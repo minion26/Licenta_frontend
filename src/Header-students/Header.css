@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'Newsreader';
+    src: url('../../public/fonts/Newsreader_36pt-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../../public/fonts/Inter-SemiBold.ttf');
+}
+
+
+.header {
+    background-color: #007EB4;
+    padding: 10px 20px;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 150px; /* Ajustați această valoare în funcție de cât de lat doriți să fie header-ul */
+}
+
+.webApp{
+    color: #FFFFFF;
+    font-size: 26px;
+    font-style: normal;
+    font-family: 'Newsreader', serif;
+}
+
+.header ul li{
+    list-style-type: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 50px 0;
+    margin-left: -25px;
+}
+
+.header ul li a {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+@media screen and (max-width: 600px) {
+    .header {
+        width: 100%;
+    }
+}
