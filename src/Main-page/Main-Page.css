@@ -1,0 +1,106 @@
+@font-face {
+    font-family: 'Newsreader';
+    src: url('../../public/fonts/Newsreader_36pt-Regular.ttf');
+}
+
+body {
+    background-color: #F3F3F3;
+}
+
+.main {
+    margin-left: 125px; /* This should be equal to the width of the header */
+    color: black;
+}
+
+h1,p {
+    font-family: 'Newsreader', serif;
+    font-size: 48px;
+}
+
+.title{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.description {
+    margin-top: 50px;
+    text-align: center;
+}
+
+
+.image-container img {
+    width: 200px; /* Ajustează lățimea imaginilor */
+    height: 198px; /* Menține proporția imaginilor */
+    border-radius: 27px;
+}
+
+.image-container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row; /* Display the images and the h1 in a row on large screens */
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.image-container h1.title {
+    order: 2; /* Place the h1 in the middle */
+}
+
+.image-container img:first-child {
+    order: 1; /* Place the first image before the h1 */
+}
+
+.image-container img:last-child {
+    order: 3; /* Place the second image after the h1 */
+}
+
+@media screen and (max-width: 500px) {
+    .image-container {
+        flex-direction: column; /* Stack the images and the h1 vertically on small screens */
+    }
+
+    .image-container h1.title {
+        order: 3; /* Place the h1 below the images */
+    }
+
+    .image-container img:first-child {
+        order: 1; /* Place the first image at the top */
+    }
+
+    .image-container img:last-child {
+        order: 2; /* Place the second image in the middle */
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .main {
+        margin-top : 25px;
+        margin-left: 0;
+    }
+
+    h1, p {
+        font-size: 24px; /* Reduce the font size for smaller screens */
+    }
+
+    .title {
+        /*margin-top: 25px;*/
+        /*margin-bottom: 25px;*/
+    }
+
+    .description {
+        margin-top: 25px;
+        text-after-overflow: ellipsis;
+    }
+
+    .image-container {
+        /*flex-direction: column; !* Stack the images vertically on small screens *!*/
+        gap: 25px; /* Reduce the space between images */
+    }
+
+    .image-container img {
+        width: 100px; /* Make the images take up the full width of their container */
+        height: 100px; /* Let the images maintain their aspect ratio */
+    }
+}
