@@ -1,0 +1,39 @@
+@font-face {
+    font-family: 'Newsreader';
+    src: url('../../public/fonts/Newsreader_36pt-Regular.ttf');
+}
+
+body {
+    background-color: #F3F3F3;
+}
+
+/*.main {*/
+/*    margin-left: 125px; !* This should be equal to the width of the header *!*/
+/*    color: black;*/
+/*}*/
+
+/*.calendar{*/
+
+/*}*/
+
+.main {
+    margin-left: 125px; /* This should be equal to the width of the header */
+    color: black;
+    display: flex;
+    height: 100vh; /* This will make the main div take up the full height of the viewport */
+
+
+
+}
+
+.calendar{
+
+}
+
+.title{
+    font-family: 'Newsreader', serif;
+    font-size: 48px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+}

@@ -1,0 +1,61 @@
+@font-face {
+    font-family: 'Newsreader';
+    src: url('../../public/fonts/Newsreader_36pt-Regular.ttf');
+}
+
+.calendar{
+    width: 300px;
+    height: 300px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    max-width: 600px;
+    margin: auto;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+
+/* Custom toolbar styles */
+.custom-toolbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+}
+
+.custom-toolbar button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.custom-toolbar button:hover {
+    background-color: #e7e7e7;
+}
+
+.custom-toolbar span {
+    font-weight: bold;
+}
+
+
+.rbc-calendar {
+    font-size: 10px;
+}
+
+.rbc-day-bg {
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    color: black;
+}
+
+.rbc-today {
+    background-color: #eaf6ff;
+    color: black;
+}
+
+.rbc-current {
+    font-size: 15px;
+    font-weight: bold;
+}
