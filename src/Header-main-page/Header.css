@@ -21,17 +21,19 @@
     top: 0;
     left: 0;
     bottom: 0;
-    width: 150px; /* Ajustați această valoare în funcție de cât de lat doriți să fie header-ul */
+    width: 125px; /* Ajustați această valoare în funcție de cât de lat doriți să fie header-ul */
+    /*width: 100%; !* Ajustați această valoare la 100% pentru a face antetul să se întindă pe toată lățimea ecranului *!*/
+    z-index: 1000; /* Adăugați această linie pentru a asigura că antetul este întotdeauna deasupra celorlalte elemente */
 }
 
 
 .webApp{
     color: #FFFFFF;
-    font-size: 26px;
+    font-size: 20px;
     font-style: normal;
     position: fixed;
     top: 15px; /* Add this line */
-    left: 25px; /* Add this line */
+    left: 20px; /* Add this line */
     font-family: 'Newsreader', serif;
 }
 

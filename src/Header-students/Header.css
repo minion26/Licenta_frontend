@@ -21,22 +21,26 @@
     top: 0;
     left: 0;
     bottom: 0;
-    width: 150px; /* Ajustați această valoare în funcție de cât de lat doriți să fie header-ul */
+    width: 125px; /* Ajustați această valoare în funcție de cât de lat doriți să fie header-ul */
+    z-index: 1000;
 }
 
 .webApp{
     color: #FFFFFF;
-    font-size: 26px;
+    font-size: 20px;
     font-style: normal;
+    position: fixed;
+    top: 15px; /* Add this line */
+    left: 20px; /* Add this line */
     font-family: 'Newsreader', serif;
 }
 
 .header ul li{
     list-style-type: none;
     font-family: 'Inter', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    margin: 50px 0;
+    font-size: 15px;
+    /*font-weight: 400;*/
+    margin: 70px 0;
     margin-left: -25px;
 }
 
@@ -45,8 +49,42 @@
     color: #FFFFFF;
 }
 
-@media screen and (max-width: 600px) {
+.burger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1000; /* Increase this value */
+}
+
+.burger div {
+    width: 1rem;
+    height: 0.15rem;
+    background: #007EB4; /* Change this to a different color */
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+}
+
+@media screen and (max-width: 500px) {
     .header {
-        width: 100%;
+        display: none;
+    }
+
+    .header.show {
+        display: flex !important;
+    }
+
+    .burger {
+        display: block;
+        position: fixed;
+        top: 10px;
+        left: 10px;
     }
 }
