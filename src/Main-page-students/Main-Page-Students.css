@@ -7,28 +7,24 @@ body {
     background-color: #F3F3F3;
 }
 
-/*.main {*/
-/*    margin-left: 125px; !* This should be equal to the width of the header *!*/
-/*    color: black;*/
-/*}*/
-
-/*.calendar{*/
-
-/*}*/
 
 .main {
     margin-left: 125px; /* This should be equal to the width of the header */
     color: black;
+
+    height: 60vh; /* This will make the main div take up the full height of the viewport */
+
     display: flex;
-    height: 100vh; /* This will make the main div take up the full height of the viewport */
-
-
-
+    justify-content: space-between;
 }
 
-.calendar{
-
+.calendar-container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
 }
+
+
 
 .title{
     font-family: 'Newsreader', serif;
@@ -37,3 +33,89 @@ body {
     margin-bottom: 50px;
     text-align: center;
 }
+
+
+.calendar {
+    /*width: 50%; !* This will make the calendar take up half the width of the .main div *!*/
+    /*margin-left: 25%; !* This will center the calendar on the left side *!*/
+    /*margin-top: -40px; !* Adjust this value as needed *!*/
+    align-self: flex-start; /* This will align the calendar to the start of the container */
+    margin-top: 10px; /* Adjust this value as needed */
+}
+
+.btn {
+    width: 200px; /* Adjust this value as needed */
+    border-radius : 27px;
+    margin-bottom: 30px;
+}
+
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 200px;
+}
+
+@media screen and (max-width: 540px) {
+    .main {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 50px;
+    }
+
+    .calendar-container, .buttons {
+        width: 100%;
+        margin: 0;
+    }
+
+    .buttons{
+        margin-left: 175px;
+    }
+
+}
+
+@media screen and (min-height: 1000px){
+
+    .main {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 50px;
+    }
+
+    .calendar-container, .buttons {
+        width: 100%;
+        margin: 0;
+    }
+
+    .buttons{
+        margin-top: 150px;
+        margin-left: 550px;
+    }
+
+}
+
+
+@media screen and (max-width: 300px) {
+    .main {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 50px;
+    }
+
+    .calendar-container, .buttons {
+        width: 100%;
+        margin: 0;
+    }
+
+    .calendar{
+        height: 50px;
+        width: 50px;
+    }
+
+
+
+}
+
+
+
