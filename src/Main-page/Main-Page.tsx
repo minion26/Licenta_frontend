@@ -5,7 +5,7 @@ function MainPage() {
   return (
 
     <div >
-      <Header />
+      <Header showButton={true}/>
         <div className="main">
 
             <div className="image-container">

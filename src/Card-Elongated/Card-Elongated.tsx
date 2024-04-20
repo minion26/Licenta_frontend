@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 
 interface CardElongatedProps{
     title: string;
-    description: string;
+    description?: string;
     cardIndex: number;
     children?: React.ReactNode;
 }

@@ -4,12 +4,14 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 interface CardLargeProps{
     title: string;
-    credits: number;
-    description: string;
+    credits?: number;
+    description?: string;
     cardIndex: number;
+    size?: number;
 }
 
 const images = [
@@ -23,16 +25,18 @@ const images = [
 function getImage(index: number) {
     return images[index % images.length];
 }
-function CardLarge({title, credits, description, cardIndex}: CardLargeProps){
+function CardLarge({title, credits, description, cardIndex, size}: CardLargeProps){
+    const navigate = useNavigate();
 
     return (
-        <Card sx={{ maxWidth: 297,
+        <Card sx={{ maxWidth:297 ,
+            height: size,
             // maxHeight: 296,
             borderRadius: '24px',
             backgroundColor: '#FAFAF5',
 
         }}>
-            <CardActionArea>
+            <CardActionArea onClick={() => navigate('/other-page')}>
                 <CardMedia
                     sx={{ aspectRatio: '16/9' }}
                     component="img"
@@ -48,12 +52,15 @@ function CardLarge({title, credits, description, cardIndex}: CardLargeProps){
                     }}>
                         {title}
                     </Typography>
-                    <Typography variant="subtitle1" color="text.secondary">
-                        {credits} credits
-                    </Typography>
+                    {credits && (
+                        <Typography variant="subtitle1" color="text.secondary">
+                            {credits} credits
+                        </Typography>
+                    )}
                     <Typography variant="body2" color="text.secondary">
                         {description}
                     </Typography>
+
                 </CardContent>
             </CardActionArea>
         </Card>

@@ -15,7 +15,7 @@ function Header() {
                 <div></div>
                 <div></div>
             </div>
-            <header className={`header ${showMenu ? 'show' : ''}`} onClick={toggleMenu}>
+            <header className={`header ${showMenu ? 'show' : ''}`} onClick={toggleMenu} >
                 <h1 className="webApp">web app</h1>
                 <nav>
                     <ul>
