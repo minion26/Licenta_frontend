@@ -4,8 +4,6 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 
 
 
@@ -13,6 +11,7 @@ interface CardElongatedProps{
     title: string;
     description: string;
     cardIndex: number;
+    children?: React.ReactNode;
 }
 
 const images = [
@@ -28,7 +27,7 @@ function getImage(index: number) {
 }
 //TODO: make it responsive
 
-function CardElongated({title, description, cardIndex}: CardElongatedProps){
+function CardElongated({title, description, cardIndex, children}: CardElongatedProps){
 
     return (
         <Card sx={{ display: 'flex',
@@ -56,21 +55,8 @@ function CardElongated({title, description, cardIndex}: CardElongatedProps){
                     </Typography>
                 </CardContent>
             </Box>
-            <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} sx={{
-                width: '50px',
-                height: '50px',
-                backgroundColor: '#F5F5F5',
-                borderRadius: '20px',
-                color: '#000000',
-                fontWeight: 'bold',
-                alignSelf: 'flex-end',
-                marginLeft: 'auto',
-                marginRight: '20px',
-                marginBottom: '50px',
-                border: 'none',
+            {children}
 
-            }}>
-            </Button>
         </Card>
     );
 }
