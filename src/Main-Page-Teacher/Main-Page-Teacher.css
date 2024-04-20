@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Newsreader';
+    src: url('../../public/fonts/Newsreader_36pt-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../../public/fonts/Inter-SemiBold.ttf');
+}
+
+body{
+    background-color: #F3F3F3;
+}

@@ -9,7 +9,7 @@ function Header() {
     };
 
     return (
-        <div className="nav flex-column">
+        <div >
             <div className="burger" onClick={toggleMenu}>
                 <div></div>
                 <div></div>
