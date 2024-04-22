@@ -1,7 +1,7 @@
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './Calendar.css';
+import styles from './Calendar.module.css';
 import { NavigateAction } from 'react-big-calendar';
 
 const localizer = momentLocalizer(moment);
@@ -13,11 +13,11 @@ interface CustomToolbarProps {
 
 const CustomToolbar: React.FC<CustomToolbarProps> = ({ label, onNavigate }) => {
     return (
-        <div className="custom-toolbar">
-            <button onClick={() => onNavigate('PREV')}>{"<"}</button>
-            <button onClick={() => onNavigate('TODAY')}>{"Today"}</button>
-            <button onClick={() => onNavigate('NEXT')}>{">"}</button>
-            <span>{label}</span>
+        <div className={styles.customToolbar}>
+            <button className={styles.customToolbarButton} onClick={() => onNavigate('PREV')}>{"<"}</button>
+            <button className={styles.customToolbarButton} onClick={() => onNavigate('TODAY')}>{"Today"}</button>
+            <button className={styles.customToolbarButton} onClick={() => onNavigate('NEXT')}>{">"}</button>
+            <span className={styles.customToolbarSpan}>{label}</span>
         </div>
     );
 };
@@ -28,7 +28,7 @@ function MyCalendar() {
     };
 
     return (
-        <div className="calendar">
+        <div className={styles.calendar}>
             <Calendar
                 localizer={localizer}
                 events={[]}

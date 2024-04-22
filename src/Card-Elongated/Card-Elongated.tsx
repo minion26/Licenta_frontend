@@ -1,11 +1,10 @@
-import './Card-Elongated.css'
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-
-
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 interface CardElongatedProps{
     title: string;
@@ -29,10 +28,13 @@ function getImage(index: number) {
 
 function CardElongated({title, description, cardIndex, children}: CardElongatedProps){
 
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
     return (
         <Card sx={{ display: 'flex',
-        width: '821px',
-        height: '159px',
+            width: isSmallScreen ? '100%' : '821px',
+            height: isSmallScreen ? '50%' : '159px',
             backgroundColor: "#FAFAF5",
 
         }}>

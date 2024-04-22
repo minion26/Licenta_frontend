@@ -12,11 +12,15 @@ body{
     background-color: #F3F3F3;
 }
 
-.card-container{
+.cardContainer{
     margin-left: 140px;
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     /*justify-content: space-between;*/
     gap: 10px;
+}
+
+.noDecoration {
+    text-decoration: none;
 }

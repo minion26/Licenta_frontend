@@ -16,7 +16,7 @@
 
 
 /* Custom toolbar styles */
-.custom-toolbar {
+.customToolbar {
     display: flex;
     justify-content: space-between;
     padding: 10px;
@@ -24,38 +24,38 @@
     border-bottom: 1px solid #ddd;
 }
 
-.custom-toolbar button {
+.customToolbarButton {
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 5px 10px;
     cursor: pointer;
 }
 
-.custom-toolbar button:hover {
+.customToolbarButton:hover {
     background-color: #e7e7e7;
 }
 
-.custom-toolbar span {
+.customToolbarSpan {
     font-weight: bold;
 }
 
 
-.rbc-calendar {
+.rbcCalendar {
     font-size: 10px;
 }
 
-.rbc-day-bg {
+.rbcDayBg {
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     color: black;
 }
 
-.rbc-today {
+.rbcToday {
     background-color: #eaf6ff;
     color: black;
 }
 
-.rbc-current {
+.rbcCurrent {
     font-size: 15px;
     font-weight: bold;
 }

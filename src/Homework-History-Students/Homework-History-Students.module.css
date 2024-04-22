@@ -28,4 +28,11 @@ body{
         margin-left: 0;
     }
 
+
+        .cardElongated {
+            width: 10px; /* or any smaller value that suits your design */
+            height: 50px;
+        }
+
+
 }

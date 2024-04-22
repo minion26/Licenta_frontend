@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './Upper-Header.css';
+import styles from './Upper-Header.module.css';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
@@ -47,13 +47,13 @@ function UpperHeader({ title, subtitle, buttons }: UpperHeaderProps){
     const displaySubtitle = subtitle === 'date' ? dateString : subtitle;
 
     return (
-        <div className="main">
+        <div className={styles.main}>
             <nav className="navbar">
-                <div className="title-container">
-                    <h1 className="title">{title}</h1>
-                    <p className="subtitle">{displaySubtitle}</p>
+                <div className={styles.titleContainer}>
+                    <h1 className={styles.title}>{title}</h1>
+                    <p className={styles.subtitle}>{displaySubtitle}</p>
                 </div>
-                <div className="buttons">
+                <div className={styles.buttons}>
                     {buttons && (
                         <ButtonGroup
                             sx={{

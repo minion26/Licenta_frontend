@@ -8,7 +8,7 @@
     src: url('../../public/fonts/Inter-SemiBold.ttf');
 }
 
-form {
+.form {
     display: flex;
     flex-direction: column;
     /*width: 100%;*/
@@ -18,7 +18,7 @@ form {
     box-sizing: border-box;
 }
 
-.login-container {
+.loginContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -28,18 +28,22 @@ form {
     background-position: center; /* This will center the image in the container */
 }
 
-h2 {
+.h2 {
     margin-bottom: 20px;
 }
 
-.MuiTextField-root,
-.MuiButton-root {
+/*.MuiTextField-root,*/
+/*.MuiButton-root {*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+
+.myCustomMargin{
     margin-bottom: 20px;
 }
 
 
-
-p {
+.p {
     margin-bottom: 10px;
 }
 

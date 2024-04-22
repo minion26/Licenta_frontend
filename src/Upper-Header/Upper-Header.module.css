@@ -7,7 +7,7 @@
     src: url('../../public/fonts/Inter-SemiBold.ttf');
 }
 
-.title-container{
+.titleContainer{
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -8,7 +8,11 @@
 }
 
 @media screen and (max-width: 540px) {
-    .card-elongated {
-        width: 400px; /* or any smaller value that suits your design */
+
+    .cardElongated {
+        width: 10px; /* or any smaller value that suits your design */
+        height: 50px;
     }
+
+
 }

@@ -12,10 +12,23 @@ body {
     color: black;
 }
 
-h1,p {
+.newsreader {
     font-family: 'Newsreader', serif;
     font-size: 48px;
 }
+
+.imageContainerTitle {
+    order: 2; /* Place the h1 in the middle */
+}
+
+.imageContainerFirstChild {
+    order: 1; /* Place the first image before the h1 */
+}
+
+.imageContainerLastChild {
+    order: 3; /* Place the second image after the h1 */
+}
+
 
 .title{
     margin-top: 50px;
@@ -29,13 +42,13 @@ h1,p {
 }
 
 
-.image-container img {
+.imageContainerImg {
     width: 200px; /* Ajustează lățimea imaginilor */
     height: 198px; /* Menține proporția imaginilor */
     border-radius: 27px;
 }
 
-.image-container {
+.imageContainer {
     margin-top: 50px;
     display: flex;
     flex-direction: row; /* Display the images and the h1 in a row on large screens */
@@ -44,35 +57,27 @@ h1,p {
     gap: 50px;
 }
 
-.image-container h1.title {
-    order: 2; /* Place the h1 in the middle */
-}
 
-.image-container img:first-child {
-    order: 1; /* Place the first image before the h1 */
-}
 
-.image-container img:last-child {
-    order: 3; /* Place the second image after the h1 */
-}
 
 @media screen and (max-width: 500px) {
-    .image-container {
-        flex-direction: column; /* Stack the images and the h1 vertically on small screens */
-    }
+        .imageContainer {
+            flex-direction: column; /* Stack the images and the h1 vertically on small screens */
+        }
 
-    .image-container h1.title {
-        order: 3; /* Place the h1 below the images */
-    }
+        .imageContainerTitle {
+            order: 3; /* Place the h1 below the images */
+        }
 
-    .image-container img:first-child {
-        order: 1; /* Place the first image at the top */
-    }
+        .imageContainerFirstChild {
+            order: 1; /* Place the first image at the top */
+        }
 
-    .image-container img:last-child {
-        order: 2; /* Place the second image in the middle */
-    }
+        .imageContainerLastChild {
+            order: 2; /* Place the second image in the middle */
+        }
 }
+
 
 @media screen and (max-width: 500px) {
     .main {
@@ -80,7 +85,7 @@ h1,p {
         margin-left: 0;
     }
 
-    h1, p {
+    .newsreader {
         font-size: 24px; /* Reduce the font size for smaller screens */
     }
 
@@ -94,12 +99,12 @@ h1,p {
         text-after-overflow: ellipsis;
     }
 
-    .image-container {
+    .imageContainer {
         /*flex-direction: column; !* Stack the images vertically on small screens *!*/
         gap: 25px; /* Reduce the space between images */
     }
 
-    .image-container img {
+    .imageContainerImg {
         width: 100px; /* Make the images take up the full width of their container */
         height: 100px; /* Let the images maintain their aspect ratio */
     }

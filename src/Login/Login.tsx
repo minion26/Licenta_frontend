@@ -1,9 +1,10 @@
-import './Login.css';
+import styles from './Login.module.css';
 import  { ChangeEvent, FormEvent , useState} from 'react';
 import { TextField, Button, Checkbox, FormControlLabel } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Header from "../Header-main-page/Header.tsx";
+import {Link} from "react-router-dom";
 // import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 function LoginForm() {
@@ -39,7 +40,7 @@ function LoginForm() {
     return (
         <div>
         <Header showButton={false} />
-            <div className="login-container">
+            <div className={styles.loginContainer}>
                 <Card  sx={{
                     borderRadius: '24px',
                     overflow: 'hidden',
@@ -58,9 +59,9 @@ function LoginForm() {
                         height: '100%',
                         fontSize: '24px',
                     }}>
-                        <form onSubmit={handleSubmit}>
+                        <form className={styles.form} onSubmit={handleSubmit}>
 
-                            <h2 style={{fontFamily: 'Inter',
+                            <h2 className={styles.h2} style={{fontFamily: 'Inter',
                                     fontSize: '24px',
                             }}>Sign in</h2>
                             <TextField
@@ -76,6 +77,7 @@ function LoginForm() {
                                 }}
                             />
                             <TextField
+                                className={styles.myCustomMargin}
                                 label="Password"
                                 type={showPassword ? 'text' : 'password'}
                                 value={password}
@@ -100,10 +102,13 @@ function LoginForm() {
                                 }
                                 label="Remember me"
                             />
-                            <Button variant="contained" type="submit">
-                                Sign in
-                            </Button>
-                            <p style={{textAlign: 'right', fontSize: '14px',}}><a
+                            <Link to="/main-page-student">
+                                <Button variant="contained" type="submit">
+                                    Sign in
+                                </Button>
+                            </Link>
+
+                            <p className={styles.p} style={{textAlign: 'right', fontSize: '14px',}}><a
                                 href="https://www.google.com"
                                 target="_blank"
                                 rel="noopener noreferrer"

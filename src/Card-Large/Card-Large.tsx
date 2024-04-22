@@ -1,4 +1,4 @@
-import './Card-Large.css';
+import './Card-Large.module.css';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -36,7 +36,7 @@ function CardLarge({title, credits, description, cardIndex, size}: CardLargeProp
             backgroundColor: '#FAFAF5',
 
         }}>
-            <CardActionArea onClick={() => navigate('/other-page')}>
+            <CardActionArea onClick={() => navigate('/')}>
                 <CardMedia
                     sx={{ aspectRatio: '16/9' }}
                     component="img"

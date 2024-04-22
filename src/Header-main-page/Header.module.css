@@ -64,7 +64,7 @@
     z-index: 1000; /* Increase this value */
 }
 
-.burger div {
+.burgerDiv {
     width: 1rem;
     height: 0.15rem;
     background: #007EB4; /* Change this to a different color */
@@ -79,7 +79,7 @@
         display: none;
     }
 
-    .header.show {
+    .headerShow {
         display: flex !important;
     }
 
