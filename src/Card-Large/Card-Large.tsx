@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 interface CardLargeProps{
     title: string;
@@ -12,6 +12,7 @@ interface CardLargeProps{
     description?: string;
     cardIndex: number;
     size?: number;
+    onCardClick?: (title: string) => void;
 }
 
 const images = [
@@ -25,8 +26,8 @@ const images = [
 function getImage(index: number) {
     return images[index % images.length];
 }
-function CardLarge({title, credits, description, cardIndex, size}: CardLargeProps){
-    const navigate = useNavigate();
+function CardLarge({title, credits, description, cardIndex, size, onCardClick}: CardLargeProps){
+    // const navigate = useNavigate();
 
     return (
         <Card sx={{ maxWidth:297 ,
@@ -36,7 +37,7 @@ function CardLarge({title, credits, description, cardIndex, size}: CardLargeProp
             backgroundColor: '#FAFAF5',
 
         }}>
-            <CardActionArea onClick={() => navigate('/')}>
+            <CardActionArea onClick={() => onCardClick && onCardClick(title)}>
                 <CardMedia
                     sx={{ aspectRatio: '16/9' }}
                     component="img"

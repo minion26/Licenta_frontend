@@ -40,7 +40,7 @@ function CardElongated({title, description, cardIndex, children}: CardElongatedP
         }}>
             <CardMedia
                 component="img"
-                sx={{ width: 160 }}
+                sx={{ width:  isSmallScreen ? '100px' : '160px', }}
                 image={getImage(cardIndex)}
                 alt="Live from space album cover"
             />
@@ -49,6 +49,7 @@ function CardElongated({title, description, cardIndex, children}: CardElongatedP
                     <Typography component="div" variant="h5" sx={{
                         fontFamily : 'Inter',
                         fontWeight: 'semi-bold',
+                        fontSize: isSmallScreen ? '15px' : '20px',
                     }}>
                         {title}
                     </Typography>
