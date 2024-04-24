@@ -5,6 +5,7 @@ import CardElongated from "../Card-Elongated/Card-Elongated.tsx";
 // import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';// import {Link} from "react-router-dom";
 import Button from "@mui/material/Button";
+import {Link} from "react-router-dom";
 
 function LecturesPerCourseTeachers(){
     return (
@@ -32,8 +33,8 @@ function LecturesPerCourseTeachers(){
                             border: 'none',
                             textTransform: 'none',
                         }}
-                        // component={Link}
-                        // to="/materials-per-lecture"
+                        component={Link}
+                        to="/materials-per-lecture"
                     > Add Materials
                     </Button>
                 </CardElongated>

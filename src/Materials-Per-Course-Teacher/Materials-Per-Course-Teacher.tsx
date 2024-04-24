@@ -12,6 +12,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import Button from "@mui/material/Button";
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import {Link} from "react-router-dom";
 
 
 function Buttons(){
@@ -96,8 +97,8 @@ function Buttons(){
                             border: 'none',
                             textTransform: 'none',
                         }}
-                        // component={Link}
-                        // to="/materials-per-lecture"
+                        component={Link}
+                        to="/homeworks-per-lecture"
                     > See Homework
                     </Button>
                 </CardContent>
@@ -116,7 +117,10 @@ function MaterialsPerCourseTeacher() {
         <Header />
         <UpperHeader title="WEEK 1" subtitle="introduction"/>
         <div className={styles.container}>
-            <CardLarge title="Curs" cardIndex={1} />
+            <Link to={"/view-course-teacher"} className={styles.noDecoration}>
+                <CardLarge title="Curs" cardIndex={1} />
+            </Link>
+
             <CardLarge title="Suport" cardIndex={3} />
             <CardLarge title="Video" cardIndex={2} />
 

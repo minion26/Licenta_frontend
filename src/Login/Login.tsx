@@ -102,7 +102,9 @@ function LoginForm() {
                                 }
                                 label="Remember me"
                             />
-                            <Link to="/main-page-student">
+                            {/*/main-page-student*/}
+                            {/*/main-page-teacher*/}
+                            <Link to="/main-page-teacher">
                                 <Button variant="contained" type="submit">
                                     Sign in
                                 </Button>

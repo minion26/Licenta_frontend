@@ -1,0 +1,47 @@
+@font-face {
+    font-family: 'Newsreader';
+    src: url('../../public/fonts/Newsreader_36pt-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../../public/fonts/Inter-SemiBold.ttf');
+}
+
+body{
+    background-color: #F3F3F3;
+}
+
+.container{
+    margin-left: 140px;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    /*justify-content: space-between;*/
+    gap: 10px;
+}
+
+.divContainer{
+    position: relative;
+    z-index: 99;
+
+}
+
+@media screen and (max-width: 540px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0;
+    }
+
+    .divContainer{
+        flex-direction: row;
+        align-self: flex-start;
+        z-index: 99;
+        width: 200px;
+
+    }
+
+}
+
+

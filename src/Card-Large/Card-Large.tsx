@@ -29,6 +29,7 @@ function getImage(index: number) {
 function CardLarge({title, credits, description, cardIndex, size, onCardClick}: CardLargeProps){
     // const navigate = useNavigate();
 
+
     return (
         <Card sx={{ maxWidth:297 ,
             height: size,

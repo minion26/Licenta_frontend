@@ -21,6 +21,9 @@ body{
     gap: 10px;
 }
 
+.noDecoration{
+    text-decoration: none;
+}
 @media screen and (max-width: 540px) {
     .container {
         flex-direction: column;

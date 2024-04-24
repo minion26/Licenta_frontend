@@ -1,13 +1,14 @@
 import Header from "../Header-teacher/Header.tsx";
 import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import CardElongated from "../Card-Elongated/Card-Elongated.tsx";
-import styles from "./Homework-Per-Lecture-Teacher.module.css";
+import styles from "./Homeworks-Per-Lecture-Teacher.module.css";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import Button from "@mui/material/Button";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {useTheme} from "@mui/material/styles";
+import {Link} from "react-router-dom";
 
-function HomeworkPerLectureTeacher() {
+function HomeworksPerLectureTeacher() {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -36,8 +37,8 @@ function HomeworkPerLectureTeacher() {
                             border: 'none',
                             textTransform: 'none',
                         }}
-                        // component={Link}
-                        // to="/materials-per-lecture"
+                        component={Link}
+                        to="/add-feedback"
                     > Add Feedback
                     </Button>
                 </CardElongated>
@@ -63,7 +64,7 @@ function HomeworkPerLectureTeacher() {
                             textTransform: 'none',
                         }}
                         // component={Link}
-                        // to="/materials-per-lecture"
+                        // to="/add-feedback"
                     > Add Feedback
                     </Button>
                 </CardElongated>
@@ -72,4 +73,4 @@ function HomeworkPerLectureTeacher() {
     );
 }
 
-export default HomeworkPerLectureTeacher;
+export default HomeworksPerLectureTeacher;
