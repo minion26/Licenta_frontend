@@ -16,14 +16,16 @@ import Login from "./Login/Login.tsx";
 // import MaterialsPerLectureStudents from "./Materials-Per-Lecture-Students/Materials-Per-Lecture-Students.tsx";
 // import ViewCourseStudents from "./View-Course-Students/View-Course-Students.tsx";
 
-import MainPageTeacher from "./Main-Page-Teacher/Main-Page-Teacher.tsx";
-import LecturesPerCourseTeachers from "./Lecture-Per-Course-Teacher/Lectures-Per-Course-Teachers.tsx";
-import MaterialsPerCourseTeacher from "./Materials-Per-Course-Teacher/Materials-Per-Course-Teacher.tsx";
-import ViewCourseTeacher from "./View-Course-Teacher/View-Course-Teacher.tsx";
-import HomeworksPerLectureTeacher from "./Homeworks-Per-Lecture-Teacher/Homeworks-Per-Lecture-Teacher.tsx";
-import FeedbackPerHomeworkTeacher from "./Feedback-Per-Homework-Teacher/Feedback-Per-Homework-Teacher";
-import NotificationsTeacher from "./Notifications-Teacher/Notifications-Teacher.tsx";
-import MyProfile from "./My-Profile/My-Profile.tsx";
+// import MainPageTeacher from "./Main-Page-Teacher/Main-Page-Teacher.tsx";
+// import LecturesPerCourseTeachers from "./Lecture-Per-Course-Teacher/Lectures-Per-Course-Teachers.tsx";
+// import MaterialsPerCourseTeacher from "./Materials-Per-Course-Teacher/Materials-Per-Course-Teacher.tsx";
+// import ViewCourseTeacher from "./View-Course-Teacher/View-Course-Teacher.tsx";
+// import HomeworksPerLectureTeacher from "./Homeworks-Per-Lecture-Teacher/Homeworks-Per-Lecture-Teacher.tsx";
+// import FeedbackPerHomeworkTeacher from "./Feedback-Per-Homework-Teacher/Feedback-Per-Homework-Teacher";
+// import NotificationsTeacher from "./Notifications-Teacher/Notifications-Teacher.tsx";
+// import MyProfile from "./My-Profile/My-Profile.tsx";
+
+import MainPageAdmin from "./Main-Page-Admin/Main-Page-Admin.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -43,7 +45,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         {/*<Route path={"/view-course"} element={<ViewCourseStudents />} />*/}
 
         {/*TEACHERS*/}
-        <Route path="/main-page-teacher" element={<MainPageTeacher />} />
+        {/* <Route path="/main-page-teacher" element={<MainPageTeacher />} />
         <Route
           path="/lecture-per-course"
           element={<LecturesPerCourseTeachers />}
@@ -66,6 +68,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           element={<NotificationsTeacher />}
         />
         <Route path={"/my-profile"} element={<MyProfile />} />
+       */}
+
+        {/* ADMINS */}
+        <Route path={"/main-page-admin"} element={<MainPageAdmin />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

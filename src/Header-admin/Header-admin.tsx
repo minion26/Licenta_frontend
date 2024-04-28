@@ -1,4 +1,4 @@
-import styles from "./Header.module.css";
+import styles from "./Header-admin.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 function Header() {
@@ -27,24 +27,12 @@ function Header() {
               <li className={`${styles.headerUlLi}`}>My profile</li>
             </Link>
 
-            <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
-              <a className={styles.headerUlLiA} href="/">
-                Courses
-              </a>
-            </li>
-            <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
-              <a className={styles.headerUlLiA} href="/">
-                Lectures
-              </a>
-            </li>
-            <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
-              <a className={styles.headerUlLiA} href="/">
-                Tests
-              </a>
-            </li>
+            <Link to={"/students"} className={styles.headerUlLiA}>
+              <li className={`${styles.headerUlLi}`}>Students</li>
+            </Link>
 
-            <Link to="/notifications-teacher" className={styles.headerUlLiA}>
-              <li className={`${styles.headerUlLi} `}>Notifications</li>
+            <Link to={"/teachers"} className={styles.headerUlLiA}>
+              <li className={`${styles.headerUlLi} `}>Teachers</li>
             </Link>
           </ul>
         </nav>
