@@ -6,6 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Swal from "sweetalert2";
 
 function SeeStudentAccountAdmin(){
     const theme = useTheme();
@@ -122,7 +123,20 @@ function SeeStudentAccountAdmin(){
                     }}
                 >
                     <Button variant="outlined">Cancel</Button>
-                    <Button variant="contained">Save</Button>
+                    <Button
+                        variant="contained"
+                        onClick={() => {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "The details have been saved",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }}
+                    >
+                        Save
+                    </Button>
                 </Box>
 
             </Card>

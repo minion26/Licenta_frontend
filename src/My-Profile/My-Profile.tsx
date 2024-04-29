@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Swal from "sweetalert2";
 
 function MyProfile() {
   const theme = useTheme();
@@ -83,7 +84,20 @@ function MyProfile() {
             }}
           >
             <Button variant="outlined">Cancel</Button>
-            <Button variant="contained">Save</Button>
+              <Button
+                  variant="contained"
+                  onClick={() => {
+                      Swal.fire({
+                          position: "top-end",
+                          icon: "success",
+                          title: "Your work has been saved",
+                          showConfirmButton: false,
+                          timer: 1500
+                      });
+                  }}
+              >
+                  Save
+              </Button>
           </Box>
         </Box>
       </Box>

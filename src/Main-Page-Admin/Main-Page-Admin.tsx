@@ -113,56 +113,6 @@ function StudentsButtons() {
             See
           </Button>
 
-          {/*<Button*/}
-          {/*  variant="contained"*/}
-          {/*  endIcon={<DeleteIcon />}*/}
-          {/*  sx={{*/}
-          {/*    width: "150px",*/}
-          {/*    height: "50px",*/}
-          {/*    backgroundColor: "#F5F5F5",*/}
-          {/*    borderRadius: "20px",*/}
-          {/*    color: "rgba(0,0,0,0.75)",*/}
-          {/*    fontFamily: "Inter",*/}
-          {/*    fontSize: "12px",*/}
-          {/*    fontWeight: "semi-bold",*/}
-          {/*    alignSelf: "flex-end",*/}
-          {/*    marginLeft: "auto",*/}
-          {/*    marginRight: "20px",*/}
-          {/*    marginBottom: "10px",*/}
-          {/*    border: "none",*/}
-          {/*    textTransform: "none",*/}
-          {/*  }}*/}
-          {/*  // component={Link}*/}
-          {/*  // to="/homeworks-per-lecture"*/}
-          {/*>*/}
-          {/*  {" "}*/}
-          {/*  Delete*/}
-          {/*</Button>*/}
-          {/*<Button*/}
-          {/*  variant="contained"*/}
-          {/*  endIcon={<CreateOutlinedIcon />}*/}
-          {/*  sx={{*/}
-          {/*    width: "150px",*/}
-          {/*    height: "50px",*/}
-          {/*    backgroundColor: "#F5F5F5",*/}
-          {/*    borderRadius: "20px",*/}
-          {/*    color: "rgba(0,0,0,0.75)",*/}
-          {/*    fontFamily: "Inter",*/}
-          {/*    fontSize: "12px",*/}
-          {/*    fontWeight: "semi-bold",*/}
-          {/*    alignSelf: "flex-end",*/}
-          {/*    marginLeft: "auto",*/}
-          {/*    marginRight: "20px",*/}
-          {/*    marginBottom: "10px",*/}
-          {/*    border: "none",*/}
-          {/*    textTransform: "none",*/}
-          {/*  }}*/}
-          {/*  // component={Link}*/}
-          {/*  // to="/homeworks-per-lecture"*/}
-          {/*>*/}
-          {/*  {" "}*/}
-          {/*  Edit*/}
-          {/*</Button>*/}
         </CardContent>
       </Box>
     </Card>
@@ -212,8 +162,8 @@ function TeachersButtons() {
               border: "none",
               textTransform: "none",
             }}
-            // component={Link}
-            // to="/materials-per-lecture"
+            component={Link}
+            to="/create-teachers-admin"
           >
             {" "}
             Create
@@ -237,8 +187,8 @@ function TeachersButtons() {
               border: "none",
               textTransform: "none",
             }}
-            // component={Link}
-            // to="/materials-per-lecture"
+            component={Link}
+            to="/upload-teachers-admin"
           >
             {" "}
             Upload
@@ -262,63 +212,14 @@ function TeachersButtons() {
               border: "none",
               textTransform: "none",
             }}
-            // component={Link}
-            // to="/homeworks-per-lecture"
+            component={Link}
+            to="/see-teachers-admin"
           >
             {" "}
             See
           </Button>
 
-          {/*<Button*/}
-          {/*  variant="contained"*/}
-          {/*  endIcon={<DeleteIcon />}*/}
-          {/*  sx={{*/}
-          {/*    width: "150px",*/}
-          {/*    height: "50px",*/}
-          {/*    backgroundColor: "#F5F5F5",*/}
-          {/*    borderRadius: "20px",*/}
-          {/*    color: "rgba(0,0,0,0.75)",*/}
-          {/*    fontFamily: "Inter",*/}
-          {/*    fontSize: "12px",*/}
-          {/*    fontWeight: "semi-bold",*/}
-          {/*    alignSelf: "flex-end",*/}
-          {/*    marginLeft: "auto",*/}
-          {/*    marginRight: "20px",*/}
-          {/*    marginBottom: "10px",*/}
-          {/*    border: "none",*/}
-          {/*    textTransform: "none",*/}
-          {/*  }}*/}
-          {/*  // component={Link}*/}
-          {/*  // to="/homeworks-per-lecture"*/}
-          {/*>*/}
-          {/*  {" "}*/}
-          {/*  Delete*/}
-          {/*</Button>*/}
-          {/*<Button*/}
-          {/*  variant="contained"*/}
-          {/*  endIcon={<CreateOutlinedIcon />}*/}
-          {/*  sx={{*/}
-          {/*    width: "150px",*/}
-          {/*    height: "50px",*/}
-          {/*    backgroundColor: "#F5F5F5",*/}
-          {/*    borderRadius: "20px",*/}
-          {/*    color: "rgba(0,0,0,0.75)",*/}
-          {/*    fontFamily: "Inter",*/}
-          {/*    fontSize: "12px",*/}
-          {/*    fontWeight: "semi-bold",*/}
-          {/*    alignSelf: "flex-end",*/}
-          {/*    marginLeft: "auto",*/}
-          {/*    marginRight: "20px",*/}
-          {/*    marginBottom: "10px",*/}
-          {/*    border: "none",*/}
-          {/*    textTransform: "none",*/}
-          {/*  }}*/}
-          {/*  // component={Link}*/}
-          {/*  // to="/homeworks-per-lecture"*/}
-          {/*>*/}
-          {/*  {" "}*/}
-          {/*  Edit*/}
-          {/*</Button>*/}
+
         </CardContent>
       </Box>
     </Card>

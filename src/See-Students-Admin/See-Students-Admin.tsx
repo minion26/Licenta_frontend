@@ -52,7 +52,6 @@ return (
                     }}
                     // component={Link}
                     // to="/homeworks-per-lecture"
-                    // TODO: if clicked, an alarm should pop up to confirm the deletion
 
                     onClick={() => {
                         Swal.fire({
@@ -67,7 +66,7 @@ return (
                             if (result.isConfirmed) {
                                 Swal.fire({
                                     title: "Deleted!",
-                                    text: "Your file has been deleted.",
+                                    text: "The account has been deleted.",
                                     icon: "success"
                                 });
                                 // Here you can add the code to actually delete the student
