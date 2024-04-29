@@ -28,7 +28,11 @@ body {
 
 
 
-
+.title{
+    font-family: 'Newsreader', serif;
+    font-weight: bold;
+    font-size: 20px;
+}
 
 
 .calendar {

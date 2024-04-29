@@ -26,6 +26,11 @@ import Login from "./Login/Login.tsx";
 // import MyProfile from "./My-Profile/My-Profile.tsx";
 
 import MainPageAdmin from "./Main-Page-Admin/Main-Page-Admin.tsx";
+import CreateStudentsAdmin from "./Create-Students-Admin/Create-Students-Admin.tsx";
+import MyProfile from "./My-Profile/My-Profile.tsx";
+import UploadStudentsAdmin from "./Upload-Students-Admin/Upload-Students-Admin.tsx";
+import SeeStudentsAdmin from "./See-Students-Admin/See-Students-Admin.tsx";
+import SeeStudentAccountAdmin from "./See-Student-Account-Admin/See-Student-Account-Admin.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -72,6 +77,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 
         {/* ADMINS */}
         <Route path={"/main-page-admin"} element={<MainPageAdmin />} />
+          <Route path={"/create-students-admin"} element={<CreateStudentsAdmin />} />
+          <Route path={"/my-profile"} element={<MyProfile />} />
+          <Route path={"/upload-students-admin"} element={<UploadStudentsAdmin />} />
+        <Route path={"/see-students-admin"} element={<SeeStudentsAdmin />} />
+        <Route path={"/see-student-account-admin"} element={<SeeStudentAccountAdmin />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
