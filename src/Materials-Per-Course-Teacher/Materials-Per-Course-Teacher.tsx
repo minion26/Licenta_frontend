@@ -21,7 +21,7 @@ function Buttons(){
 
    return ( <Card sx={{ display: 'flex',
         width: isSmallScreen ? '100%' : '250px',
-        height: isSmallScreen ? '50%' : '159px',
+        height: isSmallScreen ? '50%' : '200px',
         backgroundColor: "#FAFAF5",
         borderRadius: '24px',
            alignSelf: 'center',
@@ -74,9 +74,32 @@ function Buttons(){
                             border: 'none',
                             textTransform: 'none',
                         }}
+                        component={Link}
+                        to="/add-homework-announcement"
+                    > Add Homework
+                    </Button>
+                    <Button
+                        variant="contained"
+                        endIcon={<CreateOutlinedIcon />}
+                        sx={{
+                            width: '150px',
+                            height: '50px',
+                            backgroundColor: '#F5F5F5',
+                            borderRadius: '20px',
+                            color: 'rgba(0,0,0,0.75)',
+                            fontFamily: 'Inter',
+                            fontSize: '12px',
+                            fontWeight: 'semi-bold',
+                            alignSelf: 'flex-end',
+                            marginLeft: 'auto',
+                            marginRight: '20px',
+                            marginBottom: '10px',
+                            border: 'none',
+                            textTransform: 'none',
+                        }}
                         // component={Link}
                         // to="/materials-per-lecture"
-                    > Add Homework
+                    > Edit Homework
                     </Button>
                     <Button
                         variant="contained"
