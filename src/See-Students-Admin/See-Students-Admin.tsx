@@ -20,7 +20,7 @@ function SeeStudentsAdmin() {
 return (
     <div>
         <Header/>
-        <UpperHeader title={"See accounts"} subtitle={"Students"}/>
+        <UpperHeader title={"See accounts"} subtitle={"Students"} buttons={[{ key: "Search", label: "Search" }]}/>
         <div className={styles.cardContainer}>
             <CardElongated title={"Jitca Diana"} cardIndex={1} height={100}>
                 <Box sx={{ display: "flex" }}>

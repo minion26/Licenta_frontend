@@ -35,6 +35,8 @@ import CreateTeachersAdmin from "./Create-Teachers-Admin/Create-Teachers-Admin.t
 import UploadTeachersAdmin from "./Upload-Teachers-Admin/Upload-Teachers-Admin.tsx";
 import SeeTeachersAdmin from "./See-Teachers-Admin/See-Teachers-Admin.tsx";
 import SeeTeacherAccountAdmin from "./See-Teacher-Account-Admin/See-Teacher-Account-Admin.tsx";
+import CreateAdmins from "./Create-Admins/Create-Admins.tsx";
+
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -90,6 +92,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path={"/upload-teachers-admin"} element={<UploadTeachersAdmin />} />
         <Route path={"/see-teachers-admin"} element={<SeeTeachersAdmin />} />
         <Route path={"/see-teacher-account-admin"} element={<SeeTeacherAccountAdmin />} />
+        <Route path={"/create-admins"} element={<CreateAdmins />} />
+
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

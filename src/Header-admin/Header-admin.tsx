@@ -27,13 +27,17 @@ function Header() {
               <li className={`${styles.headerUlLi}`}>My profile</li>
             </Link>
 
-            <Link to={"/students"} className={styles.headerUlLiA}>
-              <li className={`${styles.headerUlLi}`}>Students</li>
-            </Link>
+            {/*<Link to={"/students"} className={styles.headerUlLiA}>*/}
+            {/*  <li className={`${styles.headerUlLi}`}>Students</li>*/}
+            {/*</Link>*/}
 
-            <Link to={"/teachers"} className={styles.headerUlLiA}>
-              <li className={`${styles.headerUlLi} `}>Teachers</li>
-            </Link>
+            {/*<Link to={"/teachers"} className={styles.headerUlLiA}>*/}
+            {/*  <li className={`${styles.headerUlLi} `}>Teachers</li>*/}
+            {/*</Link>*/}
+
+            {/*<Link to={"/admin"} className={styles.headerUlLiA}>*/}
+            {/*  <li className={`${styles.headerUlLi} `}>Admin</li>*/}
+            {/*</Link>*/}
           </ul>
         </nav>
       </header>

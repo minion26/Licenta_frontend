@@ -13,14 +13,14 @@ import {Link} from "react-router-dom";
 import Swal from 'sweetalert2';
 
 
-function SeeStudentsAdmin() {
+function SeeTeachersAdmin() {
     // const theme = useTheme();
     // const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     return (
         <div>
             <Header/>
-            <UpperHeader title={"See accounts"} subtitle={"Teachers"}/>
+            <UpperHeader title={"See accounts"} subtitle={"Teachers"} buttons={[{ key: "Search", label: "Search" }]}/>
             <div className={styles.cardContainer}>
                 <CardElongated title={"Alice Johnson"} cardIndex={1} height={100}>
                     <Box sx={{ display: "flex" }}>
@@ -116,4 +116,4 @@ function SeeStudentsAdmin() {
     );
 }
 
-export default SeeStudentsAdmin;
+export default SeeTeachersAdmin;
