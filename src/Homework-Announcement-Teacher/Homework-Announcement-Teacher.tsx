@@ -13,7 +13,7 @@ function HomeworkAnnouncementTeacher() {
   return (
     <div>
         <Header/>
-        <UpperHeader title={"Create Homework Announcemets"} subtitle={"date"}/>
+        <UpperHeader title={"Create Homework Announcemet"} subtitle={"date"}/>
         <Box
             sx={{
                 display: "flex",
@@ -83,7 +83,7 @@ function HomeworkAnnouncementTeacher() {
                             Swal.fire({
                                 position: "top-end",
                                 icon: "success",
-                                title: "The account has been saved",
+                                title: "The announcement has been saved",
                                 showConfirmButton: false,
                                 timer: 1500
                             });

@@ -97,8 +97,8 @@ function Buttons(){
                             border: 'none',
                             textTransform: 'none',
                         }}
-                        // component={Link}
-                        // to="/materials-per-lecture"
+                        component={Link}
+                        to="/see-homework-announcement"
                     > Edit Homework
                     </Button>
                     <Button
@@ -146,7 +146,7 @@ function MaterialsPerCourseTeacher() {
 
             <CardLarge title="Suport" cardIndex={3} />
             <CardLarge title="Video" cardIndex={2} />
-
+            <CardLarge title="Homework" cardIndex={4} />
             <Buttons />
 
 

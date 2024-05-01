@@ -25,6 +25,9 @@ import FeedbackPerHomeworkTeacher from "./Feedback-Per-Homework-Teacher/Feedback
 import NotificationsTeacher from "./Notifications-Teacher/Notifications-Teacher.tsx";
 import MyProfile from "./My-Profile/My-Profile.tsx";
 import HomeworkAnnouncementTeacher from "./Homework-Announcement-Teacher/Homework-Announcement-Teacher.tsx";
+import SeeHomeworkAnnouncementTeacher from "./See-Homework-Announcemet-Teacher/See-Homework-Announcemet-Teacher.tsx";
+import EditHomeworkAnnouncementsTeacher
+  from "./Edit-Homework-Announcements-Teacher/Edit-Homework-Announcements-Teacher.tsx";
 
 // import MainPageAdmin from "./Main-Page-Admin/Main-Page-Admin.tsx";
 // import CreateStudentsAdmin from "./Create-Students-Admin/Create-Students-Admin.tsx";
@@ -81,6 +84,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         />
         <Route path={"/my-profile"} element={<MyProfile />} />
         <Route path={"/add-homework-announcement"} element={<HomeworkAnnouncementTeacher />} />
+        <Route path={"/see-homework-announcement"} element={<SeeHomeworkAnnouncementTeacher />} />
+        <Route path={"/edit-homework-announcement"} element={<EditHomeworkAnnouncementsTeacher /> } />
 
 
         {/* ADMINS */}
