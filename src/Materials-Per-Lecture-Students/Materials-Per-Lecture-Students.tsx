@@ -36,7 +36,12 @@ function MaterialsPerLectureStudents() {
 
                 <CardLarge title="Suport" cardIndex={2} size={250}/>
                 <CardLarge title="Video" cardIndex={3} size={250}/>
-                <CardLarge title="Homework" cardIndex={4} size={250}/>
+
+                <Link to={"/see-homework-announcement-student"} className={styles.noDecoration}>
+                    <CardLarge title="Homework" cardIndex={4} size={250}/>
+                </Link>
+
+
             </div>
         </div>
     );

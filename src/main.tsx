@@ -9,26 +9,29 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./Main-page/Main-Page.tsx";
 import Login from "./Login/Login.tsx";
 
-// import MainPageStudents from "./Main-page-students/Main-Page-Students.tsx";
-// import CoursesPageStudents from "./Courses-Page-Students/Courses-Page-Students.tsx";
-// import LecturePerCourseStudents from "./Lecture-Per-Course-Students/Lecture-Per-Course-Students.tsx";
-// import HomeworkHistoryStudents from "./Homework-History-Students/Homework-History-Students.tsx";
-// import MaterialsPerLectureStudents from "./Materials-Per-Lecture-Students/Materials-Per-Lecture-Students.tsx";
-// import ViewCourseStudents from "./View-Course-Students/View-Course-Students.tsx";
-
-import MainPageTeacher from "./Main-Page-Teacher/Main-Page-Teacher.tsx";
-import LecturesPerCourseTeachers from "./Lecture-Per-Course-Teacher/Lectures-Per-Course-Teachers.tsx";
-import MaterialsPerCourseTeacher from "./Materials-Per-Course-Teacher/Materials-Per-Course-Teacher.tsx";
-import ViewCourseTeacher from "./View-Course-Teacher/View-Course-Teacher.tsx";
-import HomeworksPerLectureTeacher from "./Homeworks-Per-Lecture-Teacher/Homeworks-Per-Lecture-Teacher.tsx";
-import FeedbackPerHomeworkTeacher from "./Feedback-Per-Homework-Teacher/Feedback-Per-Homework-Teacher";
-import NotificationsTeacher from "./Notifications-Teacher/Notifications-Teacher.tsx";
+import MainPageStudents from "./Main-page-students/Main-Page-Students.tsx";
+import CoursesPageStudents from "./Courses-Page-Students/Courses-Page-Students.tsx";
+import LecturePerCourseStudents from "./Lecture-Per-Course-Students/Lecture-Per-Course-Students.tsx";
+import HomeworkHistoryStudents from "./Homework-History-Students/Homework-History-Students.tsx";
+import MaterialsPerLectureStudents from "./Materials-Per-Lecture-Students/Materials-Per-Lecture-Students.tsx";
+import ViewCourseStudents from "./View-Course-Students/View-Course-Students.tsx";
+import SeeHomeworkAnnouncementStudent from "./See-Homework-Announcement-Student/See-Homework-Announcement-Student.tsx";
+import AddHomeworkStudent from "./Add-Homework-Student/Add-Homework-Student.tsx";
 import MyProfile from "./My-Profile/My-Profile.tsx";
-import HomeworkAnnouncementTeacher from "./Homework-Announcement-Teacher/Homework-Announcement-Teacher.tsx";
-import SeeHomeworkAnnouncementTeacher from "./See-Homework-Announcemet-Teacher/See-Homework-Announcemet-Teacher.tsx";
-import EditHomeworkAnnouncementsTeacher
-  from "./Edit-Homework-Announcements-Teacher/Edit-Homework-Announcements-Teacher.tsx";
-import AddMaterialsTeacher from "./Add-Materials-Teacher/Add-Materials-Teacher.tsx";
+
+// import MainPageTeacher from "./Main-Page-Teacher/Main-Page-Teacher.tsx";
+// import LecturesPerCourseTeachers from "./Lecture-Per-Course-Teacher/Lectures-Per-Course-Teachers.tsx";
+// import MaterialsPerCourseTeacher from "./Materials-Per-Course-Teacher/Materials-Per-Course-Teacher.tsx";
+// import ViewCourseTeacher from "./View-Course-Teacher/View-Course-Teacher.tsx";
+// import HomeworksPerLectureTeacher from "./Homeworks-Per-Lecture-Teacher/Homeworks-Per-Lecture-Teacher.tsx";
+// import FeedbackPerHomeworkTeacher from "./Feedback-Per-Homework-Teacher/Feedback-Per-Homework-Teacher";
+// import NotificationsTeacher from "./Notifications-Teacher/Notifications-Teacher.tsx";
+// import MyProfile from "./My-Profile/My-Profile.tsx";
+// import HomeworkAnnouncementTeacher from "./Homework-Announcement-Teacher/Homework-Announcement-Teacher.tsx";
+// import SeeHomeworkAnnouncementTeacher from "./See-Homework-Announcemet-Teacher/See-Homework-Announcemet-Teacher.tsx";
+// import EditHomeworkAnnouncementsTeacher
+//   from "./Edit-Homework-Announcements-Teacher/Edit-Homework-Announcements-Teacher.tsx";
+// import AddMaterialsTeacher from "./Add-Materials-Teacher/Add-Materials-Teacher.tsx";
 
 // import MainPageAdmin from "./Main-Page-Admin/Main-Page-Admin.tsx";
 // import CreateStudentsAdmin from "./Create-Students-Admin/Create-Students-Admin.tsx";
@@ -52,42 +55,45 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/login" element={<Login />} />
 
         {/*STUDENTS*/}
-        {/*<Route path="/main-page-student" element={<MainPageStudents />} />*/}
-        {/*<Route path="semester1" element={<CoursesPageStudents />} />*/}
-        {/*<Route path="semester2" element={<CoursesPageStudents />} />*/}
-        {/*<Route path="lecture-per-course" element={<LecturePerCourseStudents />} />*/}
-        {/*<Route path="homework" element={<HomeworkHistoryStudents />} />*/}
-        {/*<Route path="/materials-per-lecture" element={<MaterialsPerLectureStudents />} />*/}
-        {/*<Route path={"/view-course"} element={<ViewCourseStudents />} />*/}
+        <Route path="/main-page-student" element={<MainPageStudents />} />
+        <Route path="semester1" element={<CoursesPageStudents />} />
+        <Route path="semester2" element={<CoursesPageStudents />} />
+        <Route path="lecture-per-course" element={<LecturePerCourseStudents />} />
+        <Route path="homework" element={<HomeworkHistoryStudents />} />
+        <Route path={"/my-profile"} element={<MyProfile />} />
+        <Route path="/materials-per-lecture" element={<MaterialsPerLectureStudents />} />
+        <Route path={"/view-course"} element={<ViewCourseStudents />} />
+        <Route path={"/see-homework-announcement-student"} element={<SeeHomeworkAnnouncementStudent />} />
+        <Route path={"/add-homework-student"} element={<AddHomeworkStudent />} />
 
         {/*TEACHERS*/}
-        <Route path="/main-page-teacher" element={<MainPageTeacher />} />
-        <Route
-          path="/lecture-per-course"
-          element={<LecturesPerCourseTeachers />}
-        />
-        <Route
-          path="/materials-per-lecture"
-          element={<MaterialsPerCourseTeacher />}
-        />
-        <Route path={"/view-course-teacher"} element={<ViewCourseTeacher />} />
-        <Route
-          path={"/homeworks-per-lecture"}
-          element={<HomeworksPerLectureTeacher />}
-        />
-        <Route
-          path={"/add-feedback"}
-          element={<FeedbackPerHomeworkTeacher />}
-        />
-        <Route
-          path={"/notifications-teacher"}
-          element={<NotificationsTeacher />}
-        />
-        <Route path={"/my-profile"} element={<MyProfile />} />
-        <Route path={"/add-homework-announcement"} element={<HomeworkAnnouncementTeacher />} />
-        <Route path={"/see-homework-announcement"} element={<SeeHomeworkAnnouncementTeacher />} />
-        <Route path={"/edit-homework-announcement"} element={<EditHomeworkAnnouncementsTeacher /> } />
-        <Route path={"/add-materials-per-lecture"} element={<AddMaterialsTeacher />} />
+        {/*<Route path="/main-page-teacher" element={<MainPageTeacher />} />*/}
+        {/*<Route*/}
+        {/*  path="/lecture-per-course"*/}
+        {/*  element={<LecturesPerCourseTeachers />}*/}
+        {/*/>*/}
+        {/*<Route*/}
+        {/*  path="/materials-per-lecture"*/}
+        {/*  element={<MaterialsPerCourseTeacher />}*/}
+        {/*/>*/}
+        {/*<Route path={"/view-course-teacher"} element={<ViewCourseTeacher />} />*/}
+        {/*<Route*/}
+        {/*  path={"/homeworks-per-lecture"}*/}
+        {/*  element={<HomeworksPerLectureTeacher />}*/}
+        {/*/>*/}
+        {/*<Route*/}
+        {/*  path={"/add-feedback"}*/}
+        {/*  element={<FeedbackPerHomeworkTeacher />}*/}
+        {/*/>*/}
+        {/*<Route*/}
+        {/*  path={"/notifications-teacher"}*/}
+        {/*  element={<NotificationsTeacher />}*/}
+        {/*/>*/}
+        {/*<Route path={"/my-profile"} element={<MyProfile />} />*/}
+        {/*<Route path={"/add-homework-announcement"} element={<HomeworkAnnouncementTeacher />} />*/}
+        {/*<Route path={"/see-homework-announcement"} element={<SeeHomeworkAnnouncementTeacher />} />*/}
+        {/*<Route path={"/edit-homework-announcement"} element={<EditHomeworkAnnouncementsTeacher /> } />*/}
+        {/*<Route path={"/add-materials-per-lecture"} element={<AddMaterialsTeacher />} />*/}
 
 
         {/* ADMINS */}

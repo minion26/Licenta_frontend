@@ -21,10 +21,15 @@ function Header() {
             <h1 className={styles.webApp}>web app</h1>
             <nav>
                 <ul className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
-                    <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}><a className={styles.headerUlLiA} href="/">My profile</a></li>
+                    <Link to="/my-profile" className={styles.headerUlLiA}>
+                        <li className={`${styles.headerUlLi}`}>My profile</li>
+                    </Link>
+
                     <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}><a className={styles.headerUlLiA} href="/">Courses</a></li>
                     <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}><a className={styles.headerUlLiA} href="/">Lectures</a></li>
-                    <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}><Link className={styles.headerUlLiA} to="/homework">Homework</Link></li>
+                    <Link to="/homework" className={styles.headerUlLiA}>
+                        <li className={`${styles.headerUlLi}`}>Homework</li>
+                    </Link>
                     <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}><a className={styles.headerUlLiA} href="/">Tests</a></li>
                 </ul>
             </nav>
