@@ -9,7 +9,7 @@ function ViewCourseTeacher() {
       <Header />
       <UpperHeader title="WEEK 1" subtitle="Course" />
       <div className={styles.container}>
-        <PDFViewer documentURL={"/"} />
+        <PDFViewer fileURL={"src//assets//PDF.pdf"} />
       </div>
     </div>
   );

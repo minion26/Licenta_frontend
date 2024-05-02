@@ -28,8 +28,8 @@ function FeedbackPerHomeworkTeacher() {
                     <ReactStickyNotes onChange={handleOnChange}/>
 
                 </div>
-                <h2>Start POSTing!</h2>
-                <PdfViewerHomework documentURL={"src/assets/C01_Course_Introduction-to-Automotive.pdf"}/>
+
+                <PdfViewerHomework documentURL={"src/assets/help.txt"}/>
             </div>
         </div>
     );

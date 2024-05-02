@@ -28,6 +28,7 @@ import HomeworkAnnouncementTeacher from "./Homework-Announcement-Teacher/Homewor
 import SeeHomeworkAnnouncementTeacher from "./See-Homework-Announcemet-Teacher/See-Homework-Announcemet-Teacher.tsx";
 import EditHomeworkAnnouncementsTeacher
   from "./Edit-Homework-Announcements-Teacher/Edit-Homework-Announcements-Teacher.tsx";
+import AddMaterialsTeacher from "./Add-Materials-Teacher/Add-Materials-Teacher.tsx";
 
 // import MainPageAdmin from "./Main-Page-Admin/Main-Page-Admin.tsx";
 // import CreateStudentsAdmin from "./Create-Students-Admin/Create-Students-Admin.tsx";
@@ -86,6 +87,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path={"/add-homework-announcement"} element={<HomeworkAnnouncementTeacher />} />
         <Route path={"/see-homework-announcement"} element={<SeeHomeworkAnnouncementTeacher />} />
         <Route path={"/edit-homework-announcement"} element={<EditHomeworkAnnouncementsTeacher /> } />
+        <Route path={"/add-materials-per-lecture"} element={<AddMaterialsTeacher />} />
 
 
         {/* ADMINS */}
