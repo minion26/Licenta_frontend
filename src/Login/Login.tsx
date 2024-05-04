@@ -109,7 +109,7 @@ function LoginForm() {
               {/*/main-page-student*/}
               {/*/main-page-teacher*/}
               {/* /main-page-admin */}
-              <Link to="/main-page-teacher">
+              <Link to="/main-page-admin">
                 <Button variant="contained" type="submit">
                   Sign in
                 </Button>

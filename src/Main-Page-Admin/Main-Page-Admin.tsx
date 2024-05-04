@@ -11,6 +11,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import {Link} from "react-router-dom";
+import Tooltip from "@mui/material/Tooltip";
 // import DeleteIcon from "@mui/icons-material/Delete";
 // import Swal from "sweetalert2";
 
@@ -38,81 +39,89 @@ function StudentsButtons() {
           }}
         >
           <p className={styles.title}>Students</p>
-          <Button
-            variant="contained"
-            endIcon={<AddIcon />}
-            sx={{
-              width: "150px",
-              height: "50px",
-              backgroundColor: "#F5F5F5",
-              borderRadius: "20px",
-              color: "rgba(0,0,0,0.75)",
-              fontFamily: "Inter",
-              fontSize: "12px",
-              fontWeight: "semi-bold",
-              alignSelf: "flex-end",
-              marginLeft: "auto",
-              marginRight: "20px",
-              marginBottom: "10px",
-              border: "none",
-              textTransform: "none",
-            }}
-            component={Link}
-            to="/create-students-admin"
-          >
-            {" "}
-            Create
-          </Button>
-          <Button
-            variant="contained"
-            endIcon={<AddIcon />}
-            sx={{
-              width: "150px",
-              height: "50px",
-              backgroundColor: "#F5F5F5",
-              borderRadius: "20px",
-              color: "rgba(0,0,0,0.75)",
-              fontFamily: "Inter",
-              fontSize: "12px",
-              fontWeight: "semi-bold",
-              alignSelf: "flex-end",
-              marginLeft: "auto",
-              marginRight: "20px",
-              marginBottom: "10px",
-              border: "none",
-              textTransform: "none",
-            }}
-            component={Link}
-            to="/upload-students-admin"
-          >
-            {" "}
-            Upload
-          </Button>
-          <Button
-            variant="contained"
-            endIcon={<RemoveRedEyeOutlinedIcon />}
-            sx={{
-              width: "150px",
-              height: "50px",
-              backgroundColor: "#F5F5F5",
-              borderRadius: "20px",
-              color: "rgba(0,0,0,0.75)",
-              fontFamily: "Inter",
-              fontSize: "12px",
-              fontWeight: "semi-bold",
-              alignSelf: "flex-end",
-              marginLeft: "auto",
-              marginRight: "20px",
-              marginBottom: "10px",
-              border: "none",
-              textTransform: "none",
-            }}
-            component={Link}
-            to="/see-students-admin"
-          >
-            {" "}
-            See
-          </Button>
+            <Tooltip title={"Create a new student account"}>
+              <Button
+                variant="contained"
+                endIcon={<AddIcon />}
+                sx={{
+                  width: "150px",
+                  height: "50px",
+                  backgroundColor: "#F5F5F5",
+                  borderRadius: "20px",
+                  color: "rgba(0,0,0,0.75)",
+                  fontFamily: "Inter",
+                  fontSize: "12px",
+                  fontWeight: "semi-bold",
+                  alignSelf: "flex-end",
+                  marginLeft: "auto",
+                  marginRight: "20px",
+                  marginBottom: "10px",
+                  border: "none",
+                  textTransform: "none",
+                }}
+                component={Link}
+                to="/create-students-admin"
+              >
+                {" "}
+                Create
+              </Button>
+            </Tooltip>
+
+            <Tooltip title={"Upload a file of students"}>
+              <Button
+                variant="contained"
+                endIcon={<AddIcon />}
+                sx={{
+                  width: "150px",
+                  height: "50px",
+                  backgroundColor: "#F5F5F5",
+                  borderRadius: "20px",
+                  color: "rgba(0,0,0,0.75)",
+                  fontFamily: "Inter",
+                  fontSize: "12px",
+                  fontWeight: "semi-bold",
+                  alignSelf: "flex-end",
+                  marginLeft: "auto",
+                  marginRight: "20px",
+                  marginBottom: "10px",
+                  border: "none",
+                  textTransform: "none",
+                }}
+                component={Link}
+                to="/upload-students-admin"
+              >
+                {" "}
+                Upload
+              </Button>
+            </Tooltip>
+
+            <Tooltip title={"See all students"}>
+              <Button
+                variant="contained"
+                endIcon={<RemoveRedEyeOutlinedIcon />}
+                sx={{
+                  width: "150px",
+                  height: "50px",
+                  backgroundColor: "#F5F5F5",
+                  borderRadius: "20px",
+                  color: "rgba(0,0,0,0.75)",
+                  fontFamily: "Inter",
+                  fontSize: "12px",
+                  fontWeight: "semi-bold",
+                  alignSelf: "flex-end",
+                  marginLeft: "auto",
+                  marginRight: "20px",
+                  marginBottom: "10px",
+                  border: "none",
+                  textTransform: "none",
+                }}
+                component={Link}
+                to="/see-students-admin"
+              >
+                {" "}
+                See
+              </Button>
+            </Tooltip>
 
         </CardContent>
       </Box>
@@ -144,81 +153,89 @@ function TeachersButtons() {
           }}
         >
           <p className={styles.title}>Teachers</p>
-          <Button
-            variant="contained"
-            endIcon={<AddIcon />}
-            sx={{
-              width: "150px",
-              height: "50px",
-              backgroundColor: "#F5F5F5",
-              borderRadius: "20px",
-              color: "rgba(0,0,0,0.75)",
-              fontFamily: "Inter",
-              fontSize: "12px",
-              fontWeight: "semi-bold",
-              alignSelf: "flex-end",
-              marginLeft: "auto",
-              marginRight: "20px",
-              marginBottom: "10px",
-              border: "none",
-              textTransform: "none",
-            }}
-            component={Link}
-            to="/create-teachers-admin"
-          >
-            {" "}
-            Create
-          </Button>
-          <Button
-            variant="contained"
-            endIcon={<AddIcon />}
-            sx={{
-              width: "150px",
-              height: "50px",
-              backgroundColor: "#F5F5F5",
-              borderRadius: "20px",
-              color: "rgba(0,0,0,0.75)",
-              fontFamily: "Inter",
-              fontSize: "12px",
-              fontWeight: "semi-bold",
-              alignSelf: "flex-end",
-              marginLeft: "auto",
-              marginRight: "20px",
-              marginBottom: "10px",
-              border: "none",
-              textTransform: "none",
-            }}
-            component={Link}
-            to="/upload-teachers-admin"
-          >
-            {" "}
-            Upload
-          </Button>
-          <Button
-            variant="contained"
-            endIcon={<RemoveRedEyeOutlinedIcon />}
-            sx={{
-              width: "150px",
-              height: "50px",
-              backgroundColor: "#F5F5F5",
-              borderRadius: "20px",
-              color: "rgba(0,0,0,0.75)",
-              fontFamily: "Inter",
-              fontSize: "12px",
-              fontWeight: "semi-bold",
-              alignSelf: "flex-end",
-              marginLeft: "auto",
-              marginRight: "20px",
-              marginBottom: "10px",
-              border: "none",
-              textTransform: "none",
-            }}
-            component={Link}
-            to="/see-teachers-admin"
-          >
-            {" "}
-            See
-          </Button>
+            <Tooltip title={"Create a new teacher account"}>
+              <Button
+                variant="contained"
+                endIcon={<AddIcon />}
+                sx={{
+                  width: "150px",
+                  height: "50px",
+                  backgroundColor: "#F5F5F5",
+                  borderRadius: "20px",
+                  color: "rgba(0,0,0,0.75)",
+                  fontFamily: "Inter",
+                  fontSize: "12px",
+                  fontWeight: "semi-bold",
+                  alignSelf: "flex-end",
+                  marginLeft: "auto",
+                  marginRight: "20px",
+                  marginBottom: "10px",
+                  border: "none",
+                  textTransform: "none",
+                }}
+                component={Link}
+                to="/create-teachers-admin"
+              >
+                {" "}
+                Create
+              </Button>
+            </Tooltip>
+
+            <Tooltip title={"Upload a file of teachers"}>
+              <Button
+                variant="contained"
+                endIcon={<AddIcon />}
+                sx={{
+                  width: "150px",
+                  height: "50px",
+                  backgroundColor: "#F5F5F5",
+                  borderRadius: "20px",
+                  color: "rgba(0,0,0,0.75)",
+                  fontFamily: "Inter",
+                  fontSize: "12px",
+                  fontWeight: "semi-bold",
+                  alignSelf: "flex-end",
+                  marginLeft: "auto",
+                  marginRight: "20px",
+                  marginBottom: "10px",
+                  border: "none",
+                  textTransform: "none",
+                }}
+                component={Link}
+                to="/upload-teachers-admin"
+              >
+                {" "}
+                Upload
+              </Button>
+            </Tooltip>
+
+            <Tooltip title={"See all teachers"}>
+              <Button
+                variant="contained"
+                endIcon={<RemoveRedEyeOutlinedIcon />}
+                sx={{
+                  width: "150px",
+                  height: "50px",
+                  backgroundColor: "#F5F5F5",
+                  borderRadius: "20px",
+                  color: "rgba(0,0,0,0.75)",
+                  fontFamily: "Inter",
+                  fontSize: "12px",
+                  fontWeight: "semi-bold",
+                  alignSelf: "flex-end",
+                  marginLeft: "auto",
+                  marginRight: "20px",
+                  marginBottom: "10px",
+                  border: "none",
+                  textTransform: "none",
+                }}
+                component={Link}
+                to="/see-teachers-admin"
+              >
+                {" "}
+                See
+              </Button>
+            </Tooltip>
 
 
         </CardContent>
@@ -251,31 +268,33 @@ function AdminsButtons() {
                     }}
                 >
                     <p className={styles.title}>Admins</p>
-                    <Button
-                        variant="contained"
-                        endIcon={<AddIcon />}
-                        sx={{
-                            width: "150px",
-                            height: "50px",
-                            backgroundColor: "#F5F5F5",
-                            borderRadius: "20px",
-                            color: "rgba(0,0,0,0.75)",
-                            fontFamily: "Inter",
-                            fontSize: "12px",
-                            fontWeight: "semi-bold",
-                            alignSelf: "flex-end",
-                            marginLeft: "auto",
-                            marginRight: "20px",
-                            marginBottom: "10px",
-                            border: "none",
-                            textTransform: "none",
-                        }}
-                        component={Link}
-                        to="/create-admins"
-                    >
-                        {" "}
-                        Create
-                    </Button>
+                    <Tooltip title={"Create a new admin account"}>
+                        <Button
+                            variant="contained"
+                            endIcon={<AddIcon />}
+                            sx={{
+                                width: "150px",
+                                height: "50px",
+                                backgroundColor: "#F5F5F5",
+                                borderRadius: "20px",
+                                color: "rgba(0,0,0,0.75)",
+                                fontFamily: "Inter",
+                                fontSize: "12px",
+                                fontWeight: "semi-bold",
+                                alignSelf: "flex-end",
+                                marginLeft: "auto",
+                                marginRight: "20px",
+                                marginBottom: "10px",
+                                border: "none",
+                                textTransform: "none",
+                            }}
+                            component={Link}
+                            to="/create-admins"
+                        >
+                            {" "}
+                            Create
+                        </Button>
+                    </Tooltip>
 
                     {/*<Button*/}
                     {/*    variant="contained"*/}
@@ -330,6 +349,151 @@ function AdminsButtons() {
     );
 }
 
+
+function CoursesButtons() {
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+    return (
+        <Card
+            sx={{
+                display: "flex",
+                width: isSmallScreen ? "100%" : "250px",
+                height: isSmallScreen ? "50%" : "300px",
+                backgroundColor: "#FAFAF5",
+                borderRadius: "24px",
+                alignSelf: "center",
+            }}
+        >
+            <Box sx={{ display: "flex" }}>
+                <CardContent
+                    sx={{
+                        flex: "1 0 auto",
+                        display: "flex",
+                        flexDirection: "column",
+                    }}
+                >
+                    <p className={styles.title}>Courses</p>
+                    <Tooltip title={"Create a new course"}>
+                        <Button
+                            variant="contained"
+                            endIcon={<AddIcon />}
+                            sx={{
+                                width: "150px",
+                                height: "50px",
+                                backgroundColor: "#F5F5F5",
+                                borderRadius: "20px",
+                                color: "rgba(0,0,0,0.75)",
+                                fontFamily: "Inter",
+                                fontSize: "12px",
+                                fontWeight: "semi-bold",
+                                alignSelf: "flex-end",
+                                marginLeft: "auto",
+                                marginRight: "20px",
+                                marginBottom: "10px",
+                                border: "none",
+                                textTransform: "none",
+                            }}
+                            component={Link}
+                            to="/create-course"
+                        >
+                            {" "}
+                            Create
+                        </Button>
+                    </Tooltip>
+
+                    <Tooltip title={"Upload a file of courses"}>
+                        <Button
+                            variant="contained"
+                            endIcon={<AddIcon />}
+                            sx={{
+                                width: "150px",
+                                height: "50px",
+                                backgroundColor: "#F5F5F5",
+                                borderRadius: "20px",
+                                color: "rgba(0,0,0,0.75)",
+                                fontFamily: "Inter",
+                                fontSize: "12px",
+                                fontWeight: "semi-bold",
+                                alignSelf: "flex-end",
+                                marginLeft: "auto",
+                                marginRight: "20px",
+                                marginBottom: "10px",
+                                border: "none",
+                                textTransform: "none",
+                            }}
+                            component={Link}
+                            to="/upload-courses"
+                        >
+                            {" "}
+                            Upload
+                        </Button>
+                    </Tooltip>
+
+                    <Tooltip title={"Add a teacher to a course"}>
+                        <Button
+                            variant="contained"
+                            endIcon={<AddIcon />}
+                            sx={{
+                                width: "150px",
+                                height: "50px",
+                                backgroundColor: "#F5F5F5",
+                                borderRadius: "20px",
+                                color: "rgba(0,0,0,0.75)",
+                                fontFamily: "Inter",
+                                fontSize: "12px",
+                                fontWeight: "semi-bold",
+                                alignSelf: "flex-end",
+                                marginLeft: "auto",
+                                marginRight: "20px",
+                                marginBottom: "10px",
+                                border: "none",
+                                textTransform: "none",
+                            }}
+                            component={Link}
+                            to="/add-teacher-to-course"
+                        >
+                            {" "}
+                            Add
+                        </Button>
+                    </Tooltip>
+
+                    <Tooltip title={"See all courses"}>
+                        <Button
+                            variant="contained"
+                            endIcon={<RemoveRedEyeOutlinedIcon />}
+                            sx={{
+                                width: "150px",
+                                height: "50px",
+                                backgroundColor: "#F5F5F5",
+                                borderRadius: "20px",
+                                color: "rgba(0,0,0,0.75)",
+                                fontFamily: "Inter",
+                                fontSize: "12px",
+                                fontWeight: "semi-bold",
+                                alignSelf: "flex-end",
+                                marginLeft: "auto",
+                                marginRight: "20px",
+                                marginBottom: "10px",
+                                border: "none",
+                                textTransform: "none",
+                            }}
+                            component={Link}
+                            to="/see-courses"
+                        >
+                            {" "}
+                            See
+                        </Button>
+                    </Tooltip>
+
+                </CardContent>
+            </Box>
+        </Card>
+    );
+}
+
+
+
 function MainPageAdmin() {
   return (
     <div>
@@ -341,6 +505,7 @@ function MainPageAdmin() {
           <StudentsButtons />
           <TeachersButtons />
             <AdminsButtons />
+            <CoursesButtons />
         </div>
         {/*<div className={styles.calendarContainer}>*/}
         {/*  <div className={styles.calendar}>*/}

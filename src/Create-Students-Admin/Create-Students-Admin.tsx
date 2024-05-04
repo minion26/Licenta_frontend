@@ -45,14 +45,14 @@ function CreateStudentsAdmin(){
                     sx={{ m: 1, marginBottom: "20px" }}
                     fullWidth
                     label="Faculty Email"
-                    id="fullWidth"
+                    id="faculty-email"
                 />
 
                 <TextField
                     sx={{ m: 1, marginBottom: "20px" }}
                     fullWidth
                     label="Personal Email"
-                    id="fullWidth"
+                    id="personal-email"
                 />
 
 
