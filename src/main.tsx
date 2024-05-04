@@ -38,6 +38,7 @@ import EditTestTeacher from "./Edit-Test-Teacher/Edit-Test-Teacher.tsx";
 import AddQuestionsTestTeacher from "./Add-Questions-Test-Teacher/Add-Questions-Test-Teacher.tsx";
 import AddCorrectAnswersTestTeacher from "./Add-Correct-Answers-Test-Teacher/Add-Correct-Answers-Test-Teacher.tsx";
 import UploadStudentsToTestTeacher from "./Upload-Students-To-Test-Teacher/Upload-Students-To-Test-Teacher.tsx";
+import NeedsReviewTeacher from "./Needs-Review-Teacher/Needs-Review-Teacher.tsx";
 
 // import MainPageAdmin from "./Main-Page-Admin/Main-Page-Admin.tsx";
 // import CreateStudentsAdmin from "./Create-Students-Admin/Create-Students-Admin.tsx";
@@ -91,6 +92,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path={"/add-questions-test"} element={<AddQuestionsTestTeacher />} />
         <Route path={"/add-correct-answers"} element={<AddCorrectAnswersTestTeacher />} />
         <Route path={"/add-students-to-test"} element={<UploadStudentsToTestTeacher />} />
+        <Route path={"/add-review"} element={<NeedsReviewTeacher />} />
 
 
         {/* ADMINS */}

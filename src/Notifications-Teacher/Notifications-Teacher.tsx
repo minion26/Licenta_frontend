@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import styles from "./Notifications-Teacher.module.css";
+import {Link} from "react-router-dom";
 
 function NotificationsTeacher() {
   const theme = useTheme();
@@ -36,8 +37,8 @@ function NotificationsTeacher() {
               border: "none",
               textTransform: "none",
             }}
-            // component={Link}
-            // to="/add-feedback"
+            component={Link}
+            to="/add-review"
           />
         </CardElongated>
 
