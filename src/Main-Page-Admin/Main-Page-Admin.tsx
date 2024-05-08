@@ -359,7 +359,7 @@ function CoursesButtons() {
             sx={{
                 display: "flex",
                 width: isSmallScreen ? "100%" : "250px",
-                height: isSmallScreen ? "50%" : "300px",
+                height: isSmallScreen ? "50%" : "350px",
                 backgroundColor: "#FAFAF5",
                 borderRadius: "24px",
                 alignSelf: "center",
@@ -430,7 +430,7 @@ function CoursesButtons() {
                         </Button>
                     </Tooltip>
 
-                    <Tooltip title={"Add a teacher to a course"}>
+                    <Tooltip title={"Add teachers to courses"}>
                         <Button
                             variant="contained"
                             endIcon={<AddIcon />}
@@ -451,10 +451,38 @@ function CoursesButtons() {
                                 textTransform: "none",
                             }}
                             component={Link}
-                            to="/add-teacher-to-course"
+                            to="/add-teachers-to-courses"
                         >
                             {" "}
-                            Add
+                            Add Teachers
+                        </Button>
+                    </Tooltip>
+
+                    <Tooltip title={"Add students to courses"}>
+                        <Button
+                            variant="contained"
+                            endIcon={<AddIcon />}
+                            sx={{
+                                width: "150px",
+                                height: "50px",
+                                backgroundColor: "#F5F5F5",
+                                borderRadius: "20px",
+                                color: "rgba(0,0,0,0.75)",
+                                fontFamily: "Inter",
+                                fontSize: "12px",
+                                fontWeight: "semi-bold",
+                                alignSelf: "flex-end",
+                                marginLeft: "auto",
+                                marginRight: "20px",
+                                marginBottom: "10px",
+                                border: "none",
+                                textTransform: "none",
+                            }}
+                            component={Link}
+                            to="/add-students-to-courses"
+                        >
+                            {" "}
+                            Add Students
                         </Button>
                     </Tooltip>
 

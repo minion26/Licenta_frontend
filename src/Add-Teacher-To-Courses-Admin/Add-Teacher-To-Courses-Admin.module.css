@@ -1,0 +1,77 @@
+@font-face {
+    font-family: 'Newsreader';
+    src: url('../../public/fonts/Newsreader_36pt-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../../public/fonts/Inter-SemiBold.ttf');
+}
+
+body{
+    background-color: #F3F3F3;
+
+}
+
+.container{
+    margin-left: 140px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    gap: 10px;
+    /*border: 1px solid rgba(0, 0, 0, 0.3);*/
+    height: 700px ;
+    width: 600px ;
+
+}
+
+.importer{
+    height: 700px !important;
+    width: 700px !important;
+}
+
+.title{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333;
+    margin-left: 35px;
+    margin-top: 35px;
+}
+
+.p{
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    color: #333333;
+    width: 100%;
+}
+
+.str{
+    font-family: 'Newsreader', sans-serif;
+    font-size: 17px;
+    color: #333333;
+    width: 100%;
+
+}
+
+@media screen and (max-width: 540px) {
+    .container {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 0;
+        height: auto;
+        width: 100px;
+    }
+
+    .title{
+        margin-left: 0;
+    }
+
+    .importer{
+        height: auto !important;
+        width: auto !important;
+    }
+
+}
+

@@ -53,6 +53,10 @@ import SeeTeacherAccountAdmin from "./See-Teacher-Account-Admin/See-Teacher-Acco
 import CreateAdmins from "./Create-Admins/Create-Admins.tsx";
 import CreateCourseAdmin from "./Create-Course-Admin/Create-Course-Admin.tsx";
 import UploadCoursesAdmin from "./Upload-Courses-Admin/Upload-Courses-Admin.tsx";
+import AddTeacherToCoursesAdmin from "./Add-Teacher-To-Courses-Admin/Add-Teacher-To-Courses-Admin.tsx";
+import SeeCoursesAdmin from "./See-Courses-Admin/See-Courses-Admin.tsx";
+import SeeCoursesAccountAdmin from "./See-Courses-Account-Admin/See-Courses-Account-Admin.tsx";
+import AddStudentsToCoursesAdmin from "./Add-Students-To-Courses-Admin/Add-Students-To-Courses-Admin.tsx";
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -111,6 +115,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path={"/create-admins"} element={<CreateAdmins />} />
         <Route path={"/create-course"} element={<CreateCourseAdmin />} />
         <Route path={"/upload-courses"} element={<UploadCoursesAdmin />} />
+        <Route path={"/add-teachers-to-courses"} element={<AddTeacherToCoursesAdmin />} />
+        <Route path={"/see-courses"} element={<SeeCoursesAdmin />} />
+        <Route path={"/see-course-account"} element={<SeeCoursesAccountAdmin />} />
+        <Route path={"/add-students-to-courses"} element={<AddStudentsToCoursesAdmin />} />
 
       </Routes>
     </BrowserRouter>
