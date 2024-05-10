@@ -60,7 +60,7 @@ function TakeTestsStudent(){
             <UpperHeader title={"Test1"} subtitle={"blabla"} />
             <div className={styles.container}>
                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <TimerComponent onTimeUp={handleSubmit}/>
+                    <TimerComponent onTimeUp={handleSubmit} time={360}/>
                 </div>
 
                 <Box sx={

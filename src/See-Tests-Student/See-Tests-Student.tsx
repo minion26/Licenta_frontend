@@ -20,6 +20,20 @@ function SeeTestsStudent(){
             <Header/>
             <UpperHeader title={"Tests"} subtitle={"Course Name"} />
             <div className={styles.container}>
+                <Box sx={{
+                    border: '3px solid red',
+                    padding: '20px',
+                    margin: '10px',
+                    borderRadius: '10px',
+                    fontFamily: 'Newsreader , sans-serif',
+                    color: 'black',
+                    // fontWeight: 'bold',
+                    fontSize: '20px',
+                    backgroundColor: '#FAFAF5',
+                }}>
+                    <p>If you switch the tab, you can't resolve any more questions.</p>
+                    <p>When the timer is up, your work will be automatically submitted.</p>
+                </Box>
                 <CardElongated title={"Test1"} cardIndex={1} height={100}>
                     <Box sx={{
                         display: 'flex',
