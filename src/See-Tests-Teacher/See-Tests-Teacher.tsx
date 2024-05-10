@@ -12,6 +12,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CheckIcon from '@mui/icons-material/Check';
 import Tooltip from '@mui/material/Tooltip';
 import AddTaskIcon from '@mui/icons-material/AddTask';
+import StartIcon from '@mui/icons-material/Start';
 
 
 function SeeTestsTeacher(){
@@ -31,6 +32,33 @@ function SeeTestsTeacher(){
                         marginLeft: 'auto',
                         marginTop: '5px',
                     }}>
+                        <Tooltip title="Start Test">
+                            <Button
+                                variant="contained"
+                                endIcon={<StartIcon />}
+                                sx={{
+                                    width: isSmallScreen ? "75px" : "130px",
+                                    height: "50px",
+                                    backgroundColor: "#F5F5F5",
+                                    borderRadius: "20px",
+                                    color: "rgba(0,0,0,0.75)",
+                                    fontFamily: "Inter",
+                                    fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size
+                                    fontWeight: "semi-bold",
+                                    alignSelf: "flex-end",
+                                    marginLeft: "auto",
+                                    marginRight: "20px",
+                                    marginBottom: "25px",
+                                    border: "none",
+                                    textTransform: "none",
+                                }}
+                                // onClick={startTest}
+                            >
+                                Start Test
+                            </Button>
+
+                        </Tooltip>
+
                         <Tooltip title="Edit Test Details">
                             <Button
                                 variant="contained"

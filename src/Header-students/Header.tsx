@@ -30,7 +30,10 @@ function Header() {
                     <Link to="/homework" className={styles.headerUlLiA}>
                         <li className={`${styles.headerUlLi}`}>Homework</li>
                     </Link>
-                    <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}><a className={styles.headerUlLiA} href="/">Tests</a></li>
+
+                    <Link to="/tests" className={styles.headerUlLiA}>
+                        <li className={`${styles.headerUlLi}`}>Tests</li>
+                    </Link>
                 </ul>
             </nav>
         </header>

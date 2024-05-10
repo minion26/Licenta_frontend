@@ -9,15 +9,17 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "./Main-page/Main-Page.tsx";
 import Login from "./Login/Login.tsx";
 
-// import MainPageStudents from "./Main-page-students/Main-Page-Students.tsx";
-// import CoursesPageStudents from "./Courses-Page-Students/Courses-Page-Students.tsx";
-// import LecturePerCourseStudents from "./Lecture-Per-Course-Students/Lecture-Per-Course-Students.tsx";
-// import HomeworkHistoryStudents from "./Homework-History-Students/Homework-History-Students.tsx";
-// import MaterialsPerLectureStudents from "./Materials-Per-Lecture-Students/Materials-Per-Lecture-Students.tsx";
-// import ViewCourseStudents from "./View-Course-Students/View-Course-Students.tsx";
-// import SeeHomeworkAnnouncementStudent from "./See-Homework-Announcement-Student/See-Homework-Announcement-Student.tsx";
-// import AddHomeworkStudent from "./Add-Homework-Student/Add-Homework-Student.tsx";
-// import MyProfile from "./My-Profile/My-Profile.tsx";
+import MainPageStudents from "./Main-page-students/Main-Page-Students.tsx";
+import CoursesPageStudents from "./Courses-Page-Students/Courses-Page-Students.tsx";
+import LecturePerCourseStudents from "./Lecture-Per-Course-Students/Lecture-Per-Course-Students.tsx";
+import HomeworkHistoryStudents from "./Homework-History-Students/Homework-History-Students.tsx";
+import MaterialsPerLectureStudents from "./Materials-Per-Lecture-Students/Materials-Per-Lecture-Students.tsx";
+import ViewCourseStudents from "./View-Course-Students/View-Course-Students.tsx";
+import SeeHomeworkAnnouncementStudent from "./See-Homework-Announcement-Student/See-Homework-Announcement-Student.tsx";
+import AddHomeworkStudent from "./Add-Homework-Student/Add-Homework-Student.tsx";
+import MyProfile from "./My-Profile/My-Profile.tsx";
+import SeeTestsStudent from "./See-Tests-Student/See-Tests-Student.tsx";
+import TakeTestsStudent from "./Take-Tests-Student/Take-Tests-Student.tsx";
 
 // import MainPageTeacher from "./Main-Page-Teacher/Main-Page-Teacher.tsx";
 // import LecturesPerCourseTeachers from "./Lecture-Per-Course-Teacher/Lectures-Per-Course-Teachers.tsx";
@@ -40,23 +42,23 @@ import Login from "./Login/Login.tsx";
 // import UploadStudentsToTestTeacher from "./Upload-Students-To-Test-Teacher/Upload-Students-To-Test-Teacher.tsx";
 // import NeedsReviewTeacher from "./Needs-Review-Teacher/Needs-Review-Teacher.tsx";
 
-import MainPageAdmin from "./Main-Page-Admin/Main-Page-Admin.tsx";
-import CreateStudentsAdmin from "./Create-Students-Admin/Create-Students-Admin.tsx";
-import MyProfile from "./My-Profile/My-Profile.tsx";
-import UploadStudentsAdmin from "./Upload-Students-Admin/Upload-Students-Admin.tsx";
-import SeeStudentsAdmin from "./See-Students-Admin/See-Students-Admin.tsx";
-import SeeStudentAccountAdmin from "./See-Student-Account-Admin/See-Student-Account-Admin.tsx";
-import CreateTeachersAdmin from "./Create-Teachers-Admin/Create-Teachers-Admin.tsx";
-import UploadTeachersAdmin from "./Upload-Teachers-Admin/Upload-Teachers-Admin.tsx";
-import SeeTeachersAdmin from "./See-Teachers-Admin/See-Teachers-Admin.tsx";
-import SeeTeacherAccountAdmin from "./See-Teacher-Account-Admin/See-Teacher-Account-Admin.tsx";
-import CreateAdmins from "./Create-Admins/Create-Admins.tsx";
-import CreateCourseAdmin from "./Create-Course-Admin/Create-Course-Admin.tsx";
-import UploadCoursesAdmin from "./Upload-Courses-Admin/Upload-Courses-Admin.tsx";
-import AddTeacherToCoursesAdmin from "./Add-Teacher-To-Courses-Admin/Add-Teacher-To-Courses-Admin.tsx";
-import SeeCoursesAdmin from "./See-Courses-Admin/See-Courses-Admin.tsx";
-import SeeCoursesAccountAdmin from "./See-Courses-Account-Admin/See-Courses-Account-Admin.tsx";
-import AddStudentsToCoursesAdmin from "./Add-Students-To-Courses-Admin/Add-Students-To-Courses-Admin.tsx";
+// import MainPageAdmin from "./Main-Page-Admin/Main-Page-Admin.tsx";
+// import CreateStudentsAdmin from "./Create-Students-Admin/Create-Students-Admin.tsx";
+// import MyProfile from "./My-Profile/My-Profile.tsx";
+// import UploadStudentsAdmin from "./Upload-Students-Admin/Upload-Students-Admin.tsx";
+// import SeeStudentsAdmin from "./See-Students-Admin/See-Students-Admin.tsx";
+// import SeeStudentAccountAdmin from "./See-Student-Account-Admin/See-Student-Account-Admin.tsx";
+// import CreateTeachersAdmin from "./Create-Teachers-Admin/Create-Teachers-Admin.tsx";
+// import UploadTeachersAdmin from "./Upload-Teachers-Admin/Upload-Teachers-Admin.tsx";
+// import SeeTeachersAdmin from "./See-Teachers-Admin/See-Teachers-Admin.tsx";
+// import SeeTeacherAccountAdmin from "./See-Teacher-Account-Admin/See-Teacher-Account-Admin.tsx";
+// import CreateAdmins from "./Create-Admins/Create-Admins.tsx";
+// import CreateCourseAdmin from "./Create-Course-Admin/Create-Course-Admin.tsx";
+// import UploadCoursesAdmin from "./Upload-Courses-Admin/Upload-Courses-Admin.tsx";
+// import AddTeacherToCoursesAdmin from "./Add-Teacher-To-Courses-Admin/Add-Teacher-To-Courses-Admin.tsx";
+// import SeeCoursesAdmin from "./See-Courses-Admin/See-Courses-Admin.tsx";
+// import SeeCoursesAccountAdmin from "./See-Courses-Account-Admin/See-Courses-Account-Admin.tsx";
+// import AddStudentsToCoursesAdmin from "./Add-Students-To-Courses-Admin/Add-Students-To-Courses-Admin.tsx";
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -68,16 +70,18 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/login" element={<Login />} />
 
         {/*STUDENTS*/}
-        {/*<Route path="/main-page-student" element={<MainPageStudents />} />*/}
-        {/*<Route path="semester1" element={<CoursesPageStudents />} />*/}
-        {/*<Route path="semester2" element={<CoursesPageStudents />} />*/}
-        {/*<Route path="lecture-per-course" element={<LecturePerCourseStudents />} />*/}
-        {/*<Route path="homework" element={<HomeworkHistoryStudents />} />*/}
-        {/*<Route path={"/my-profile"} element={<MyProfile />} />*/}
-        {/*<Route path="/materials-per-lecture" element={<MaterialsPerLectureStudents />} />*/}
-        {/*<Route path={"/view-course"} element={<ViewCourseStudents />} />*/}
-        {/*<Route path={"/see-homework-announcement-student"} element={<SeeHomeworkAnnouncementStudent />} />*/}
-        {/*<Route path={"/add-homework-student"} element={<AddHomeworkStudent />} />*/}
+        <Route path="/main-page-student" element={<MainPageStudents />} />
+        <Route path="semester1" element={<CoursesPageStudents />} />
+        <Route path="semester2" element={<CoursesPageStudents />} />
+        <Route path="lecture-per-course" element={<LecturePerCourseStudents />} />
+        <Route path="homework" element={<HomeworkHistoryStudents />} />
+        <Route path={"/my-profile"} element={<MyProfile />} />
+        <Route path="/materials-per-lecture" element={<MaterialsPerLectureStudents />} />
+        <Route path={"/view-course"} element={<ViewCourseStudents />} />
+        <Route path={"/see-homework-announcement-student"} element={<SeeHomeworkAnnouncementStudent />} />
+        <Route path={"/add-homework-student"} element={<AddHomeworkStudent />} />
+        <Route path={"/tests"} element={<SeeTestsStudent />} />
+        <Route path={"/take-test"} element={<TakeTestsStudent />} />
 
         {/*TEACHERS*/}
         {/*<Route path="/main-page-teacher" element={<MainPageTeacher />} />*/}
@@ -102,23 +106,23 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 
 
         {/* ADMINS */}
-        <Route path={"/main-page-admin"} element={<MainPageAdmin />} />
-        <Route path={"/create-students-admin"} element={<CreateStudentsAdmin />} />
-        <Route path={"/my-profile"} element={<MyProfile />} />
-        <Route path={"/upload-students-admin"} element={<UploadStudentsAdmin />} />
-        <Route path={"/see-students-admin"} element={<SeeStudentsAdmin />} />
-        <Route path={"/see-student-account-admin"} element={<SeeStudentAccountAdmin />} />
-        <Route path={"/create-teachers-admin"} element={<CreateTeachersAdmin />} />
-        <Route path={"/upload-teachers-admin"} element={<UploadTeachersAdmin />} />
-        <Route path={"/see-teachers-admin"} element={<SeeTeachersAdmin />} />
-        <Route path={"/see-teacher-account-admin"} element={<SeeTeacherAccountAdmin />} />
-        <Route path={"/create-admins"} element={<CreateAdmins />} />
-        <Route path={"/create-course"} element={<CreateCourseAdmin />} />
-        <Route path={"/upload-courses"} element={<UploadCoursesAdmin />} />
-        <Route path={"/add-teachers-to-courses"} element={<AddTeacherToCoursesAdmin />} />
-        <Route path={"/see-courses"} element={<SeeCoursesAdmin />} />
-        <Route path={"/see-course-account"} element={<SeeCoursesAccountAdmin />} />
-        <Route path={"/add-students-to-courses"} element={<AddStudentsToCoursesAdmin />} />
+        {/*<Route path={"/main-page-admin"} element={<MainPageAdmin />} />*/}
+        {/*<Route path={"/create-students-admin"} element={<CreateStudentsAdmin />} />*/}
+        {/*<Route path={"/my-profile"} element={<MyProfile />} />*/}
+        {/*<Route path={"/upload-students-admin"} element={<UploadStudentsAdmin />} />*/}
+        {/*<Route path={"/see-students-admin"} element={<SeeStudentsAdmin />} />*/}
+        {/*<Route path={"/see-student-account-admin"} element={<SeeStudentAccountAdmin />} />*/}
+        {/*<Route path={"/create-teachers-admin"} element={<CreateTeachersAdmin />} />*/}
+        {/*<Route path={"/upload-teachers-admin"} element={<UploadTeachersAdmin />} />*/}
+        {/*<Route path={"/see-teachers-admin"} element={<SeeTeachersAdmin />} />*/}
+        {/*<Route path={"/see-teacher-account-admin"} element={<SeeTeacherAccountAdmin />} />*/}
+        {/*<Route path={"/create-admins"} element={<CreateAdmins />} />*/}
+        {/*<Route path={"/create-course"} element={<CreateCourseAdmin />} />*/}
+        {/*<Route path={"/upload-courses"} element={<UploadCoursesAdmin />} />*/}
+        {/*<Route path={"/add-teachers-to-courses"} element={<AddTeacherToCoursesAdmin />} />*/}
+        {/*<Route path={"/see-courses"} element={<SeeCoursesAdmin />} />*/}
+        {/*<Route path={"/see-course-account"} element={<SeeCoursesAccountAdmin />} />*/}
+        {/*<Route path={"/add-students-to-courses"} element={<AddStudentsToCoursesAdmin />} />*/}
 
       </Routes>
     </BrowserRouter>

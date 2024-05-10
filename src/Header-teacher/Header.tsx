@@ -37,11 +37,10 @@ function Header() {
                 Lectures
               </a>
             </li>
-            <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
-              <a className={styles.headerUlLiA} href="/">
-                Tests
-              </a>
-            </li>
+
+            <Link to="/see-tests" className={styles.headerUlLiA}>
+              <li className={`${styles.headerUlLi} `}>Tests</li>
+            </Link>
 
             <Link to="/notifications-teacher" className={styles.headerUlLiA}>
               <li className={`${styles.headerUlLi} `}>Notifications</li>
