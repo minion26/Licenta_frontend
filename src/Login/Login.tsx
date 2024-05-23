@@ -1,17 +1,22 @@
 import styles from "./Login.module.css";
-import { ChangeEvent, FormEvent, useState } from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import { TextField, Button, Checkbox, FormControlLabel } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Header from "../Header-main-page/Header.tsx";
-import { Link } from "react-router-dom";
-// import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useAuth } from '../AuthContext';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword /*setShowPassword*/] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+
+  const navigate = useNavigate();
+  const { role, setRole } = useAuth();
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -25,12 +30,87 @@ function LoginForm() {
     setRememberMe(event.target.checked);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Handle form submission logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Remember Me:", rememberMe);
+    useEffect(() => {
+        if (role === 1) {
+            navigate("/main-page-admin");
+        } else if (role === 2) {
+            navigate("/main-page-teacher");
+        } else if (role === 3) {
+            navigate("/main-page-student");
+        }
+    }, [role, navigate]);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      // Handle form submission logic here
+      console.log("Email:", email);
+      console.log("Password:", password);
+      console.log("Remember Me:", rememberMe);
+
+      // Create an object representing the login data
+      const loginData = {
+          facultyEmail: email,
+          password: password,
+      };
+
+      // Send a POST request to the login endpoint
+      fetch('http://localhost:8081/api/v1/auth/authenticate', {
+          method: 'POST',
+          // credentials: 'include',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(loginData),
+      })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Login failed');
+              }
+              console.log(response)
+              return response.json();
+          })
+          .then(data => {
+
+              // Handle the response data here
+              // For example, you might store the returned token in local storage
+              localStorage.setItem('token', data.token);
+                console.log(data)
+
+              // Make a second API call to get the user details
+              return fetch(`http://localhost:8081/api/v1/users/email/${encodeURIComponent(email)}`, {
+                  method: 'GET',
+                  // credentials: 'include',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': `Bearer ${data.token}`,
+                      "Access-Control-Allow-Origin": "*",
+                  },
+              });
+
+             //  // Redirect to the main page
+             // navigate('/main-page-student');
+          })
+          .then(response => {
+              if (!response.ok) {
+                  console.error(`Server responded with status code ${response.status}`);
+                  throw new Error('Failed to get user details');
+              }
+              return response.json();
+          })
+          .then(data => {
+
+              console.log(data.roleId)
+              setRole(data.roleId);
+              console.log(role)
+
+
+
+
+          })
+          .catch(error => {
+              // Handle the error here
+              console.error('Error:', error);
+          });
   };
 
   // const togglePasswordVisibility = () => {
@@ -109,11 +189,11 @@ function LoginForm() {
               {/*/main-page-student*/}
               {/*/main-page-teacher*/}
               {/* /main-page-admin */}
-              <Link to="/main-page-student">
+              {/*<Link to="/main-page-student">*/}
                 <Button variant="contained" type="submit">
                   Sign in
                 </Button>
-              </Link>
+              {/*</Link>*/}
 
               <p
                 className={styles.p}

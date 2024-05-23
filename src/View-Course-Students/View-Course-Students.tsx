@@ -9,7 +9,7 @@ function ViewCourseStudents() {
       <Header />
       <UpperHeader title="WEEK 1" subtitle="Course" />
       <div className={styles.container}>
-        <PDFViewer documentURL={"src/assets/licenta - figma.pdf"} />
+        <PDFViewer fileURL={"src/assets/licenta - figma.pdf"} />
       </div>
     </div>
   );
