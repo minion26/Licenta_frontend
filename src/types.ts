@@ -44,3 +44,9 @@ export type ExamType = {
     idTeachers: Array<string>;
     studentExamDTO: Array<StudentExamDTO>;
 };
+
+export type StudentName = {
+    firstName: string;
+    lastName: string;
+    idUsers: string;
+}

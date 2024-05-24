@@ -73,8 +73,8 @@ function LoginForm() {
 
               // Handle the response data here
               // For example, you might store the returned token in local storage
-              localStorage.setItem('token', data.token);
-                console.log(data)
+              sessionStorage.setItem('token', data.token);
+              console.log(data)
 
               // Make a second API call to get the user details
               return fetch(`http://localhost:8081/api/v1/users/email/${encodeURIComponent(email)}`, {

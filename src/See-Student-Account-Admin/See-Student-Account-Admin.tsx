@@ -7,10 +7,31 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Swal from "sweetalert2";
+import {useParams} from "react-router-dom";
+import {useEffect} from "react";
 
 function SeeStudentAccountAdmin(){
+    const {idUsers} = useParams();
+
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+    useEffect(() => {
+        fetch(`http://localhost:8081/api/v1/students/${idUsers}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                "Access-Control-Allow-Origin": "*",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                    console.log(data);
+            })
+            .catch(error => console.error('An error occured!', error));
+
+    }, [idUsers]);
 
     return (
         <div>

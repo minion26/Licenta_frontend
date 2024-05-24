@@ -123,7 +123,7 @@ function RoutesComponent() {
                             <Route path={"/my-profile"} element={<MyProfile />} />
                             <Route path={"/upload-students-admin"} element={<UploadStudentsAdmin />} />
                             <Route path={"/see-students-admin"} element={<SeeStudentsAdmin />} />
-                            <Route path={"/see-student-account-admin"} element={<SeeStudentAccountAdmin />} />
+                            <Route path={"/see-student-account-admin/:idUsers"} element={<SeeStudentAccountAdmin />} />
                             <Route path={"/create-teachers-admin"} element={<CreateTeachersAdmin />} />
                             <Route path={"/upload-teachers-admin"} element={<UploadTeachersAdmin />} />
                             <Route path={"/see-teachers-admin"} element={<SeeTeachersAdmin />} />
