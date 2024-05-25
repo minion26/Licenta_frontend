@@ -56,7 +56,7 @@ function LoginForm() {
       // Send a POST request to the login endpoint
       fetch('http://localhost:8081/api/v1/auth/authenticate', {
           method: 'POST',
-          // credentials: 'include',
+          credentials: 'include',
           headers: {
               'Content-Type': 'application/json',
           },
@@ -73,16 +73,16 @@ function LoginForm() {
 
               // Handle the response data here
               // For example, you might store the returned token in local storage
-              sessionStorage.setItem('token', data.token);
+              // sessionStorage.setItem('token', data.token);
               console.log(data)
 
               // Make a second API call to get the user details
               return fetch(`http://localhost:8081/api/v1/users/email/${encodeURIComponent(email)}`, {
                   method: 'GET',
-                  // credentials: 'include',
+                  credentials: 'include',
                   headers: {
                       'Content-Type': 'application/json',
-                      'Authorization': `Bearer ${data.token}`,
+                      // 'Authorization': `Bearer ${data.token}`,
                       "Access-Control-Allow-Origin": "*",
                   },
               });

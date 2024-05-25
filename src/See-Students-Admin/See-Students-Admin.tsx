@@ -23,9 +23,10 @@ function SeeStudentsAdmin() {
     useEffect( () => {
         fetch("http://localhost:8081/api/v1/students", {
             method: 'GET',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                // 'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
                 "Access-Control-Allow-Origin": "*",
             },
         })
