@@ -58,9 +58,10 @@ function CreateStudentsAdmin(){
 
         const response = await fetch("http://localhost:8081/api/v1/students/create", {
             method: "POST",
+            credentials: 'include',
             headers: {
                 'Content-Type': "application/json",
-                'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                // 'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
                 "Access-Control-Allow-Origin": "*",
 
             },

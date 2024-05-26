@@ -91,18 +91,42 @@ return (
                                             confirmButtonText: "Yes, delete it!"
                                         }).then((result) => {
                                             if (result.isConfirmed) {
-                                                Swal.fire({
-                                                    title: "Deleted!",
-                                                    text: "The account has been deleted.",
-                                                    icon: "success"
-                                                });
-                                                // Here you can add the code to actually delete the student
-                                            }
-                                        });
-                                    }}
+                                                //MAKE DELETE REQUEST
+                                                fetch(`http://localhost:8081/api/v1/students/delete/${student.idUsers}`, {
+                                                    method: 'DELETE',
+                                                    credentials: 'include',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        // 'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                                                        "Access-Control-Allow-Origin": "*",
+                                                    },
+                                                })
+                                                    .then(response => {
+                                                        if (!response.ok) {
+                                                            console.error(`Server responded with status code ${response.status}`);
+                                                            throw new Error('Failed to delete student');
+                                                        }
+                                                        return response.json();
+                                                    })
+                                                    .then(data => {
+                                                        console.log(data);
+                                                        Swal.fire({
+                                                            title: "Deleted!",
+                                                            text: "The account has been deleted.",
+                                                            icon: "success"
+                                                        });
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('An error occured!', error);
 
+                                                    });
+                                            }
+                                            });
+
+                                    }}
                                 >
                                 </Button>
+
                                 <Button
                                     variant="contained"
                                     endIcon={<CreateOutlinedIcon />}

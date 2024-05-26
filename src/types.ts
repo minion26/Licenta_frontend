@@ -50,3 +50,21 @@ export type StudentName = {
     lastName: string;
     idUsers: string;
 }
+
+export type Student = {
+    idUsers: string;
+    firstName: string;
+    lastName: string;
+    facultyEmail: string;
+    personalEmail: string;
+    nrMatriculation: string;
+    yearOfStudy: number;
+    semester: number;
+    groupOfStudy: string;
+};
+
+export type TeacherName = {
+    firstName: string;
+    lastName: string;
+    idUsers: string;
+}

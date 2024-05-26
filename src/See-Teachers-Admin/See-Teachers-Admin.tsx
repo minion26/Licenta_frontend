@@ -11,97 +11,150 @@ import Box from "@mui/material/Box";
 import styles from "../Courses-Page-Students/Courses-Page-Students.module.css";
 import {Link} from "react-router-dom";
 import Swal from 'sweetalert2';
+import {TeacherName} from "../types";
+import {useEffect, useState} from "react";
 
 
 function SeeTeachersAdmin() {
     // const theme = useTheme();
     // const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+    const [teachers, setTeachers] = useState<TeacherName[]>([]);
+
+    const fetchTeachers = () => {
+        fetch('http://localhost:8081/api/v1/teachers', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                setTeachers(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
+    useEffect(() => {
+        fetchTeachers();
+    }, []);
+
     return (
         <div>
             <Header/>
             <UpperHeader title={"See accounts"} subtitle={"Teachers"} buttons={[{ key: "Search", label: "Search" }]}/>
             <div className={styles.cardContainer}>
-                <CardElongated title={"Alice Johnson"} cardIndex={1} height={100}>
-                    <Box sx={{ display: "flex" }}>
-                        <CardContent
-                            sx={{
-                                flex: "1 0 auto",
-                                display: "flex",
-                                flexDirection: "row",
-                            }}
-                        >
-                            <Button
-                                variant="contained"
-                                endIcon={<DeleteIcon />}
+                {teachers.map((teacher, index) => (
+                    <CardElongated key={index} title={teacher.firstName + " " + teacher.lastName} cardIndex={index+1} height={100}>
+                        <Box sx={{ display: "flex" }}>
+                            <CardContent
                                 sx={{
-                                    width: "50px",
-                                    height: "50px",
-                                    backgroundColor: "#F5F5F5",
-                                    borderRadius: "20px",
-                                    color: "rgba(0,0,0,0.75)",
-                                    fontFamily: "Inter",
-                                    fontSize: "12px",
-                                    fontWeight: "semi-bold",
-                                    alignSelf: "flex-end",
-                                    marginLeft: "auto",
-                                    marginRight: "20px",
-                                    marginBottom: "10px",
-                                    border: "none",
-                                    textTransform: "none",
+                                    flex: "1 0 auto",
+                                    display: "flex",
+                                    flexDirection: "row",
                                 }}
-                                // component={Link}
-                                // to="/homeworks-per-lecture"
-
-                                onClick={() => {
-                                    Swal.fire({
-                                        title: "Are you sure?",
-                                        text: "You won't be able to revert this!",
-                                        icon: "warning",
-                                        showCancelButton: true,
-                                        confirmButtonColor: "#3085d6",
-                                        cancelButtonColor: "#d33",
-                                        confirmButtonText: "Yes, delete it!"
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            Swal.fire({
-                                                title: "Deleted!",
-                                                text: "The account has been deleted.",
-                                                icon: "success"
-                                            });
-                                            // Here you can add the code to actually delete the student
-                                        }
-                                    });
-                                }}
-
                             >
-                            </Button>
-                            <Button
-                                variant="contained"
-                                endIcon={<CreateOutlinedIcon />}
-                                sx={{
-                                    width: "50px",
-                                    height: "50px",
-                                    backgroundColor: "#F5F5F5",
-                                    borderRadius: "20px",
-                                    color: "rgba(0,0,0,0.75)",
-                                    fontFamily: "Inter",
-                                    fontSize: "12px",
-                                    fontWeight: "semi-bold",
-                                    alignSelf: "flex-end",
-                                    marginLeft: "auto",
-                                    marginRight: "20px",
-                                    marginBottom: "10px",
-                                    border: "none",
-                                    textTransform: "none",
-                                }}
-                                component={Link}
-                                to="/see-teacher-account-admin"
-                            >
-                            </Button>
-                        </CardContent>
-                    </Box>
-                </CardElongated>
+                                <Button
+                                    variant="contained"
+                                    endIcon={<DeleteIcon />}
+                                    sx={{
+                                        width: "50px",
+                                        height: "50px",
+                                        backgroundColor: "#F5F5F5",
+                                        borderRadius: "20px",
+                                        color: "rgba(0,0,0,0.75)",
+                                        fontFamily: "Inter",
+                                        fontSize: "12px",
+                                        fontWeight: "semi-bold",
+                                        alignSelf: "flex-end",
+                                        marginLeft: "auto",
+                                        marginRight: "20px",
+                                        marginBottom: "10px",
+                                        border: "none",
+                                        textTransform: "none",
+                                    }}
+                                    // component={Link}
+                                    // to="/homeworks-per-lecture"
+
+                                    onClick={() => {
+                                        Swal.fire({
+                                            title: "Are you sure?",
+                                            text: "You won't be able to revert this!",
+                                            icon: "warning",
+                                            showCancelButton: true,
+                                            confirmButtonColor: "#3085d6",
+                                            cancelButtonColor: "#d33",
+                                            confirmButtonText: "Yes, delete it!"
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                fetch(`http://localhost:8081/api/v1/teachers/delete/${teacher.idUsers}`, {
+                                                    method: 'DELETE',
+                                                    credentials: 'include',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        "Access-Control-Allow-Origin": "*",
+                                                    },
+                                                })
+                                                    .then((response) => {
+                                                        if (!response.ok) {
+                                                            console.error(`Server responded with status code ${response.status}`);
+                                                            throw new Error('Failed to delete the account');
+                                                        }
+                                                        return response.json();
+
+                                                    })
+                                                    .then((data) => {
+                                                        console.log(data);
+                                                        Swal.fire({
+                                                            title: "Deleted!",
+                                                            text: "The account has been deleted.",
+                                                            icon: "success"
+                                                        });
+
+                                                        fetchTeachers();
+                                                    })
+                                                    .catch((error) => {
+                                                        console.error('Error:', error);
+                                                    });
+                                            }
+                                        });
+                                    }}
+
+                                >
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    endIcon={<CreateOutlinedIcon />}
+                                    sx={{
+                                        width: "50px",
+                                        height: "50px",
+                                        backgroundColor: "#F5F5F5",
+                                        borderRadius: "20px",
+                                        color: "rgba(0,0,0,0.75)",
+                                        fontFamily: "Inter",
+                                        fontSize: "12px",
+                                        fontWeight: "semi-bold",
+                                        alignSelf: "flex-end",
+                                        marginLeft: "auto",
+                                        marginRight: "20px",
+                                        marginBottom: "10px",
+                                        border: "none",
+                                        textTransform: "none",
+                                    }}
+                                    component={Link}
+                                    to={`/see-teacher-account-admin/${teacher.idUsers}`}
+                                >
+                                </Button>
+                            </CardContent>
+                        </Box>
+                    </CardElongated>
+                ))}
+
             </div>
             {/*<h2>Jitca Diana</h2>*/}
             {/*<p>Faculty Email: jtc.didi@uaic.ro</p>*/}

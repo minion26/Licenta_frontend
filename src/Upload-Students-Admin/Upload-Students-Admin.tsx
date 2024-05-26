@@ -7,10 +7,14 @@ import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import Card from "@mui/material/Card";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+// import {useState} from "react";
 
 function UploadStudentsAdmin() {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+    // const [file, setFile] = useState<File | null>(null);
+
 
     return (
         <div >
@@ -63,12 +67,44 @@ function UploadStudentsAdmin() {
                         restartable={false}
                         onStart={({file, fields}) => {
                             console.log("starting import of file", file, "with fields", fields);
+
                         }}
-                        onComplete={({file, fields}) => {
+                        onComplete={ async ({file, fields}) => {
                             console.log("finished import of file", file, "with fields", fields);
-                        }}
+
+                            const formData = new FormData();
+                            formData.append('file', file);
+
+                            try {
+                                const response = await fetch('http://localhost:8081/api/v1/students/upload', {
+                                    method: 'POST',
+                                    credentials: 'include',
+                                    body: formData,
+                                    headers: {
+                                        // 'Content-Type': "application/json",
+                                        "Access-Control-Allow-Origin": "*",
+                                    }
+                                });
+
+                                if (!response.ok) {
+                                    throw new Error('Failed to upload file');
+                                }
+
+                                if (response.headers.get('content-type')?.includes('application/json')) {
+                                    const data = await response.json();
+                                    console.log('File uploaded', data);
+                                } else {
+                                    console.log('No JSON data returned');
+                                }
+
+                            }catch (error) {
+                                console.error('Error:', error);
+                        }
+
+
+                }}
                         onClose={() => {
-                            console.log("importer dismissed");
+                            console.log("importer closed ");
                         }}
                     >
                         <ImporterField name="firstName" label="First Name"/>
