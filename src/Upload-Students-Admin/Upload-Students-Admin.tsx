@@ -7,9 +7,12 @@ import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import Card from "@mui/material/Card";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {useNavigate} from "react-router-dom";
 // import {useState} from "react";
 
 function UploadStudentsAdmin() {
+    const navigate = useNavigate();
+
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -105,6 +108,8 @@ function UploadStudentsAdmin() {
                 }}
                         onClose={() => {
                             console.log("importer closed ");
+                            navigate("/see-students-admin");
+
                         }}
                     >
                         <ImporterField name="firstName" label="First Name"/>

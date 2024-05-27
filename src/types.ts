@@ -68,3 +68,14 @@ export type TeacherName = {
     lastName: string;
     idUsers: string;
 }
+
+export type Teacher = {
+    idUsers: string;
+    firstName: string;
+    lastName: string;
+    facultyEmail: string;
+    personalEmail: string;
+    idTeacher: string;
+    degree: string;
+};
+

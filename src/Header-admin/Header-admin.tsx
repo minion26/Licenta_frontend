@@ -1,6 +1,7 @@
 import styles from "./Header-admin.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Tooltip from "@mui/material/Tooltip";
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
 
@@ -20,7 +21,11 @@ function Header() {
         className={`${styles.header} ${showMenu ? `${styles.headerShow}` : ""}`}
         onClick={toggleMenu}
       >
-        <h1 className={styles.webApp}>web app</h1>
+          <Tooltip title={"Navigate to main page"}>
+          <Link to={"/main-page-admin"}>
+            <h1 className={styles.webApp}>web app</h1>
+          </Link>
+          </Tooltip>
         <nav>
           <ul className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
             <Link to="/my-profile" className={styles.headerUlLiA}>

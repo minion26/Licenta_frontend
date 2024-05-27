@@ -127,7 +127,7 @@ function RoutesComponent() {
                             <Route path={"/create-teachers-admin"} element={<CreateTeachersAdmin />} />
                             <Route path={"/upload-teachers-admin"} element={<UploadTeachersAdmin />} />
                             <Route path={"/see-teachers-admin"} element={<SeeTeachersAdmin />} />
-                            <Route path={"/see-teacher-account-admin"} element={<SeeTeacherAccountAdmin />} />
+                            <Route path={"/see-teacher-account-admin/:idUsers"} element={<SeeTeacherAccountAdmin />} />
                             <Route path={"/create-admins"} element={<CreateAdmins />} />
                             <Route path={"/create-course"} element={<CreateCourseAdmin />} />
                             <Route path={"/upload-courses"} element={<UploadCoursesAdmin />} />

@@ -7,8 +7,11 @@ import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import Card from "@mui/material/Card";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {useNavigate} from "react-router-dom";
 
 function UploadStudentsAdmin() {
+    const navigate = useNavigate();
+
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -64,12 +67,43 @@ function UploadStudentsAdmin() {
                             onStart={({file, fields}) => {
                                 console.log("starting import of file", file, "with fields", fields);
                             }}
-                            onComplete={({file, fields}) => {
+                            onComplete={ async ({file, fields}) => {
                                 console.log("finished import of file", file, "with fields", fields);
+
+                                const formData = new FormData();
+                                formData.append('file', file);
+
+                                try {
+                                    const response = await fetch('http://localhost:8081/api/v1/teachers/upload', {
+                                        method: 'POST',
+                                        credentials: 'include',
+                                        body: formData,
+                                        headers: {
+                                            // 'Content-Type': "application/json",
+                                            "Access-Control-Allow-Origin": "*",
+                                        }
+                                    });
+                                    if (!response.ok) {
+                                        const errorData = await response.json();
+                                        console.error('Error response from server', errorData);
+                                        throw new Error('Failed to upload file');
+                                    }
+
+                                    if (response.headers.get('content-type')?.includes('application/json')) {
+                                        const data = await response.json();
+                                        console.log('File uploaded', data);
+                                    } else {
+                                        console.log('No JSON data returned');
+                                    }
+
+                                }catch (e) {
+                                    console.error(e);
+                                }
                             }}
-                            onClose={() => {
-                                console.log("importer dismissed");
-                            }}
+                                onClose={() => {
+                                    console.log("importer closed");
+                                    navigate("/see-teachers-admin")
+                                }}
                         >
                             <ImporterField name="firstName" label="First Name"/>
                             <ImporterField name="lastName" label="Last Name"/>
