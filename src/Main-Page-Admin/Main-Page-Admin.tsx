@@ -296,52 +296,33 @@ function AdminsButtons() {
                         </Button>
                     </Tooltip>
 
-                    {/*<Button*/}
-                    {/*    variant="contained"*/}
-                    {/*    endIcon={<DeleteIcon />}*/}
-                    {/*    sx={{*/}
-                    {/*        width: "150px",*/}
-                    {/*        height: "50px",*/}
-                    {/*        backgroundColor: "#F5F5F5",*/}
-                    {/*        borderRadius: "20px",*/}
-                    {/*        color: "rgba(0,0,0,0.75)",*/}
-                    {/*        fontFamily: "Inter",*/}
-                    {/*        fontSize: "12px",*/}
-                    {/*        fontWeight: "semi-bold",*/}
-                    {/*        alignSelf: "flex-end",*/}
-                    {/*        marginLeft: "auto",*/}
-                    {/*        marginRight: "20px",*/}
-                    {/*        marginBottom: "10px",*/}
-                    {/*        border: "none",*/}
-                    {/*        textTransform: "none",*/}
-                    {/*    }}*/}
-                    {/*    // component={Link}*/}
-                    {/*    // to="/homeworks-per-lecture"*/}
-
-                    {/*    onClick={() => {*/}
-                    {/*        Swal.fire({*/}
-                    {/*            title: "Are you sure?",*/}
-                    {/*            text: "You won't be able to revert this!",*/}
-                    {/*            icon: "warning",*/}
-                    {/*            showCancelButton: true,*/}
-                    {/*            confirmButtonColor: "#3085d6",*/}
-                    {/*            cancelButtonColor: "#d33",*/}
-                    {/*            confirmButtonText: "Yes, delete it!"*/}
-                    {/*        }).then((result) => {*/}
-                    {/*            if (result.isConfirmed) {*/}
-                    {/*                Swal.fire({*/}
-                    {/*                    title: "Deleted!",*/}
-                    {/*                    text: "The account has been deleted.",*/}
-                    {/*                    icon: "success"*/}
-                    {/*                });*/}
-                    {/*                // Here you can add the code to actually delete the student*/}
-                    {/*            }*/}
-                    {/*        });*/}
-                    {/*    }}*/}
-
-                    {/*>*/}
-                    {/*    Delete your account*/}
-                    {/*</Button>*/}
+                    <Tooltip title={"See all admins"}>
+                        <Button
+                            variant="contained"
+                            endIcon={<RemoveRedEyeOutlinedIcon />}
+                            sx={{
+                                width: "150px",
+                                height: "50px",
+                                backgroundColor: "#F5F5F5",
+                                borderRadius: "20px",
+                                color: "rgba(0,0,0,0.75)",
+                                fontFamily: "Inter",
+                                fontSize: "12px",
+                                fontWeight: "semi-bold",
+                                alignSelf: "flex-end",
+                                marginLeft: "auto",
+                                marginRight: "20px",
+                                marginBottom: "10px",
+                                border: "none",
+                                textTransform: "none",
+                            }}
+                            component={Link}
+                            to="/see-admins"
+                        >
+                            {" "}
+                            See
+                        </Button>
+                    </Tooltip>
 
                 </CardContent>
             </Box>

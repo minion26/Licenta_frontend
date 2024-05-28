@@ -49,6 +49,10 @@ import SeeCoursesAccountAdmin from "./See-Courses-Account-Admin/See-Courses-Acco
 import AddStudentsToCoursesAdmin from "./Add-Students-To-Courses-Admin/Add-Students-To-Courses-Admin.tsx";
 
 import {AuthProvider, useAuth} from './AuthContext';
+import SeeAdminsAdmin from "./See-admins-admin/See-admins-admin.tsx";
+import SeeTeachersPerCourseAdmin from "./See-Teachers-Per-Course-Admin/See-Teachers-Per-Course-Admin.tsx";
+import AddSingleTeacherToCourseAdmin from "./Add-Single-Teacher-To-Course-Admin/Add-Single-Teacher-To-Course-Admin.tsx";
+import SeeStudentsPerCourseAdmin from "./See-Students-Per-Course-Admin/See-Students-Per-Course-Admin.tsx";
 
 function App() {
 
@@ -128,12 +132,16 @@ function RoutesComponent() {
                             <Route path={"/upload-teachers-admin"} element={<UploadTeachersAdmin />} />
                             <Route path={"/see-teachers-admin"} element={<SeeTeachersAdmin />} />
                             <Route path={"/see-teacher-account-admin/:idUsers"} element={<SeeTeacherAccountAdmin />} />
+                            <Route path={"/students-per-course/:idCourses"} element={<SeeStudentsPerCourseAdmin />} />
                             <Route path={"/create-admins"} element={<CreateAdmins />} />
+                            <Route path={"/see-admins"} element={<SeeAdminsAdmin />} />
                             <Route path={"/create-course"} element={<CreateCourseAdmin />} />
                             <Route path={"/upload-courses"} element={<UploadCoursesAdmin />} />
                             <Route path={"/add-teachers-to-courses"} element={<AddTeacherToCoursesAdmin />} />
+                            <Route path={"/add-single-teacher-per-course/:idCourses"} element={<AddSingleTeacherToCourseAdmin />} />
+                            <Route path={"/teachers-per-course/:idCourses"} element={<SeeTeachersPerCourseAdmin />} />
                             <Route path={"/see-courses"} element={<SeeCoursesAdmin />} />
-                            <Route path={"/see-course-account"} element={<SeeCoursesAccountAdmin />} />
+                            <Route path={"/see-course-account/:idCourses"} element={<SeeCoursesAccountAdmin />} />
                             <Route path={"/add-students-to-courses"} element={<AddStudentsToCoursesAdmin />} />
                     </>
                 )}

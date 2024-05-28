@@ -6,14 +6,88 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Swal from "sweetalert2";
+import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 // import styles from "./Create-Admins.module.css";
 
 
 function CreateAdmins(){
+    const navigate = useNavigate();
+
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+    const [admin, setAdmin] = useState({
+        firstName: "",
+        lastName: "",
+        facultyEmail: "",
+        personalEmail: "",
+        roleId: 1
+    });
+
+    const initialAdminState = {
+        firstName: "",
+        lastName: "",
+        facultyEmail: "",
+        personalEmail: "",
+        roleId: 1
+    };
+
+    const handleCancel = () => {
+        setAdmin(initialAdminState);
+    };
+
+    const handleChange = (e :  React.ChangeEvent<HTMLInputElement> ) => {
+        const value = e.target.type === "number" ? parseInt(e.target.value) : e.target.value;
+        setAdmin({
+            ...admin,
+            [e.target.name]: value
+        });
+    };
+
+    const handleSumbit = async (e :  React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(admin);
+
+        admin.roleId= 1;
+
+        const response = await fetch("http://localhost:8081/api/v1/users/create", {
+            method: "POST",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(admin)
+        });
+
+        if (response.ok){
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "The account has been saved",
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            if (response.headers.get("content-type")?.includes("application/json")) {
+                const data = await response.json();
+                console.log(data);
+            }
+
+            navigate("/main-page-admin");
+        }else{
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "The account has not been saved",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    };
+
     return (
-        <div>
+        <form onSubmit={handleSumbit}>
             <Header />
             <UpperHeader title={"Create accounts"} subtitle={"Students"}/>
             <Box
@@ -34,11 +108,17 @@ function CreateAdmins(){
                         label="First Name"
                         id="outlined-start-adornment-firstname"
                         sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
+                        value={admin.firstName}
+                        name={"firstName"}
+                        onChange={handleChange}
                     />
                     <TextField
                         label="Last Name"
                         id="outlined-start-adornment-lastname"
                         sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
+                        value={admin.lastName}
+                        name={"lastName"}
+                        onChange={handleChange}
                     />
 
                     <TextField
@@ -46,6 +126,9 @@ function CreateAdmins(){
                         fullWidth
                         label="Faculty Email"
                         id="fullWidth"
+                        value={admin.facultyEmail}
+                        name={"facultyEmail"}
+                        onChange={handleChange}
                     />
 
                     <TextField
@@ -53,6 +136,9 @@ function CreateAdmins(){
                         fullWidth
                         label="Personal Email"
                         id="fullWidth"
+                        value={admin.personalEmail}
+                        name={"personalEmail"}
+                        onChange={handleChange}
                     />
 
 
@@ -69,7 +155,9 @@ function CreateAdmins(){
                             max: 1,
                         }}
 
-                        value={1}
+                        value={admin.roleId}
+                        name={"roleId"}
+                        onChange={handleChange}
                     />
 
 
@@ -84,25 +172,17 @@ function CreateAdmins(){
                             m: 1,
                         }}
                     >
-                        <Button variant="outlined">Cancel</Button>
+                        <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
                         <Button
                             variant="contained"
-                            onClick={() => {
-                                Swal.fire({
-                                    position: "top-end",
-                                    icon: "success",
-                                    title: "The account has been saved",
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                            }}
+                            type={"submit"}
                         >
                             Save
                         </Button>
                     </Box>
                 </Box>
             </Box>
-        </div>
+        </form>
     );
 }
 

@@ -79,3 +79,23 @@ export type Teacher = {
     degree: string;
 };
 
+export type AdminName = {
+    firstName: string;
+    lastName: string;
+    idUsers: string;
+};
+
+export type TeacherDidactic = {
+    idDidactic: string;
+    teacherName: string;
+    courseName: string;
+};
+
+export type StudentFollowCourse = {
+    idStudentFollowCourse: string;
+    studentName: string;
+    courseName: string;
+};
+
+
+

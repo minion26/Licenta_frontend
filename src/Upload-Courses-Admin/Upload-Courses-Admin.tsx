@@ -5,8 +5,11 @@ import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import Card from "@mui/material/Card";
 import {Importer, ImporterField} from "react-csv-importer";
 import styles from "./Upload-Courses-Admin.module.css";
+import {useNavigate} from "react-router-dom";
 
 function UploadCoursesAdmin(){
+    const navigate = useNavigate();
+
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -62,17 +65,47 @@ function UploadCoursesAdmin(){
                             onStart={({file, fields}) => {
                                 console.log("starting import of file", file, "with fields", fields);
                             }}
-                            onComplete={({file, fields}) => {
+                            onComplete={ async ({file, fields}) => {
                                 console.log("finished import of file", file, "with fields", fields);
-                            }}
+
+                                const formData = new FormData();
+                                formData.append('file', file);
+
+                                try {
+                                    const response = await fetch('http://localhost:8081/api/v1/courses/upload', {
+                                        method: 'POST',
+                                        body: formData,
+                                        credentials: 'include',
+                                        headers : {
+                                            "Access-Control-Allow-Origin": "*",
+                                        }
+
+                                    });
+
+                                    if (!response.ok) {
+                                        throw new Error('Failed to upload file');
+                                    }
+
+                                    if (response.headers.get('content-type')?.includes('application/json')) {
+                                        const data = await response.json();
+                                        console.log('File uploaded', data);
+                                    } else {
+                                        console.log('No JSON data returned');
+                                    }
+                                }catch(error){
+                                    console.log('Error:', error);
+                                }
+                            }
+                            }
                             onClose={() => {
-                                console.log("importer dismissed");
+                                console.log("importer closed");
+                                navigate("/see-courses-admin");
                             }}
                         >
                             <ImporterField name="name" label="Name"/>
                             <ImporterField name="year" label="Year"/>
-                            <ImporterField name="semester" label="Semester"/>
                             <ImporterField name="credits" label="Credits"/>
+                            <ImporterField name="semester" label="Semester"/>
                             <ImporterField name="description" label="Description"/>
 
 

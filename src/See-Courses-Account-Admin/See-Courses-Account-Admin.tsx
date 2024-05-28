@@ -7,92 +7,112 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Swal from "sweetalert2";
-import { useLocation } from 'react-router-dom';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Course} from "../types";
+import {useNavigate, useParams} from "react-router-dom";
+
 
 function SeeCoursesAccountAdmin(){
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-    const location = useLocation();
-    const course = location.state.course;
+    const navigate = useNavigate();
+    const {idCourses} = useParams();
 
-    const [editedCourse, setEditedCourse] = useState<Course>(course);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { id, value } = event.target;
-        let key = id;
-        switch(id) {
-            case 'outlined-start-adornment-coursename':
-                key = 'name';
-                break;
-            case 'outlined-number':
-                key = 'year';
-                break;
-            case 'outlined-number-semester':
-                key = 'semester';
-                break;
-            case 'outlined-number-credits':
-                key = 'credits';
-                break;
-            case 'fullWidth-description':
-                key = 'description';
-                break;
-            default:
-                break;
-        }
-        setEditedCourse(prevState => ({
-            ...prevState,
-            [key]: id === 'outlined-number' || id === 'outlined-number-semester' || id === 'outlined-number-credits' ? parseInt(value) : value
-        }));
-    };
+    const [editedCourse, setEditedCourse] = useState<Course>({
+        idCourses: '',
+        name: '',
+        year: 0,
+        semester: 0,
+        credits: 0,
+        description: ''
+    });
 
-    const handleSaveClick = () => {
-        // fetch(`http://localhost:8081/api/v1/courses/update/${editedCourse.idCourses}`, {
-        //     method: 'PATCH',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(editedCourse),
-        // })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // Handle the response data here
-        //         console.log('Success:', data);
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error:', error);
-        //     });
-        fetch(`http://localhost:8081/api/v1/courses/update/${editedCourse.idCourses}`, {
-            method: 'PATCH',
+    const [editedCourseBackup, setEditedCourseBackup] = useState<Course>({
+        idCourses: '',
+        name: '',
+        year: 0,
+        semester: 0,
+        credits: 0,
+        description: ''
+    });
+
+    useEffect(() => {
+        fetch(`http://localhost:8081/api/v1/courses/${idCourses}`, {
+            method: "GET",
+            credentials: 'include',
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
+                // 'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                "Access-Control-Allow-Origin": "*",
             },
-            body: JSON.stringify(editedCourse),
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text();  // Change this line
+            .then((response) => response.json())
+            .then((data) => {
+                    setEditedCourse(data);
+                    setEditedCourseBackup(data);
+                    console.log(data);
             })
-            .then(text => {
-                console.log('Server response:', text);
-                return text ? JSON.parse(text) : {};  // Add a check here
-            })
-            .then(data => {
-                // Handle the response data here
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+            .catch(error => console.error('An error occured!', error));
+        }, [idCourses]
+    );
+
+    function handleInputChange(property : keyof Course, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> ) {
+        const newValue = event.target.value;
+        setEditedCourse({
+            ...editedCourse,
+            [property]: newValue
+        });
+    }
+
+    function handleCancel(){
+        setEditedCourse(editedCourseBackup);
+    }
+
+    const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(editedCourse);
+
+        const response = await fetch (`http://localhost:8081/api/v1/courses/update/${idCourses}`, {
+            method: "PATCH",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(editedCourse)
+        });
+
+        if (response.ok){
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "The course has been saved",
+                showConfirmButton: false,
+                timer: 1500
             });
+
+            if (response.headers.get("content-type")?.includes("application/json")) {
+                const data = await response.json();
+                console.log(data);
+            }
+
+            navigate("/main-page-admin");
+        }else{
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "An error occurred",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
     };
 
 
     return (
-        <div>
+        <form onSubmit={handleSubmit}>
             <Header/>
             <UpperHeader title={"See Course"} subtitle={"Machine "}/>
             <Card
@@ -115,12 +135,13 @@ function SeeCoursesAccountAdmin(){
                     sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
                     InputLabelProps={{ shrink: true }}
                     value={editedCourse.name}
-                    onChange={handleInputChange}
+                    name={"name"}
+                    onChange={(event) => handleInputChange("name", event)}
                 />
 
 
                 <TextField
-                    id="outlined-number"
+                    id="outlined-number-year"
                     label="Year"
                     type="number"
                     sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
@@ -132,7 +153,8 @@ function SeeCoursesAccountAdmin(){
                         max: 3,
                     }}
                     value={editedCourse.year}
-                    onChange={handleInputChange}
+                    name={"year"}
+                    onChange={(event) => handleInputChange("year", event)}
                 />
 
                 <TextField
@@ -148,7 +170,8 @@ function SeeCoursesAccountAdmin(){
                         max: 2,
                     }}
                     value={editedCourse.semester}
-                    onChange={handleInputChange}
+                    name={"semester"}
+                    onChange={(event) => handleInputChange("semester", event)}
                 />
 
                 <TextField
@@ -164,7 +187,8 @@ function SeeCoursesAccountAdmin(){
                         max: 7,
                     }}
                     value={editedCourse.credits}
-                    onChange={handleInputChange}
+                    name={"credits"}
+                    onChange={(event) => handleInputChange("credits", event)}
                 />
 
                 <TextField
@@ -174,9 +198,9 @@ function SeeCoursesAccountAdmin(){
                     id="fullWidth-description"
                     InputLabelProps={{ shrink: true }}
                     value={editedCourse.description}
-                    onChange={handleInputChange}
+                    name={"description"}
+                    onChange={(event) => handleInputChange("description", event)}
                 />
-
 
 
 
@@ -189,19 +213,10 @@ function SeeCoursesAccountAdmin(){
                         m: 1,
                     }}
                 >
-                    <Button variant="outlined">Cancel</Button>
+                    <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
                     <Button
                         variant="contained"
-                        onClick={() => {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: "The details have been saved",
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                            handleSaveClick();
-                        }}
+                        type={"submit"}
                     >
                         Save
                     </Button>
@@ -209,7 +224,7 @@ function SeeCoursesAccountAdmin(){
 
             </Card>
 
-        </div>
+        </form>
     );
 }
 

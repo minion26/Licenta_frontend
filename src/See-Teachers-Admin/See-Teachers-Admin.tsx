@@ -9,7 +9,7 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
 import styles from "../Courses-Page-Students/Courses-Page-Students.module.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Swal from 'sweetalert2';
 import {TeacherName} from "../types";
 import {useEffect, useState} from "react";
@@ -18,6 +18,7 @@ import {useEffect, useState} from "react";
 function SeeTeachersAdmin() {
     // const theme = useTheme();
     // const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+    const navigate = useNavigate();
 
     const [teachers, setTeachers] = useState<TeacherName[]>([]);
 
@@ -116,7 +117,7 @@ function SeeTeachersAdmin() {
                                                             icon: "success"
                                                         });
 
-                                                        fetchTeachers();
+                                                        navigate("/main-page-admin")
                                                     })
                                                     .catch((error) => {
                                                         console.error('Error:', error);

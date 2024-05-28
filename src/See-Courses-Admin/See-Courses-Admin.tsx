@@ -10,8 +10,9 @@ import Swal from "sweetalert2";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 // import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {Course} from "../types";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 function SeeCoursesAdmin(){
     const [courses, setCourses] = useState<Course[]>([]);
@@ -19,14 +20,19 @@ function SeeCoursesAdmin(){
 
 
     useEffect(() => {
-        fetch('http://localhost:8081/api/v1/courses')
+        fetch('http://localhost:8081/api/v1/courses', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        })
             .then(response => response.json())
             .then(data => setCourses(data));
     }, []);
 
-    const handleEditClick = (course: Course) => {
-        navigate("/see-course-account", { state: { course: course } });
-    };
+
 
     return (
         <div>
@@ -76,12 +82,33 @@ function SeeCoursesAdmin(){
                                         confirmButtonText: "Yes, delete it!"
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            Swal.fire({
-                                                title: "Deleted!",
-                                                text: "The course has been deleted.",
-                                                icon: "success"
-                                            });
-                                            // Here you can add the code to actually delete the student
+                                           fetch(`http://localhost:8081/api/v1/courses/delete/${course.idCourses}`, {
+                                                    method: 'DELETE',
+                                                    credentials: 'include',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'Access-Control-Allow-Origin': '*',
+                                                    },
+                                                })
+                                               .then(response => {
+                                                   if (!response.ok) {
+                                                       console.error(`Server responded with status code ${response.status}`);
+                                                       throw new Error('Failed to delete student');
+                                                   }
+                                                   return response.json();
+                                               })
+                                               .then(data => {
+                                                    console.log(data);
+                                                   Swal.fire({
+                                                       title: "Deleted!",
+                                                       text: "The course has been deleted.",
+                                                       icon: "success"
+                                                   });
+                                                    navigate("/main-page-admin");
+                                               })
+                                               .catch((error) => {
+                                                   console.error('Error:', error);
+                                               });
                                         }
                                     });
                                 }}
@@ -107,17 +134,57 @@ function SeeCoursesAdmin(){
                                     border: "none",
                                     textTransform: "none",
                                 }}
-                                onClick={() => handleEditClick(course)}
+                                component={Link}
+                                to={`/see-course-account/${course.idCourses}`}
                             >
+                            </Button>
 
-                                {/*<Link*/}
-                                {/*    to={{*/}
-                                {/*        pathname: "/see-course-account",*/}
-                                {/*        state: { course: course }*/}
-                                {/*    }}*/}
-                                {/*>*/}
+                            <Button
+                                variant="contained"
+                                endIcon={<RemoveRedEyeIcon />}
+                                sx={{
+                                    width: "50px",
+                                    height: "50px",
+                                    backgroundColor: "#F5F5F5",
+                                    borderRadius: "20px",
+                                    color: "rgba(0,0,0,0.75)",
+                                    fontFamily: "Inter",
+                                    fontSize: "12px",
+                                    fontWeight: "semi-bold",
+                                    alignSelf: "flex-end",
+                                    marginLeft: "auto",
+                                    marginRight: "20px",
+                                    marginBottom: "10px",
+                                    border: "none",
+                                    textTransform: "none",
+                                }}
+                                component={Link}
+                                to={`/teachers-per-course/${course.idCourses}`}
+                            >
+                            </Button>
 
-                                {/*</Link>*/}
+                            <Button
+                                variant="contained"
+                                endIcon={<RemoveRedEyeIcon />}
+                                sx={{
+                                    width: "50px",
+                                    height: "50px",
+                                    backgroundColor: "#F5F5F5",
+                                    borderRadius: "20px",
+                                    color: "rgba(0,0,0,0.75)",
+                                    fontFamily: "Inter",
+                                    fontSize: "12px",
+                                    fontWeight: "semi-bold",
+                                    alignSelf: "flex-end",
+                                    marginLeft: "auto",
+                                    marginRight: "20px",
+                                    marginBottom: "10px",
+                                    border: "none",
+                                    textTransform: "none",
+                                }}
+                                component={Link}
+                                to={`/students-per-course/${course.idCourses}`}
+                            >
                             </Button>
                         </CardContent>
                     </Box>
