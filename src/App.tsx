@@ -124,7 +124,7 @@ function RoutesComponent() {
                 {role == 2 && (
                     <>
                             <Route path="/main-page-teacher" element={<MainPageTeacher />} />
-                            <Route path="/lecture-per-course" element={<LecturesPerCourseTeachers />}/>
+                            <Route path="/lecture-per-course/:idCourses" element={<LecturesPerCourseTeachers />}/>
                             <Route path="/materials-per-lecture" element={<MaterialsPerCourseTeacher />}/>
                             <Route path={"/view-course-teacher"} element={<ViewCourseTeacher />} />
                             <Route path={"/homeworks-per-lecture"} element={<HomeworksPerLectureTeacher />}/>

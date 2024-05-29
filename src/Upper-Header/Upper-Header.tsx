@@ -91,7 +91,7 @@ function SearchBar({ onSubmit }: { onSubmit ? : (value: string) => void }) {
     );
 }
 
-function UpperHeader({ title, subtitle, buttons, onSearch }: UpperHeaderProps & { onSearch ? : (value: string) => void }){
+function UpperHeader({ title, subtitle, buttons, onSearch}: UpperHeaderProps & { onSearch ? : (value: string) => void }   ) {
     const navigate = useNavigate();
     const { setRole } = useAuth();
 
@@ -101,14 +101,16 @@ function UpperHeader({ title, subtitle, buttons, onSearch }: UpperHeaderProps & 
         setSelectedButton(buttonKey);
 
         switch(buttonKey) {
-            case 'A-Z':
-                // Order content alphabetically
-                console.log('Ordering content alphabetically');
-                break;
-            case 'Z-A':
-                // Order content in reverse alphabetical order
-                console.log('Ordering content in reverse alphabetical order');
-                break;
+            // case 'A-Z':
+            //     // Order content alphabetically
+            //     console.log('Ordering content alphabetically');
+            //
+            //     break;
+            // case 'Z-A':
+            //     // Order content in reverse alphabetical order
+            //     console.log('Ordering content in reverse alphabetical order');
+            //
+            //     break;
             case 'Logout':
                 // Logout the user
                 console.log('Logging out the user');

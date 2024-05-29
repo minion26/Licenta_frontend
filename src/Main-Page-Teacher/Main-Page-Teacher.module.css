@@ -24,3 +24,27 @@ body{
 .noDecoration{
     text-decoration: None;
 }
+
+.title{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333;
+    margin-left: 35px;
+    margin-top: 30px;
+}
+
+.p{
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    color: #333333;
+    width: 100%;
+}
+
+.str{
+    font-family: 'Newsreader', sans-serif;
+    font-size: 17px;
+    color: #333333;
+    width: 100%;
+
+}

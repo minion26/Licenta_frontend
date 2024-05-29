@@ -3,39 +3,141 @@ import styles from './Main-Page-Teacher.module.css';
 import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import CardLarge from "../Card-Large/Card-Large.tsx";
 import {Link} from "react-router-dom";
-// import {useEffect, useState} from "react";
-//
-// interface Course {
-//     name: string;
-//     credits: number;
-//     description: string;
-// }
+import {useEffect, useState} from "react";
+import {Course, User} from "../types.ts";
+import Card from "@mui/material/Card";
+import {useTheme} from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+
+
 
 function MainPageTeacher() {
-    // const [courses, setCourses] = useState<Course[]>([]);
-    //
-    // useEffect(() => {
-    //     fetch('http://localhost:8081/api/v1/courses')
-    //         .then(response => response.json())
-    //         .then(data => setCourses(data));
-    // }, []);
+    const [courses, setCourses] = useState<Course[]>([]);
+
+    const [user, setUser] = useState<User>({
+        idUsers: '',
+        firstName: '',
+        lastName: '',
+        facultyEmail: '',
+        personalEmail: '',
+        password: '',
+        role: '',
+
+    });
+
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:8081/api/v1/username', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                });
+                const data = await response.json();
+                console.log("email: " + data.username);
+                // setUsername(data.username);
+
+                const userResponse = await fetch(`http://localhost:8081/api/v1/users/email/${data.username}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                });
+                const userData = await userResponse.json();
+                console.log(userData);
+                setUser(userData);
+                console.log("user: " + user.idUsers)
+
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (user.idUsers) {
+            const fetchData = async () => {
+                try {
+                    const response = await fetch(`http://localhost:8081/api/v1/courses/idTeacher=${user.idUsers}`, {
+                        method: 'GET',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            "Access-Control-Allow-Origin": "*",
+                        },
+                    });
+                    const data = await response.json();
+                    console.log(data);
+                    setCourses(data);
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            };
+
+            fetchData();
+        }
+    }, [user.idUsers]);
+
+    const [searchInput, setSearchInput] = useState('');
+
+    const handleSearch = (searchValue: string) => {
+        setSearchInput(searchValue);
+    };
+
+    const filteredCourses = searchInput
+        ? courses.filter(course =>
+            course.name.toLowerCase().startsWith(searchInput.toLowerCase())
+        )
+        : courses;
 
   return (
     <div>
       <Header />
-        <UpperHeader title="Courses" subtitle="date" buttons={[{ key: 'A-Z', label: 'A-Z' }, { key: 'Z-A', label: 'Z-A' }]} />
+        <UpperHeader
+            title="Courses"
+            subtitle="date"
+            buttons={[{ key: "Search", label: "Search" }]}
+            onSearch={handleSearch}
+
+        />
         <div className={styles.cardContainer}>
-            {/*{courses.map((course, index) => (*/}
-            {/*    <CardLarge key={index} title={course.name} credits={course.credits} description={course.description} cardIndex={index}/>*/}
-            {/*))}*/}
-            <Link to={"/lecture-per-course"} className={styles.noDecoration}>
-                <CardLarge title="Calcul numeric" credits={5} description="ceva descriere super smechera" cardIndex={1} />
-            </Link>
-            <CardLarge title="Calcul numeric" credits={5} description="ceva descriere super smechera" cardIndex={2}/>
-            <CardLarge title="Calcul numeric" credits={5} description="ceva descriere super smechera" cardIndex={3}/>
-            <CardLarge title="Calcul numeric" credits={5} description="ceva descriere super smechera" cardIndex={4}/>
-            <CardLarge title="Calcul numeric" credits={5} description="ceva descriere super smechera" cardIndex={5}/>
-            <CardLarge title="Calcul numeric" credits={5} description="ceva descriere super smechera" cardIndex={1}/>
+            { filteredCourses.length === 0 ? (<Card
+                    sx={{
+                        // marginLeft: isSmallScreen ? "0px" : "200px",
+                        // marginTop: "10px",
+                        display: "flex",
+                        flexDirection: "column",
+                        width: isSmallScreen ? "100%" : "75%",
+                        height: isSmallScreen ? "50%" : "auto",
+                        backgroundColor: "#FAFAF5",
+                        borderRadius: "24px",
+                        alignSelf: "center",
+                    }}
+                >
+                    <div className={styles.title}>
+                        <p className={styles.p}>
+                            No courses found for you.
+                        </p>
+                        <p className={styles.p}>Please enroll.</p>
+                    </div>
+                </Card>) :
+                (filteredCourses.map((course, index) => (
+                <Link to={`/lecture-per-course/${course.idCourses}`} className={styles.noDecoration}>
+                    <CardLarge key={index} title={course.name} credits={course.credits} description={course.description} cardIndex={index}/>
+                </Link>
+            )))}
+
 
 
         </div>
