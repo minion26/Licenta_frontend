@@ -14,7 +14,7 @@ import {useEffect, useState} from "react";
 
 
 function SeeAdminsAdmin() {
-
+    const [searchInput, setSearchInput] = useState('');
 
     const [admins , setAdmins] = useState<AdminName[]>([]);
 
@@ -38,14 +38,24 @@ function SeeAdminsAdmin() {
         }, []
     );
 
+    const handleSearch = (searchValue: string) => {
+        setSearchInput(searchValue);
+    };
+
+    const filteredAdmins = searchInput
+        ? admins.filter(admin =>
+            admin.firstName.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+            admin.lastName.toLowerCase().startsWith(searchInput.toLowerCase())
+        )
+        : admins;
 
   return (
       <div>
           <Header/>
-          <UpperHeader title={"See accounts"} subtitle={"Students"} buttons={[{ key: "Search", label: "Search" }]}/>
+          <UpperHeader title={"See accounts"} subtitle={"Students"} buttons={[{ key: "Search", label: "Search" }]} onSearch={handleSearch}/>
           <div className={styles.cardContainer}>
               {
-                  admins.map(
+                  filteredAdmins.map(
                       (admin, index) => (
                           <CardElongated key={index} title={`${admin.firstName} ${admin.lastName}`} cardIndex={index+1} height={100}>
                               <Box sx={{ display: "flex" }}>

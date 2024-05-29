@@ -13,10 +13,13 @@ import {useEffect, useState} from "react";
 import {Link, useNavigate} from 'react-router-dom';
 import {Course} from "../types";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import Tooltip from "@mui/material/Tooltip";
 
 function SeeCoursesAdmin(){
     const [courses, setCourses] = useState<Course[]>([]);
     const navigate = useNavigate();
+
+    const [searchInput, setSearchInput] = useState('');
 
 
     useEffect(() => {
@@ -32,14 +35,27 @@ function SeeCoursesAdmin(){
             .then(data => setCourses(data));
     }, []);
 
+    const handleSearch = (searchValue: string) => {
+        setSearchInput(searchValue);
+    };
 
+    const filteredCourses = searchInput
+        ? courses.filter(course =>
+            course.name.toLowerCase().startsWith(searchInput.toLowerCase())
+        )
+        : courses;
 
     return (
         <div>
             <Header/>
-            <UpperHeader title={"See Details"} subtitle={"Courses"} buttons={[{ key: "Search", label: "Search" }]}/>
+            <UpperHeader
+                title={"See Details"}
+                subtitle={"Courses"}
+                buttons={[{ key: "Search", label: "Search" }]}
+                onSearch={handleSearch}
+            />
             <div className={styles.cardContainer}>
-                {courses.map((course, index) => (
+                {filteredCourses.map((course, index) => (
                 <CardElongated title={course.name} cardIndex={index} height={100} key={index}>
                     <Box sx={{ display: "flex" }}>
                         <CardContent
@@ -49,6 +65,7 @@ function SeeCoursesAdmin(){
                                 flexDirection: "row",
                             }}
                         >
+                            <Tooltip title={"Delete this course"}>
                             <Button
                                 variant="contained"
                                 endIcon={<DeleteIcon />}
@@ -115,6 +132,8 @@ function SeeCoursesAdmin(){
 
                             >
                             </Button>
+                            </Tooltip>
+                            <Tooltip title={"Edit this course"}>
                             <Button
                                 variant="contained"
                                 endIcon={<CreateOutlinedIcon />}
@@ -138,7 +157,9 @@ function SeeCoursesAdmin(){
                                 to={`/see-course-account/${course.idCourses}`}
                             >
                             </Button>
+                            </Tooltip>
 
+                            <Tooltip title={"See teachers"}>
                             <Button
                                 variant="contained"
                                 endIcon={<RemoveRedEyeIcon />}
@@ -162,7 +183,9 @@ function SeeCoursesAdmin(){
                                 to={`/teachers-per-course/${course.idCourses}`}
                             >
                             </Button>
+                            </Tooltip>
 
+                            <Tooltip title={"See students"}>
                             <Button
                                 variant="contained"
                                 endIcon={<RemoveRedEyeIcon />}
@@ -186,6 +209,7 @@ function SeeCoursesAdmin(){
                                 to={`/students-per-course/${course.idCourses}`}
                             >
                             </Button>
+                            </Tooltip>
                         </CardContent>
                     </Box>
                 </CardElongated>

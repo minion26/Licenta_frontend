@@ -4,6 +4,11 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import {alpha, InputBase, styled} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
+import Tooltip from "@mui/material/Tooltip";
+import Swal from "sweetalert2";
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "../AuthContext.tsx";
+
 
 interface ButtonProps{
     key: string;
@@ -55,21 +60,40 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-function SearchBar() {
+function SearchBar({ onSubmit }: { onSubmit ? : (value: string) => void }) {
+    const [searchInput, setSearchInput] = useState('');
+
+    const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchInput(event.target.value);
+    }
+
+    const handleSearchSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        if (onSubmit) {
+            onSubmit(searchInput);
+        }
+    }
+
     return (
-        <Search>
+        <Tooltip title={"Press enter"}>
+        <Search as="form" onSubmit={handleSearchSubmit}>
             <SearchIconWrapper>
                 <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
+                onChange={handleSearchInputChange}
+                value={searchInput}
             />
         </Search>
+        </Tooltip>
     );
 }
 
-function UpperHeader({ title, subtitle, buttons }: UpperHeaderProps){
+function UpperHeader({ title, subtitle, buttons, onSearch }: UpperHeaderProps & { onSearch ? : (value: string) => void }){
+    const navigate = useNavigate();
+    const { setRole } = useAuth();
 
     const [selectedButton, setSelectedButton] = useState<string | null>(null);
 
@@ -88,6 +112,50 @@ function UpperHeader({ title, subtitle, buttons }: UpperHeaderProps){
             case 'Logout':
                 // Logout the user
                 console.log('Logging out the user');
+                Swal.fire({
+                    title: "Are you sure you want to log out?",
+                    // text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, logout!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch('http://localhost:8081/api/v1/logout', {
+                            method: 'GET',
+                            credentials: 'include', // Include cookies in the request
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*',
+                            },
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`Server responded with status code ${response.status}`);
+                                }
+
+                                Swal.fire({
+                                    title: "Logged out!",
+                                    text: "Your have been logged out.",
+                                    icon: "success"
+                                });
+
+                                navigate("/");
+                                setRole(null);
+                                return response.text();
+                            })
+                            .then(message => {
+                                console.log(message); // Should log "You have been logged out"
+                            })
+                            .catch(error => {
+                                console.error('Failed to logout', error);
+                            });
+
+
+                    }
+                });
+
                 break;
             case 'Search':
                 // Search for content
@@ -121,7 +189,7 @@ function UpperHeader({ title, subtitle, buttons }: UpperHeaderProps){
                         >
                             {buttons.map((button, index) => (
                                 button.key === 'Search' ? (
-                                    <SearchBar key={index} />
+                                    <SearchBar key={index} onSubmit={onSearch}/>
                                     ) : (
                                 <Button
                                     //TODO: make it all responsive for the phones

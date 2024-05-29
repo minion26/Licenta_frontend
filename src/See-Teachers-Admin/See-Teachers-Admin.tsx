@@ -20,6 +20,8 @@ function SeeTeachersAdmin() {
     // const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const navigate = useNavigate();
 
+    const [searchInput, setSearchInput] = useState('');
+
     const [teachers, setTeachers] = useState<TeacherName[]>([]);
 
     const fetchTeachers = () => {
@@ -45,12 +47,23 @@ function SeeTeachersAdmin() {
         fetchTeachers();
     }, []);
 
+    const handleSearch = (searchValue: string) => {
+        setSearchInput(searchValue);
+    };
+
+    const filteredTeachers = searchInput
+        ? teachers.filter(teacher =>
+            teacher.firstName.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+            teacher.lastName.toLowerCase().startsWith(searchInput.toLowerCase())
+        )
+        : teachers;
+
     return (
         <div>
             <Header/>
-            <UpperHeader title={"See accounts"} subtitle={"Teachers"} buttons={[{ key: "Search", label: "Search" }]}/>
+            <UpperHeader title={"See accounts"} subtitle={"Teachers"} buttons={[{ key: "Search", label: "Search" }]} onSearch={handleSearch}/>
             <div className={styles.cardContainer}>
-                {teachers.map((teacher, index) => (
+                {filteredTeachers.map((teacher, index) => (
                     <CardElongated key={index} title={teacher.firstName + " " + teacher.lastName} cardIndex={index+1} height={100}>
                         <Box sx={{ display: "flex" }}>
                             <CardContent

@@ -5,7 +5,7 @@ import MainPageStudents from "./Main-page-students/Main-Page-Students.tsx";
 import CoursesPageStudents from "./Courses-Page-Students/Courses-Page-Students.tsx";
 import LecturePerCourseStudents from "./Lecture-Per-Course-Students/Lecture-Per-Course-Students.tsx";
 import HomeworkHistoryStudents from "./Homework-History-Students/Homework-History-Students.tsx";
-import MyProfile from "./My-Profile/My-Profile.tsx";
+import MyProfileTeacher from "./My-Profile-Teacher/My-Profile-Teacher.tsx";
 import MaterialsPerLectureStudents from "./Materials-Per-Lecture-Students/Materials-Per-Lecture-Students.tsx";
 import ViewCourseStudents from "./View-Course-Students/View-Course-Students.tsx";
 import SeeHomeworkAnnouncementStudent from "./See-Homework-Announcement-Student/See-Homework-Announcement-Student.tsx";
@@ -53,6 +53,9 @@ import SeeAdminsAdmin from "./See-admins-admin/See-admins-admin.tsx";
 import SeeTeachersPerCourseAdmin from "./See-Teachers-Per-Course-Admin/See-Teachers-Per-Course-Admin.tsx";
 import AddSingleTeacherToCourseAdmin from "./Add-Single-Teacher-To-Course-Admin/Add-Single-Teacher-To-Course-Admin.tsx";
 import SeeStudentsPerCourseAdmin from "./See-Students-Per-Course-Admin/See-Students-Per-Course-Admin.tsx";
+import {useEffect} from "react";
+import MyProfileAdmin from "./My-Profile-Admin/My-Profile-Admin.tsx";
+
 
 function App() {
 
@@ -65,7 +68,32 @@ function App() {
 }
 
 function RoutesComponent() {
-    const { role } = useAuth();
+    const { role, setRole } = useAuth();
+
+
+    useEffect(() => {
+        // Get the role from the server
+        fetch('http://localhost:8081/api/v1/role', {
+            method: 'GET',
+            credentials: 'include', // This will include cookies in the request
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server responded with status code ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                setRole(data);
+            })
+            .catch(error => {
+                console.error('Failed to get role', error);
+            });
+    }, []);
 
     return (
         <Routes>
@@ -80,7 +108,7 @@ function RoutesComponent() {
                     <Route path="semester2" element={<CoursesPageStudents />} />
                     <Route path="lecture-per-course" element={<LecturePerCourseStudents />} />
                     <Route path="homework" element={<HomeworkHistoryStudents />} />
-                    <Route path={"/my-profile"} element={<MyProfile />} />
+                    <Route path={"/my-profile"} element={<MyProfileTeacher />} />
                     <Route path="/materials-per-lecture" element={<MaterialsPerLectureStudents />} />
                     <Route path={"/view-course"} element={<ViewCourseStudents />} />
                     <Route path={"/see-homework-announcement-student"} element={<SeeHomeworkAnnouncementStudent />} />
@@ -102,7 +130,7 @@ function RoutesComponent() {
                             <Route path={"/homeworks-per-lecture"} element={<HomeworksPerLectureTeacher />}/>
                             <Route path={"/add-feedback"} element={<FeedbackPerHomeworkTeacher />}/>
                             <Route path={"/notifications-teacher"} element={<NotificationsTeacher />}/>
-                            <Route path={"/my-profile"} element={<MyProfile />} />
+                            <Route path={"/my-profile"} element={<MyProfileTeacher />} />
                             <Route path={"/add-homework-announcement"} element={<HomeworkAnnouncementTeacher />} />
                             <Route path={"/see-homework-announcement"} element={<SeeHomeworkAnnouncementTeacher />} />
                             <Route path={"/edit-homework-announcement"} element={<EditHomeworkAnnouncementsTeacher /> } />
@@ -124,7 +152,7 @@ function RoutesComponent() {
                     <>
                             <Route path={"/main-page-admin"} element={<MainPageAdmin />} />
                             <Route path={"/create-students-admin"} element={<CreateStudentsAdmin />} />
-                            <Route path={"/my-profile"} element={<MyProfile />} />
+                            <Route path={"/my-profile"} element={<MyProfileAdmin />} />
                             <Route path={"/upload-students-admin"} element={<UploadStudentsAdmin />} />
                             <Route path={"/see-students-admin"} element={<SeeStudentsAdmin />} />
                             <Route path={"/see-student-account-admin/:idUsers"} element={<SeeStudentAccountAdmin />} />

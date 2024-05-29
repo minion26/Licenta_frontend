@@ -18,6 +18,8 @@ import {StudentName} from "../types.ts";
 function SeeStudentsAdmin() {
     const navigate = useNavigate();
 
+    const [searchInput, setSearchInput] = useState('');
+
     // const theme = useTheme();
     // const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const [students, setStudents] = useState<StudentName[]>([]);
@@ -43,13 +45,25 @@ function SeeStudentsAdmin() {
 
     );
 
+    const handleSearch = (searchValue: string) => {
+        setSearchInput(searchValue);
+    };
+
+    const filteredStudents = searchInput
+        ? students.filter(student =>
+            student.firstName.toLowerCase().startsWith(searchInput.toLowerCase()) ||
+            student.lastName.toLowerCase().startsWith(searchInput.toLowerCase())
+        )
+        : students;
+
+
 return (
     <div>
         <Header/>
-        <UpperHeader title={"See accounts"} subtitle={"Students"} buttons={[{ key: "Search", label: "Search" }]}/>
+        <UpperHeader title={"See accounts"} subtitle={"Students"} buttons={[{ key: "Search", label: "Search" }]} onSearch={handleSearch}/>
         <div className={styles.cardContainer}>
             {
-                students.map(
+                filteredStudents.map(
                     (student, index) => (
                         <CardElongated key={index} title={`${student.firstName} ${student.lastName}`} cardIndex={index+1} height={100}>
                                 <Box sx={{ display: "flex" }}>

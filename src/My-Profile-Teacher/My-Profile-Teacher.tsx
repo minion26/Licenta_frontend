@@ -1,6 +1,6 @@
 import Header from "../Header-teacher/Header";
 import UpperHeader from "../Upper-Header/Upper-Header";
-// import styles from "./My-Profile.module.css";
+// import styles from "./My-Profile-Teacher.module.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Swal from "sweetalert2";
 
-function MyProfile() {
+function MyProfileTeacher() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -105,4 +105,4 @@ function MyProfile() {
   );
 }
 
-export default MyProfile;
+export default MyProfileTeacher;

@@ -97,5 +97,16 @@ export type StudentFollowCourse = {
     courseName: string;
 };
 
+export type User = {
+    idUsers: string;
+    firstName: string;
+    lastName: string;
+    facultyEmail: string;
+    personalEmail: string;
+    password: string;
+    role: string;
+};
+
+
 
 

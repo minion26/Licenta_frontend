@@ -74,7 +74,6 @@ function SeeTeachersPerCourseAdmin(){
     const [teachers, setTeachers] = useState<TeacherDidactic[]>([]);
     const[course, setCourse] = useState<Course>();
 
-
     useEffect(() => {
         fetch(`http://localhost:8081/api/v1/courses/${idCourses}`, {
             method: "GET",
