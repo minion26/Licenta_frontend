@@ -55,7 +55,7 @@ import styles from './PDF-viewer.module.css';
 
 
 
-function PdfViewer({ fileURL }: { fileURL: string }) {
+function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
     // const defaultLayoutPluginInstance = defaultLayoutPlugin(
     //     // props?: DefaultLayoutPluginProps
     // );
@@ -80,47 +80,52 @@ function PdfViewer({ fileURL }: { fileURL: string }) {
         return <div>No file URL provided</div>;
     }
 
-    const fileExtension = fileURL.split('.').pop();
+    if (fileURL.startsWith('blob:')) {
 
-    switch(fileExtension) {
-        case 'pdf':
-            return (
+        const fileExtension = fileType;
 
-                <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
-                    <div className={styles.container} >
-                    <Toolbar>{renderDefaultToolbar(transform)}</Toolbar>
-                    <Viewer fileUrl={fileURL}
-                            defaultScale={SpecialZoomLevel.PageWidth}
-                            plugins={[toolbarPluginInstance]}
-                    />
-                    </div>
-                </Worker>
-            );
-        case 'png':
-            return <img src={fileURL} alt="file content"/>;
-        case 'txt':
-        case 'py':
-            return (
-                <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
-            );
-        case 'cpp':
-            return (
-                <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
-            );
-        case 'java':
-            return (
-                <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
-            );
-        case 'mp4':
-            return (
-                <video width="320" height="240" controls>
-                    <source src={fileURL} type="video/mp4"/>
-                    Your browser does not support the video tag.
-                </video>
-            );
-        default:
-            return <div>File type not supported</div>;
+        switch(fileExtension) {
+            case 'pdf':
+                return (
+
+                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                        <div className={styles.container} >
+                            <Toolbar>{renderDefaultToolbar(transform)}</Toolbar>
+                            <Viewer fileUrl={fileURL}
+                                    defaultScale={SpecialZoomLevel.PageWidth}
+                                    plugins={[toolbarPluginInstance]}
+                            />
+                        </div>
+                    </Worker>
+                );
+            case 'png':
+                return <img src={fileURL} alt="file content"/>;
+            case 'txt':
+            case 'py':
+                return (
+                    <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                );
+            case 'cpp':
+                return (
+                    <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                );
+            case 'java':
+                return (
+                    <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                );
+            case 'mp4':
+                return (
+                    <video width="320" height="240" controls>
+                        <source src={fileURL} type="video/mp4"/>
+                        Your browser does not support the video tag.
+                    </video>
+                );
+            default:
+                return <div>File type not supported</div>;
+        }
     }
+
+
 }
 
 export default PdfViewer;

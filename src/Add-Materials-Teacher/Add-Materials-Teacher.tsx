@@ -9,6 +9,11 @@ function AddMaterialsTeacher() {
       <Header />
         <UpperHeader title={"Add Materials"} subtitle={"Course Name"} />
       <div className={styles.container}>
+          <select >
+          <option value="course">Course</option>
+          <option value="auxiliar">Auxiliar</option>
+          <option value="video">Video</option>
+        </select>
         <UploadMaterialsTeachers />
       </div>
     </div>

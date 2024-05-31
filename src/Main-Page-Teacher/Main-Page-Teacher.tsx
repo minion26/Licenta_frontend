@@ -133,8 +133,8 @@ function MainPageTeacher() {
                     </div>
                 </Card>) :
                 (filteredCourses.map((course, index) => (
-                <Link to={`/lecture-per-course/${course.idCourses}`} className={styles.noDecoration}>
-                    <CardLarge key={index} title={course.name} credits={course.credits} description={course.description} cardIndex={index}/>
+                <Link key={index} to={`/lecture-per-course/${course.idCourses}`} className={styles.noDecoration}>
+                    <CardLarge  title={course.name} credits={course.credits} description={course.description} cardIndex={index}/>
                 </Link>
             )))}
 

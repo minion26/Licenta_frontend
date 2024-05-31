@@ -16,11 +16,11 @@ interface CardLargeProps{
 }
 
 const images = [
-    "public/images/1.jpg",
-    "public/images/2.jpg",
-    "public/images/3.jpg",
-    "public/images/4.jpg",
-    "public/images/5.jpg"
+    "/public/images/1.jpg",
+    "/public/images/2.jpg",
+    "/public/images/3.jpg",
+    "/public/images/4.jpg",
+    "/public/images/5.jpg"
 ]
 
 function getImage(index: number) {

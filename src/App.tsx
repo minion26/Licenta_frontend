@@ -84,7 +84,12 @@ function RoutesComponent() {
                 if (!response.ok) {
                     throw new Error(`Server responded with status code ${response.status}`);
                 }
+
+                // If the role is successfully fetched, navigate to the main page
+                // navigate('/main-page-teacher');
+
                 return response.json();
+
             })
             .then(data => {
                 console.log(data);
@@ -92,6 +97,8 @@ function RoutesComponent() {
             })
             .catch(error => {
                 console.error('Failed to get role', error);
+                // If the fetch fails, navigate to the login page
+                // navigate('/login');
             });
     }, []);
 
@@ -125,8 +132,10 @@ function RoutesComponent() {
                     <>
                             <Route path="/main-page-teacher" element={<MainPageTeacher />} />
                             <Route path="/lecture-per-course/:idCourses" element={<LecturesPerCourseTeachers />}/>
-                            <Route path="/materials-per-lecture" element={<MaterialsPerCourseTeacher />}/>
-                            <Route path={"/view-course-teacher"} element={<ViewCourseTeacher />} />
+                            <Route path="/materials-per-lecture/:idCourses/:idLectures" element={<MaterialsPerCourseTeacher />}/>
+                            <Route path={"/view-course-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
+                            <Route path={"/view-auxiliar-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
+                            <Route path={"/view-video-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
                             <Route path={"/homeworks-per-lecture"} element={<HomeworksPerLectureTeacher />}/>
                             <Route path={"/add-feedback"} element={<FeedbackPerHomeworkTeacher />}/>
                             <Route path={"/notifications-teacher"} element={<NotificationsTeacher />}/>

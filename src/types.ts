@@ -107,6 +107,31 @@ export type User = {
     role: string;
 };
 
+export type Lecture={
+    idLecture: string;
+    name: string;
+    description: string;
+    week: number;
+    semester: number;
+    year: number;
+}
+
+export type LectureCreation ={
+    name: string;
+    description: string;
+    week: number;
+}
+
+export type Materials = {
+   bucketName: string;
+   etag: string;
+    key: string;
+    lastModified: string;
+    owner: string;
+    size: number;
+    storageClass: string;
+}
+
 
 
 
