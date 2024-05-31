@@ -55,6 +55,8 @@ import AddSingleTeacherToCourseAdmin from "./Add-Single-Teacher-To-Course-Admin/
 import SeeStudentsPerCourseAdmin from "./See-Students-Per-Course-Admin/See-Students-Per-Course-Admin.tsx";
 import {useEffect} from "react";
 import MyProfileAdmin from "./My-Profile-Admin/My-Profile-Admin.tsx";
+import DeleteMaterialsPerLectureTeacher
+    from "./Delete-Materials-Per-Lecture-Teacher/Delete-Materials-Per-Lecture-Teacher.tsx";
 
 
 function App() {
@@ -136,14 +138,14 @@ function RoutesComponent() {
                             <Route path={"/view-course-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
                             <Route path={"/view-auxiliar-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
                             <Route path={"/view-video-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
-                            <Route path={"/homeworks-per-lecture"} element={<HomeworksPerLectureTeacher />}/>
+                            <Route path={"/homeworks-per-lecture/:idCourses/:idLectures"} element={<HomeworksPerLectureTeacher />}/>
                             <Route path={"/add-feedback"} element={<FeedbackPerHomeworkTeacher />}/>
                             <Route path={"/notifications-teacher"} element={<NotificationsTeacher />}/>
                             <Route path={"/my-profile"} element={<MyProfileTeacher />} />
-                            <Route path={"/add-homework-announcement"} element={<HomeworkAnnouncementTeacher />} />
-                            <Route path={"/see-homework-announcement"} element={<SeeHomeworkAnnouncementTeacher />} />
-                            <Route path={"/edit-homework-announcement"} element={<EditHomeworkAnnouncementsTeacher /> } />
-                            <Route path={"/add-materials-per-lecture"} element={<AddMaterialsTeacher />} />
+                            <Route path={"/add-homework-announcement/:idCourses/:idLectures"} element={<HomeworkAnnouncementTeacher />} />
+                            <Route path={"/see-homework-announcement/:idCourses/:idLectures"} element={<SeeHomeworkAnnouncementTeacher />} />
+                            <Route path={"/edit-homework-announcement/:idHomeWorkAnnouncement"} element={<EditHomeworkAnnouncementsTeacher /> } />
+                            <Route path={"/add-materials-per-lecture/:idLectures"} element={<AddMaterialsTeacher />} />
                             <Route path={"/create-test"} element={<CreateTestTeacher />} />
                             <Route path={"/see-tests"} element={<SeeTestsTeacher />} />
                             <Route path={"/edit-test"} element={<EditTestTeacher />} />
@@ -151,6 +153,7 @@ function RoutesComponent() {
                             <Route path={"/add-correct-answers"} element={<AddCorrectAnswersTestTeacher />} />
                             <Route path={"/add-students-to-test"} element={<UploadStudentsToTestTeacher />} />
                             <Route path={"/add-review"} element={<NeedsReviewTeacher />} />
+                            <Route path={"/delete-materials-per-lecture/:idLectures"} element={<DeleteMaterialsPerLectureTeacher />} />
                     </>
                 )}
 

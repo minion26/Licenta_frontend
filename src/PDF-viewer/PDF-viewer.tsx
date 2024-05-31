@@ -52,6 +52,8 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
 import type { ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
 import styles from './PDF-viewer.module.css';
+import * as mammoth from 'mammoth';
+import {useEffect, useState} from "react";
 
 
 
@@ -73,7 +75,27 @@ function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
         EnterFullScreenMenuItem: () => <></>,
         SwitchTheme: () => <></>,
         SwitchThemeMenuItem: () => <></>,
+
     });
+
+    const [docContent, setDocContent] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (fileType === 'docx' || fileType === 'doc') {
+            fetch(fileURL)
+                .then(response => response.arrayBuffer())
+                .then(arrayBuffer => {
+                    mammoth.convertToHtml({arrayBuffer: arrayBuffer})
+                        .then(function(result){
+                            const html = result.value; // The generated HTML
+                            setDocContent(html);
+                        })
+                        .catch(function(err){
+                            console.log(err);
+                        });
+                });
+        }
+    }, [fileURL, fileType]);
 
     // Check if fileURL is defined
     if (!fileURL) {
@@ -84,7 +106,14 @@ function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
 
         const fileExtension = fileType;
 
-        switch(fileExtension) {
+        if (docContent) {
+            return <div className={styles.container}>
+                <iframe srcDoc={docContent} title="file content" style={{width: '100%', height: '100%'}}/>
+            </div>
+
+        }
+
+        switch (fileExtension) {
             case 'pdf':
                 return (
 

@@ -8,9 +8,11 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {Course, HomeworkAnnouncements} from "../types.ts";
 
-function Buttons(){
+function Buttons({idHomeworkAnnouncement}: {idHomeworkAnnouncement: string}){
     return (<div>
         <Button
             variant="contained"
@@ -77,7 +79,7 @@ function Buttons(){
                 textTransform: "none",
             }}
             component={Link}
-            to="/edit-homework-announcement"
+            to={`/edit-homework-announcement/${idHomeworkAnnouncement}`}
         >
         </Button>
     </div>
@@ -85,25 +87,70 @@ function Buttons(){
 }
 
 function SeeHomeworkAnnouncementTeacher() {
+    const {idCourses, idLectures} = useParams();
+    const [course, setCourse] = useState<Course>();
+    const [homeworks, setHomeworks] = useState<HomeworkAnnouncements[]>([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:8081/api/v1/courses/${idCourses}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setCourse(data);
+                console.log(data);
+            })
+            .catch((error) => console.error('An error occured!', error));
+    }, [idCourses]);
+
+    useEffect(() => {
+        fetch(`http://localhost:8081/api/v1/homework-announcements/idLecture=${idLectures}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setHomeworks(data);
+                console.log(data);
+            })
+            .catch((error) => console.error('An error occured!', error));
+    }, [idLectures]);
+
 
   return (
     <div>
         <Header/>
-        <UpperHeader title={"Edit Homework Announcemets"} subtitle={"date"}/>
+        <UpperHeader title={"Homework " + course?.name} subtitle={"date"}/>
         <div className={styles.cardContainer}>
-            <CardElongated title={"Homework 1"} cardIndex={1} height={100}>
-                <Box sx={{ display: "flex" }}>
-                    <CardContent
-                        sx={{
-                            flex: "1 0 auto",
-                            display: "flex",
-                            flexDirection: "row",
-                        }}
-                    >
-                    <Buttons />
-                    </CardContent>
-                </Box>
-            </CardElongated>
+            {
+                homeworks.map((homework, index) => {
+                    return (
+                        <CardElongated title={homework.title} cardIndex={index} height={100}>
+                            <Box sx={{ display: "flex" }}>
+                                <CardContent
+                                    sx={{
+                                        flex: "1 0 auto",
+                                        display: "flex",
+                                        flexDirection: "row",
+                                    }}
+                                >
+                                    <Buttons idHomeworkAnnouncement={homework.idHomeworkAnnouncement}/>
+                                </CardContent>
+                            </Box>
+                        </CardElongated>
+                    );
+                })
+            }
+
     </div>
     </div>
   );

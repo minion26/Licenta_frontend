@@ -7,10 +7,13 @@ import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Button from "@mui/material/Button";
 import SendIcon from '@mui/icons-material/Send';
+import {materialsDTO} from "../types.ts";
+import {useParams} from "react-router-dom";
 
-function UploadMaterialsTeachers ()  {
+function UploadMaterialsTeachers ({materialsDTO: materialsDTO} : {materialsDTO: materialsDTO}) {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const {idLectures} = useParams();
 
     const [files, setFiles] = useState<FileList | null>(null);
     const [status, setStatus] = useState<
@@ -31,13 +34,20 @@ function UploadMaterialsTeachers ()  {
             const formData = new FormData();
 
             [...files].forEach((file) => {
-                formData.append("files", file);
+                formData.append("file", file);
             });
 
+            console.log("materialsDTO: ", materialsDTO);
+            formData.append("materialsDTO", JSON.stringify(materialsDTO));
+
             try {
-                const result = await fetch("https://httpbin.org/post", {
+                const result = await fetch(`http://localhost:8081/api/v1/materials/upload/${idLectures}`, {
                     method: "POST",
                     body: formData,
+                    credentials: "include",
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                    }
                 });
 
                 const data = await result.json();

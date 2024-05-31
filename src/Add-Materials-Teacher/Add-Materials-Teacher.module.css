@@ -11,7 +11,14 @@
 
 }
 
-
+.selectStyle {
+    background-color: #f8f8f8;
+    color: #333;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
 @media screen and (max-width: 540px) {
     .container {

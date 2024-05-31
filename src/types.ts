@@ -132,6 +132,43 @@ export type Materials = {
     storageClass: string;
 }
 
+export type materialsDTO = {
+    materialType: string;
+}
+
+export type MaterialsInfoDTO = {
+    idMaterial: string;
+    name: string;
+}
+
+export type HomeworkAnnouncementsCreationDTO = {
+    title: string;
+    description: string;
+    dueDate: Date | null;
+    score: number;
+}
+
+export type HomeworkAnnouncements = {
+    idHomeworkAnnouncement: string;
+    title: string;
+    description: string;
+    dueDate: Date | null;
+    score: number;
+    idLecture: string;
+    idTeacher: string;
+}
+
+export type Homework = {
+    idHomework: string;
+    idStudent: string;
+    nrMatricol: string;
+    firstNameStudent: string;
+    lastNameStudent: string;
+    grade: number;
+    uploadDate: Date | null;
+    fileName: Array<string>;
+}
+
 
 
 

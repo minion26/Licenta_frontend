@@ -6,12 +6,91 @@ import Button from "@mui/material/Button";
 import Swal from "sweetalert2";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {useNavigate, useParams} from "react-router-dom";
+import {useState} from "react";
+import {DatePicker} from 'rsuite';
+
+import "rsuite/DatePicker/styles/index.css";
+import {HomeworkAnnouncementsCreationDTO} from "../types.ts";
+
+
+
 
 function HomeworkAnnouncementTeacher() {
+    const {idCourses, idLectures} = useParams();
+    const navigate = useNavigate();
+
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+
+    const [homeworkAnnouncement, setHomeworkAnnouncement] = useState<HomeworkAnnouncementsCreationDTO>({
+        title: "",
+        description: "",
+        dueDate: null ,
+        score: 0
+    });
+
+    const initialHomeworkAnnouncementState = {
+        title: "",
+        description: "",
+        dueDate: null,
+        score: 0
+    };
+
+    const handleCancel = () => {
+        setHomeworkAnnouncement(initialHomeworkAnnouncementState);
+    }
+
+    const handleChange = (e :  React.ChangeEvent<HTMLInputElement> ) => {
+        const value = e.target.type === "number" ? parseInt(e.target.value) : e.target.value;
+        setHomeworkAnnouncement({
+            ...homeworkAnnouncement,
+            [e.target.name]: value
+        });
+    }
+
+    const handleSubmit = async (e :  React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(homeworkAnnouncement);
+
+        const response = await fetch(`http://localhost:8081/api/v1/homework-announcements/create/idLecture=${idLectures}`, {
+            method: "POST",
+            credentials : 'include',
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(homeworkAnnouncement),
+        });
+
+        if(response.ok){
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "The announcement has been saved",
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            if (response.headers.get("content-type")?.includes("application/json")) {
+                const data = await response.json();
+                console.log("response:", data);
+            }
+
+            navigate(`/materials-per-lecture/${idCourses}/${idLectures}`);
+        }else{
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Something went wrong",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
         <Header/>
         <UpperHeader title={"Create Homework Announcemet"} subtitle={"date"}/>
         <Box
@@ -31,19 +110,39 @@ function HomeworkAnnouncementTeacher() {
                 <TextField
                     label="Title"
                     id="outlined-start-adornment-title"
-                    sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
+                    sx={{m: 1, width: "25ch", marginBottom: "20px"}}
+                    value={homeworkAnnouncement.title}
+                    name="title"
+                    onChange={handleChange}
                 />
-                {/*<TextField*/}
-                {/*    label="Last Name"*/}
-                {/*    id="outlined-start-adornment-lastname"*/}
-                {/*    sx={{ m: 1, width: "25ch", marginBottom: "20px" }}*/}
-                {/*/>*/}
+
 
                 <TextField
-                    sx={{ m: 1, marginBottom: "20px" }}
+                    sx={{m: 1, marginBottom: "20px"}}
                     fullWidth
                     label="Description"
                     id="description"
+                    multiline
+                    rows={4}
+                    value={homeworkAnnouncement.description}
+                    name="description"
+                    onChange={handleChange}
+                />
+
+
+
+                <DatePicker
+                    size="lg"
+                    placeholder="Select Due Date"
+                    style={{ width: "200px",
+                        height: "80px",
+                        margin: 1,
+                        marginBottom: "20px"
+                    }}
+                    value={homeworkAnnouncement.dueDate}
+                    name="dueDate"
+                    onChange={(value) => setHomeworkAnnouncement({...homeworkAnnouncement, dueDate: value})}
+
                 />
 
 
@@ -53,7 +152,7 @@ function HomeworkAnnouncementTeacher() {
                     id="outlined-score"
                     label="Score"
                     type="number"
-                    sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
+                    sx={{m: 1, width: "25ch", marginBottom: "20px"}}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -61,10 +160,11 @@ function HomeworkAnnouncementTeacher() {
                         min: 1,
                         max: 100,
                     }}
+                    value={homeworkAnnouncement.score}
+                    name="score"
+                    onChange={handleChange}
 
                 />
-
-
 
 
                 <Box
@@ -76,25 +176,17 @@ function HomeworkAnnouncementTeacher() {
                         m: 1,
                     }}
                 >
-                    <Button variant="outlined">Cancel</Button>
+                    <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
                     <Button
                         variant="contained"
-                        onClick={() => {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: "The announcement has been saved",
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        }}
+                        type={"submit"}
                     >
                         Save
                     </Button>
                 </Box>
             </Box>
         </Box>
-    </div>
+    </form>
   );
 }
 
