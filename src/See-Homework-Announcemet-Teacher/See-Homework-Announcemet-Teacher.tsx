@@ -47,12 +47,45 @@ function Buttons({idHomeworkAnnouncement}: {idHomeworkAnnouncement: string}){
                     confirmButtonText: "Yes, delete it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "The announcement has been deleted.",
-                            icon: "success"
-                        });
-                        // Here you can add the code to actually delete the student
+                        fetch(`http://localhost:8081/api/v1/homework-announcements/delete/idHomeworkAnnouncement=${idHomeworkAnnouncement}`, {
+                            method: 'DELETE',
+                            credentials: 'include',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*',
+                            },
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    console.error(`Server responded with status code ${response.status}`);
+                                    throw new Error('Failed to delete student');
+                                }
+                                if (response.headers.get('content-type')?.includes('application/json')) {
+                                    const data = response.json();
+                                    console.log('File uploaded', data);
+                                } else {
+                                    console.log('No JSON data returned');
+                                }
+                            })
+                            .then(data => {
+                                console.log(data);
+                                Swal.fire({
+                                    title: "Deleted!",
+                                    text: "The account has been deleted.",
+                                    icon: "success"
+                                });
+
+                                window.location.reload();
+                            })
+                            .catch(error => {
+                                console.error('There was an error!', error);
+                                Swal.fire({
+                                    title: "An error occurred",
+                                    text: "The announcement could not be deleted.",
+                                    icon: "error"
+                                });
+
+                            })
                     }
                 });
             }}

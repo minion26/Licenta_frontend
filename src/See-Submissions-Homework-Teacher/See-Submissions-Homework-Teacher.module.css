@@ -15,31 +15,10 @@ body{
 .container{
     margin-left: 140px;
     margin-top: 10px;
-    overflow-x: hidden;
-    margin-right: 100px;
     display: flex;
     flex-wrap: wrap;
     /*justify-content: space-between;*/
     gap: 10px;
-}
-
-.divContainer{
-    position: relative;
-    z-index: 99;
-
-}
-
-.divContainerButton{
-    position: relative;
-    z-index: 99;
-    margin-top: 10px;
-}
-
-.fileContainer{
-    position: relative;
-    width: 100%; /* Adjust as needed */
-    height: 100%; /* Adjust as needed */
-    overflow: hidden;
 }
 
 @media screen and (max-width: 540px) {
@@ -49,14 +28,4 @@ body{
         margin-left: 0;
     }
 
-    .divContainer{
-        flex-direction: row;
-        align-self: flex-start;
-        z-index: 99;
-        width: 200px;
-
-    }
-
 }
-
-

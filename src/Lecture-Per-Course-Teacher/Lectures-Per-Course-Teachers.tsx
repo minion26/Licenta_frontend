@@ -298,7 +298,7 @@ function LecturesPerCourseTeachers(){
                     <CardElongated title="No lectures added yet" cardIndex={0}/>
                     : (
                     lectures.map((lecture, index) => (
-                        <CardElongated title={lecture.name}  cardIndex={index + 1}>
+                        <CardElongated key={index} title={lecture.name}  cardIndex={index + 1}>
                             <Button
                                 variant="contained"
                                 endIcon={<CreateOutlinedIcon />}

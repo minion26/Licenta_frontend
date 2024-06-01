@@ -152,7 +152,7 @@ export type HomeworkAnnouncements = {
     idHomeworkAnnouncement: string;
     title: string;
     description: string;
-    dueDate: Date | null;
+    dueDate: string | null | undefined;
     score: number;
     idLecture: string;
     idTeacher: string;
@@ -167,6 +167,18 @@ export type Homework = {
     grade: number;
     uploadDate: Date | null;
     fileName: Array<string>;
+}
+
+export type HomeworkGrade = {
+    grade: number;
+}
+
+export type Note = {
+    idNote: string;
+    note: number;
+    positionX: number;
+    positionY: number;
+    text: string;
 }
 
 

@@ -57,7 +57,7 @@ import {useEffect} from "react";
 import MyProfileAdmin from "./My-Profile-Admin/My-Profile-Admin.tsx";
 import DeleteMaterialsPerLectureTeacher
     from "./Delete-Materials-Per-Lecture-Teacher/Delete-Materials-Per-Lecture-Teacher.tsx";
-
+import SeeSubmissionsHomeworkTeacher from './See-Submissions-Homework-Teacher/See-Submissions-Homework-Teacher.tsx';
 
 function App() {
 
@@ -139,7 +139,8 @@ function RoutesComponent() {
                             <Route path={"/view-auxiliar-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
                             <Route path={"/view-video-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
                             <Route path={"/homeworks-per-lecture/:idCourses/:idLectures"} element={<HomeworksPerLectureTeacher />}/>
-                            <Route path={"/add-feedback"} element={<FeedbackPerHomeworkTeacher />}/>
+                        <Route path={"see-submissions/:idHomeworkAnnouncement"} element={<SeeSubmissionsHomeworkTeacher />}/>
+                            <Route path={"/add-feedback/:idHomeworkAnnouncement/:idHomework"} element={<FeedbackPerHomeworkTeacher />}/>
                             <Route path={"/notifications-teacher"} element={<NotificationsTeacher />}/>
                             <Route path={"/my-profile"} element={<MyProfileTeacher />} />
                             <Route path={"/add-homework-announcement/:idCourses/:idLectures"} element={<HomeworkAnnouncementTeacher />} />

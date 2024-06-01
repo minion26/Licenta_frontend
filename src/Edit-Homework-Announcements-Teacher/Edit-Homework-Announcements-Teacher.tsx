@@ -38,7 +38,7 @@ function EditHomeworkAnnouncementsTeacher() {
             method: "GET",
             credentials: 'include',
             headers: {
-                "Content-Type": "application/json",
+                // "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
             },
         })
@@ -66,10 +66,12 @@ function EditHomeworkAnnouncementsTeacher() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            const homeworkAnnouncementToSend = {
-                ...homeworkAnnouncement,
-                dueDate: homeworkAnnouncement.dueDate ? homeworkAnnouncement.dueDate.toISOString() : null,
-            };
+            // const homeworkAnnouncementToSend = {
+            //     ...homeworkAnnouncement,
+            //     dueDate: homeworkAnnouncement.dueDate ? new Date(homeworkAnnouncement.dueDate).toISOString() : null,
+            // };
+            //
+            // console.log(homeworkAnnouncementToSend);
 
             const response = await fetch(`http://localhost:8081/api/v1/homework-announcements/update/idHomeworkAnnouncement=${idHomeWorkAnnouncement}`, {
                 method: "PATCH",
@@ -78,7 +80,7 @@ function EditHomeworkAnnouncementsTeacher() {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*",
                 },
-                body: JSON.stringify(homeworkAnnouncementToSend),
+                body: JSON.stringify(homeworkAnnouncement),
             });
             if (response.ok) {
                 Swal.fire({
@@ -106,6 +108,7 @@ function EditHomeworkAnnouncementsTeacher() {
             console.error('Error:', error);
         }
     };
+
 
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -161,8 +164,16 @@ function EditHomeworkAnnouncementsTeacher() {
                             marginBottom: "20px"
                         }}
                         value={homeworkAnnouncement.dueDate ? new Date(homeworkAnnouncement.dueDate) : undefined}
-                        name="dueDate"
-                        onChange={(value) => setHomeworkAnnouncement({...homeworkAnnouncement, dueDate: value})}
+                        name={"dueDate"}
+                        onChange={(value) => {
+                            if (value) {
+                                const offset = value.getTimezoneOffset();
+                                const localISOTime = (new Date(value.getTime() - (offset * 60 * 1000))).toISOString().slice(0, -1);
+                                setHomeworkAnnouncement({...homeworkAnnouncement, dueDate: localISOTime})
+                                console.log("new date:", localISOTime)
+                            }
+
+                        }}
 
                     />
 

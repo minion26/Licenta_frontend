@@ -140,6 +140,11 @@ return (
                                                     })
                                                     .catch(error => {
                                                         console.error('An error occured!', error);
+                                                        Swal.fire({
+                                                            title: "An error occurred",
+                                                            text: "The account has not been deleted.",
+                                                            icon: "error"
+                                                        });
 
                                                     });
                                             }

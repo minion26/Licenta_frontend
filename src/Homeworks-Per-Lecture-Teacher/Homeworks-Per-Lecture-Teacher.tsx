@@ -101,9 +101,10 @@ function HomeworksPerLectureTeacher() {
                                     textTransform: 'none',
                                 }}
                                 component={Link}
-                                to={`lalal/${homework.idHomeworkAnnouncement}/submissions`}
+                                to={`/see-submissions/${homework.idHomeworkAnnouncement}`}
                             > See submissions
                             </Button>
+
                         </CardElongated>
                     );
                 })}

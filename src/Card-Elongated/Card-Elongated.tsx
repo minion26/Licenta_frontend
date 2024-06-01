@@ -8,7 +8,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface CardElongatedProps {
   title: string;
-  description?: string;
+  description?: string | number;
   cardIndex: number;
   children?: React.ReactNode;
   height?: string | number;

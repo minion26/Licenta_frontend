@@ -50,9 +50,13 @@ function UploadMaterialsTeachers ({materialsDTO: materialsDTO} : {materialsDTO: 
                     }
                 });
 
-                const data = await result.json();
-
-                console.log(data);
+                if (result.headers.get("content-type")?.includes("application/json")) {
+                    const text = await result.text();
+                    if (text !== "") { // Check if the body is not empty
+                        const data = JSON.parse(text);
+                        console.log(data);
+                    }
+                }
                 setStatus("success");
             } catch (error) {
                 console.error(error);

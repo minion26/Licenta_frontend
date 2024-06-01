@@ -129,6 +129,8 @@ function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
                 );
             case 'png':
                 return <img src={fileURL} alt="file content"/>;
+            case 'jpg':
+                return <img src={fileURL} alt="file content"/>;
             case 'txt':
             case 'py':
                 return (
