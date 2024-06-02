@@ -108,8 +108,9 @@ function FeedbackPerHomeworkTeacher() {
         })
             .then(response => response.json())
             .then(data => {
-                const transformedNotes = data.map((note, index) => ({
-                    id: String(index + 1),
+                console.log("data : ", data);
+                const transformedNotes = data.map((note) => ({
+                    id: note.idFeedback,
                     position: { x: note.positionX, y: note.positionY },
                     text: note.noteText
                 }));
@@ -121,6 +122,12 @@ function FeedbackPerHomeworkTeacher() {
                 console.error("Error:", error);
             });
     }, [idHomework]);
+
+    const [notesDBCopy, setNotesDBCopy] = useState([]);
+
+    useEffect(() => {
+        setNotesDBCopy(notesDB);
+    }, [notesDB]);
 
     // useEffect(() => {
     //     console.log(notesDB);
@@ -278,6 +285,49 @@ function FeedbackPerHomeworkTeacher() {
 
     const handleChange = (type, payload, notes) => {
         localStorage.setItem('react-sticky-notes', JSON.stringify(notes));
+
+        // Check if a note has been deleted
+        const newNotesDBCopy = notesDBCopy.filter(note => {
+            return notes.some(newNote => newNote.id === note.id);
+        });
+
+        // Find the deleted notes
+        const deletedNotes = notesDBCopy.filter(note => !newNotesDBCopy.includes(note));
+
+        deletedNotes.forEach(note => {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Perform the deletion here
+                    fetch(`http://localhost:8081/api/v1/feedback/delete/idFeedback=${note.id}`, {
+                        method: "DELETE",
+                        credentials: "include",
+                        headers: {
+                            "Access-Control-Allow-Credentials": "true"
+                        }
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            console.log(`Note with id ${note.id} deleted successfully.`);
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error);
+                        });
+                }
+            })
+        });
+
+        // Update the copy of notesDB
+        setNotesDBCopy(newNotesDBCopy);
     }
 
     // const [notes, setNotes] = useState([
