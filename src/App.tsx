@@ -148,9 +148,9 @@ function RoutesComponent() {
                             <Route path={"/edit-homework-announcement/:idHomeWorkAnnouncement"} element={<EditHomeworkAnnouncementsTeacher /> } />
                             <Route path={"/add-materials-per-lecture/:idLectures"} element={<AddMaterialsTeacher />} />
                             <Route path={"/create-test"} element={<CreateTestTeacher />} />
-                            <Route path={"/see-tests"} element={<SeeTestsTeacher />} />
-                            <Route path={"/edit-test"} element={<EditTestTeacher />} />
-                            <Route path={"/add-questions-test"} element={<AddQuestionsTestTeacher />} />
+                            <Route path={"/see-tests/:idCourses"} element={<SeeTestsTeacher />} />
+                            <Route path={"/edit-test/:idCourses/:idExam"} element={<EditTestTeacher />} />
+                            <Route path={"/add-questions-test/:idExam"} element={<AddQuestionsTestTeacher />} />
                             <Route path={"/add-correct-answers"} element={<AddCorrectAnswersTestTeacher />} />
                             <Route path={"/add-students-to-test"} element={<UploadStudentsToTestTeacher />} />
                             <Route path={"/add-review"} element={<NeedsReviewTeacher />} />

@@ -167,7 +167,7 @@ function Buttons({ idCourses }: { idCourses: string | undefined}){
                             textTransform: 'none',
                         }}
                         component={Link}
-                        to="/see-tests"
+                        to={`/see-tests/${idCourses}`}
                     > See Tests
                     </Button>
 
@@ -337,3 +337,5 @@ function LecturesPerCourseTeachers(){
 }
 
 export default LecturesPerCourseTeachers;
+
+

@@ -1,6 +1,10 @@
 import styles from "./Header.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {FaBookOpen, FaUser} from 'react-icons/fa';
+import {RiPagesFill} from "react-icons/ri";
+import {PiExamFill} from "react-icons/pi";
+import {IoNotificationsSharp} from "react-icons/io5";
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
 
@@ -24,26 +28,26 @@ function Header() {
         <nav>
           <ul className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
             <Link to="/my-profile" className={styles.headerUlLiA}>
-              <li className={`${styles.headerUlLi}`}>My profile</li>
+              <li className={`${styles.headerUlLi}`}>  <FaUser /> My profile</li>
             </Link>
 
             <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
               <a className={styles.headerUlLiA} href="/">
-                Courses
+                <FaBookOpen /> Courses
               </a>
             </li>
             <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
               <a className={styles.headerUlLiA} href="/">
-                Lectures
+                <RiPagesFill /> Lectures
               </a>
             </li>
 
             <Link to="/see-tests" className={styles.headerUlLiA}>
-              <li className={`${styles.headerUlLi} `}>Tests</li>
+              <li className={`${styles.headerUlLi} `}> <PiExamFill /> Tests</li>
             </Link>
 
             <Link to="/notifications-teacher" className={styles.headerUlLiA}>
-              <li className={`${styles.headerUlLi} `}>Notifications</li>
+              <li className={`${styles.headerUlLi} `}> <IoNotificationsSharp /> Notices</li>
             </Link>
           </ul>
         </nav>

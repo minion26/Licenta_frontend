@@ -10,7 +10,7 @@ export type Course = {
 };
 
 
-export type Question = {
+export type QuestionDTO = {
     idQuestion: string;
     questionText: string;
     idExam: string;
@@ -32,18 +32,44 @@ export type StudentExamDTO = {
     examStatus: number;
 };
 
-export type ExamType = {
+export type ExamDTO = {
     idExam: string;
     name: string;
-    questions: Array<Question>;
+    question: Array<QuestionDTO>;
     timeInMinutes: number;
     totalScore: number;
     passingScore: number;
-    date: string;
+    date: Date;
     courseName: string;
     idTeachers: Array<string>;
     studentExamDTO: Array<StudentExamDTO>;
-};
+}
+
+export type ExamCreationDTO = {
+    name:string;
+    questions: Array<QuestionCreationDTO>;
+    timeInMinutes: number;
+    totalScore: number;
+    passingScore: number;
+    date: Date;
+    idCourse: string;
+    idTeachers: Array<string>;
+}
+
+export type QuestionCreationDTO = {
+    idQuestion: string;
+    questionText: string;
+    idExam: string;
+}
+
+export type StudentExamFrontDTO = {
+    idStudentExam: string;
+    idStudent:string;
+    studentName : string;
+    idExam: string;
+    score: number;
+    examStatus: number;
+}
 
 export type StudentName = {
     firstName: string;
@@ -179,6 +205,8 @@ export type Note = {
     positionY: number;
     noteText: string;
 }
+
+
 
 
 
