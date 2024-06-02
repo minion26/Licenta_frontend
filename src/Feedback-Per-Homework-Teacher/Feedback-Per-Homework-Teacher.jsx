@@ -95,32 +95,32 @@ function FeedbackPerHomeworkTeacher() {
 
     }, [files]);
 
-    // const [notesDB, setNotesDB] = useState([]);
-    // const [isLoading, setIsLoading] = useState(true);
+    const [notesDB, setNotesDB] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    // useEffect(() => {
-    //     fetch(`http://localhost:8081/api/v1/feedback/all/idHomework=${idHomework}`, {
-    //         method: "GET",
-    //         credentials: "include",
-    //         headers: {
-    //             "Access-Control-Allow-Credentials": "true"
-    //         }
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             const transformedNotes = data.map((note, index) => ({
-    //                 id: String(index + 1),
-    //                 position: { x: note.positionX, y: note.positionY },
-    //                 text: note.noteText
-    //             }));
-    //             setNotesDB(transformedNotes);
-    //             setIsLoading(false); // Set loading to false when the fetch request is done
-    //             console.log(data);
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error:", error);
-    //         });
-    // }, [idHomework]);
+    useEffect(() => {
+        fetch(`http://localhost:8081/api/v1/feedback/all/idHomework=${idHomework}`, {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "Access-Control-Allow-Credentials": "true"
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                const transformedNotes = data.map((note, index) => ({
+                    id: String(index + 1),
+                    position: { x: note.positionX, y: note.positionY },
+                    text: note.noteText
+                }));
+                setNotesDB(transformedNotes);
+                setIsLoading(false); // Set loading to false when the fetch request is done
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }, [idHomework]);
 
     // useEffect(() => {
     //     console.log(notesDB);
@@ -184,12 +184,38 @@ function FeedbackPerHomeworkTeacher() {
         if (jsonString) {
             const notes = JSON.parse(jsonString);
 
-            // Parse the notes into the desired format
-            const feedback = notes.map(note => ({
+            // Transform notesDB into a comparable format
+            const notesDBComparable = notesDB.map(note => ({
                 positionX: note.position.x,
                 positionY: note.position.y,
                 noteText: note.text
             }));
+
+            // Filter out the notes that are already in notesDB
+            const uniqueNotes = notes.filter(note => {
+                const comparableNote = {
+                    positionX: note.position.x,
+                    positionY: note.position.y,
+                    noteText: note.text
+                };
+                return !notesDBComparable.some(dbNote => JSON.stringify(dbNote) === JSON.stringify(comparableNote));
+            });
+
+            // Parse the unique notes into the desired format
+            const feedback = uniqueNotes.map(note => ({
+                positionX: note.position.x,
+                positionY: note.position.y,
+                noteText: note.text
+            }));
+
+            // const notes = JSON.parse(jsonString);
+            //
+            // // Parse the notes into the desired format
+            // const feedback = notes.map(note => ({
+            //     positionX: note.position.x,
+            //     positionY: note.position.y,
+            //     noteText: note.text
+            // }));
 
             fetch(`http://localhost:8081/api/v1/feedback/create/idHomework=${idHomework}`, {
                 method: "POST",
@@ -314,9 +340,9 @@ function FeedbackPerHomeworkTeacher() {
                     </form>
                     <div>
 
-                        {/*{isLoading ? <div>Loading...</div> : <ReactStickyNotes notes={notesDB} onBeforeChange={handleOnChange2} />}*/}
+                        {isLoading ? <div>Loading...</div> : <ReactStickyNotes notes={notesDB} onBeforeChange={handleBeforeChange} onChange={handleChange} />}
                         {/*        /!*<ReactStickyNotes onBeforeChange={handleBeforeChange} onChange={handleChange}/>*!/*/}
-                        <ReactStickyNotes onBeforeChange={handleBeforeChange} onChange={handleChange}/>
+                        {/*<ReactStickyNotes onBeforeChange={handleBeforeChange} onChange={handleChange}/>*/}
 
                     </div>
 
