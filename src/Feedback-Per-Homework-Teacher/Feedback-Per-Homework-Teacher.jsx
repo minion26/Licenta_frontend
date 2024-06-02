@@ -7,7 +7,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Swal from "sweetalert2";
 import Button from "@mui/material/Button";
-import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined.js";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -95,25 +95,36 @@ function FeedbackPerHomeworkTeacher() {
 
     }, [files]);
 
-    const [notesDB, setNotesDB] = useState([]);
+    // const [notesDB, setNotesDB] = useState([]);
+    // const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        fetch(``, {
-            method: "GET",
-            credentials: "include",
-            headers: {
-                "Access-Control-Allow-Credentials": "true"
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                setNotesDB(data);
-                console.log(data);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-    }, [idHomework]);
+    // useEffect(() => {
+    //     fetch(`http://localhost:8081/api/v1/feedback/all/idHomework=${idHomework}`, {
+    //         method: "GET",
+    //         credentials: "include",
+    //         headers: {
+    //             "Access-Control-Allow-Credentials": "true"
+    //         }
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             const transformedNotes = data.map((note, index) => ({
+    //                 id: String(index + 1),
+    //                 position: { x: note.positionX, y: note.positionY },
+    //                 text: note.noteText
+    //             }));
+    //             setNotesDB(transformedNotes);
+    //             setIsLoading(false); // Set loading to false when the fetch request is done
+    //             console.log(data);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error:", error);
+    //         });
+    // }, [idHomework]);
+
+    // useEffect(() => {
+    //     console.log(notesDB);
+    // })
 
     // const pdfViewerRef = useRef(null);
     // const [coordinates, setCoordinates] = useState([]);
@@ -126,50 +137,91 @@ function FeedbackPerHomeworkTeacher() {
     //     }
     // }, [fileUrls]);
 
-    const [myNotes, setMyNotes] = useState([]);
+    // const [myNotes, setMyNotes] = useState([]);
+    //
+    // const [feedbackCreationDTO, setFeedbackCreationDTO] = useState([]);
+    // const [newNotes, setNewNotes] = useState([]);
 
-    const handleSubmit = () => {
-        const notesString = localStorage.getItem('react-sticky-notes');
-        if (notesString) {
-            const notes = JSON.parse(notesString);
-            // Now you can use the notes object
-            // It's an array of note objects, each with id, position, and text properties
-            const newNotes = notes.map(note => {
-                console.log(`ID: ${note.id}, Position: (${note.position.x}, ${note.position.y}), Text: ${note.text}`);
-                return [
-                    note.id,
-                    note.position.x,
-                    note.position.y,
-                    note.text
-                ];
-            });
-            setMyNotes(prevNotes => [...prevNotes, ...newNotes]);
-        } else {
-            console.log('No notes found in local storage.');
-        }
+    // useEffect(() => {
+    //     const jsonString = localStorage.getItem('react-sticky-notes');
+    //     if (jsonString ) {
+    //         const notes = JSON.parse(jsonString);
+    //         const newNotes = notes.map(note => {
+    //             return [
+    //                 note.position.x,
+    //                 note.position.y,
+    //                 note.text
+    //             ];
+    //         });
+    //         setMyNotes(prevNotes => [...prevNotes, ...newNotes]);
+    //         setNewNotes(newNotes);
+    //     } else {
+    //         console.log('No notes found in local storage.');
+    //     }
+    // }, []);
 
-        if(myNotes.length !== 0) {
-            fetch(``, {
+    // useEffect(() => {
+    //     if(newNotes.length !== 0) {
+    //         const feedback = newNotes.map(note => ({
+    //             positionX: note[0],
+    //             positionY: note[1],
+    //             noteText: note[2]
+    //         }));
+    //
+    //         setFeedbackCreationDTO(feedback);
+    //     }
+    // }, [feedbackCreationDTO]);
+    //
+    // useEffect(() => {
+    //     console.log("here", newNotes);
+    // }, [newNotes]);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        // Retrieve the notes from local storage
+        const jsonString = localStorage.getItem('react-sticky-notes');
+        if (jsonString) {
+            const notes = JSON.parse(jsonString);
+
+            // Parse the notes into the desired format
+            const feedback = notes.map(note => ({
+                positionX: note.position.x,
+                positionY: note.position.y,
+                noteText: note.text
+            }));
+
+            fetch(`http://localhost:8081/api/v1/feedback/create/idHomework=${idHomework}`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Credentials": "true"
                 },
-                body: JSON.stringify({
-                    idHomework: idHomework,
-                    feedback: myNotes
-                })
+                body: JSON.stringify(feedback)
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
                 .then(data => {
-                    console.log(data);
+                    if (data) {
+                        return JSON.parse(data);
+                    } else {
+                        console.log('No data returned by the server');
+                    }
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Feedback submitted successfully!',
                         showConfirmButton: false,
                         timer: 1500
                     });
+
+                    //delete local storage
+                    localStorage.removeItem('react-sticky-notes');
                 })
                 .catch((error) => {
                     console.error("Error:", error);
@@ -180,14 +232,16 @@ function FeedbackPerHomeworkTeacher() {
                         timer: 1500
                     });
                 });
+
+
+            navigate(`/see-submissions/${idHomeworkAnnouncement}`)
+        } else {
+            console.log('No notes found in local storage.');
         }
 
-        // navigate(`/see-submissions/${idHomeworkAnnouncement}`)
-    }
 
-    useEffect(() => {
-        console.log(myNotes);
-    }, [myNotes]);
+
+    }
 
     const handleBeforeChange = (type, payload) => {
         // Modify the payload if necessary
@@ -197,9 +251,7 @@ function FeedbackPerHomeworkTeacher() {
     }
 
     const handleChange = (type, payload, notes) => {
-        // Save the updated notes to your server or local storage
-        // For example, you can save the notes to local storage
-        localStorage.setItem('notes', JSON.stringify(notes.text));
+        localStorage.setItem('react-sticky-notes', JSON.stringify(notes));
     }
 
     // const [notes, setNotes] = useState([
@@ -214,11 +266,13 @@ function FeedbackPerHomeworkTeacher() {
     //         text: 'This is another note'
     //     }
     // ]);
-    //
-    // const handleOnChange2 = (type, payload, notes) => {
-    //     // Save the updated notes to your server or local storage
-    //     // For example, you can save the notes to local storage
-    //     localStorage.setItem('notes', JSON.stringify(notes));
+
+    // const handleOnChange2 = (type, payload, notesDB) => {
+    //     if (notesDB !== undefined) {
+    //         localStorage.setItem('react-sticky-notes', JSON.stringify(notesDB));
+    //     } else {
+    //         console.log('No notes to save in local storage.');
+    //     }
     // };
 
     const theme = useTheme();
@@ -232,32 +286,38 @@ function FeedbackPerHomeworkTeacher() {
             <div className={styles.container}>
 
                 <div className={styles.divContainer}>
-                    <Button
-                        variant="contained"
-                        endIcon={<CreateOutlinedIcon />}
-                        sx={{
-                            width: isSmallScreen ? '150px' : '175px',
-                            height: '50px',
-                            backgroundColor: '#F5F5F5',
-                            borderRadius: '20px',
-                            color: 'rgba(0,0,0,0.75)',
-                            fontFamily: 'Inter',
-                            fontSize: isSmallScreen ? '10px' : '12px',
-                            fontWeight: 'semi-bold',
-                            alignSelf: 'flex-end',
-                            marginTop: 'auto',
-                            marginLeft: '30px',
-                            marginRight: '20px',
-                            marginBottom: '50px',
-                            border: 'none',
-                            textTransform: 'none',
-                        }}
-                        onClick={handleSubmit}
-                    >
-                        Submit Feedback
-                    </Button>
+                    <form onSubmit={handleSubmit}>
+                        <Button
+                            variant="contained"
+                            endIcon={<CreateOutlinedIcon />}
+                            sx={{
+                                width: isSmallScreen ? '150px' : '175px',
+                                height: '50px',
+                                backgroundColor: '#F5F5F5',
+                                borderRadius: '20px',
+                                color: 'rgba(0,0,0,0.75)',
+                                fontFamily: 'Inter',
+                                fontSize: isSmallScreen ? '10px' : '12px',
+                                fontWeight: 'semi-bold',
+                                alignSelf: 'flex-end',
+                                marginTop: 'auto',
+                                marginLeft: '30px',
+                                marginRight: '20px',
+                                marginBottom: '50px',
+                                border: 'none',
+                                textTransform: 'none',
+                            }}
+                            type={"submit"}
+                        >
+                            Submit Feedback
+                        </Button>
+                    </form>
                     <div>
+
+                        {/*{isLoading ? <div>Loading...</div> : <ReactStickyNotes notes={notesDB} onBeforeChange={handleOnChange2} />}*/}
+                        {/*        /!*<ReactStickyNotes onBeforeChange={handleBeforeChange} onChange={handleChange}/>*!/*/}
                         <ReactStickyNotes onBeforeChange={handleBeforeChange} onChange={handleChange}/>
+
                     </div>
 
 

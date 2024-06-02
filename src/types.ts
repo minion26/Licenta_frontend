@@ -175,10 +175,9 @@ export type HomeworkGrade = {
 
 export type Note = {
     idNote: string;
-    note: number;
     positionX: number;
     positionY: number;
-    text: string;
+    noteText: string;
 }
 
 

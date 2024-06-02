@@ -79,7 +79,7 @@ function HomeworksPerLectureTeacher() {
             <div className={styles.container}>
                 {homeworks.map((homework, index) => {
                     return (
-                        <CardElongated title={homework.title} cardIndex={index} >
+                        <CardElongated key={index} title={homework.title} cardIndex={index} >
                             <Button
                                 variant="contained"
                                 endIcon={<CreateOutlinedIcon />}
