@@ -17,12 +17,23 @@ export type QuestionDTO = {
     correctAnswers: Array<CorrectAnswer>;
 };
 
+export type CorrectAnswersExamCreationDTO = {
+    correctAnswer : string;
+    score: number;
+}
+
 export type CorrectAnswer = {
     idAnswerExam: string;
     correctAnswer: string;
     score: number;
     idQuestionExam: string;
 };
+
+export type QuestionsExamDTO = {
+    idQuestionsExam : string;
+    questionId : string;
+    examId: string;
+}
 
 export type StudentExamDTO = {
     idStudentExam: string;

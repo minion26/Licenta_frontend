@@ -10,27 +10,17 @@
 
 body{
     background-color: #F3F3F3;
-    overflow-x: hidden;
 }
 
-.container{
+.cardContainer{
     margin-left: 140px;
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     /*justify-content: space-between;*/
     gap: 10px;
-    width: 100%;
-
 }
 
-
-
-@media screen and (max-width: 540px) {
-    .container {
-        flex-direction: column;
-        align-items: center;
-        margin-left: 0;
-    }
-
+.noDecoration {
+    text-decoration: none;
 }

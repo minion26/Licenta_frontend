@@ -175,7 +175,7 @@ function SeeTestsTeacher(){
                                             textTransform: "none",
                                         }}
                                         component={Link}
-                                        to="/add-correct-answers"
+                                        to={`/add-correct-answers/${exam.idExam}`}
                                     />
                                 </Tooltip>
                                 <Tooltip title="Add Students To Test">
@@ -199,7 +199,7 @@ function SeeTestsTeacher(){
                                             textTransform: "none",
                                         }}
                                         component={Link}
-                                        to="/add-students-to-test"
+                                        to={`/add-students-to-test/${idCourses}/${exam.idExam}`}
                                     />
                                 </Tooltip>
                             </Box>

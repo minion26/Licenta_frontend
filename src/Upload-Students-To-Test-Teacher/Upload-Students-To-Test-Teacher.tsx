@@ -7,8 +7,12 @@ import styles from "../Upload-Students-Admin/Upload-Students-Admin.module.css";
 import {Importer, ImporterField} from "react-csv-importer";
 // theme CSS for React CSV Importer
 import "react-csv-importer/dist/index.css";
+import {useNavigate, useParams} from "react-router-dom";
 
 function UploadStudentsToTestTeacher(){
+    const {idCourses ,idExam} = useParams();
+    const navigate = useNavigate();
+
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     return(
@@ -68,11 +72,40 @@ function UploadStudentsToTestTeacher(){
                             onStart={({file, fields}) => {
                                 console.log("starting import of file", file, "with fields", fields);
                             }}
-                            onComplete={({file, fields}) => {
+                            onComplete={ async ({file, fields}) => {
                                 console.log("finished import of file", file, "with fields", fields);
+
+                                const formData = new FormData();
+                                formData.append('file', file);
+
+                                try {
+                                    const response = await fetch(`http://localhost:8081/api/v1/student-exam/upload/idExam=${idExam}`, {
+                                        method: "POST",
+                                        credentials: "include",
+                                        body: formData,
+                                        headers: {
+                                            "Access-Control-Allow-Origin": "*",
+                                        }
+                                    })
+
+                                    if (!response.ok) {
+                                        throw new Error('Failed to upload file');
+                                    }
+
+                                    if (response.headers.get('content-type')?.includes('application/json')) {
+                                        const data = await response.json();
+                                        console.log('File uploaded', data);
+                                    } else {
+                                        console.log('No JSON data returned');
+                                    }
+                                }catch(error){
+                                    console.error('Error uploading file', error);
+                                }
+
                             }}
                             onClose={() => {
-                                console.log("importer dismissed");
+                                console.log("importer closed");
+                                navigate(`/see-tests/${idCourses}`)
                             }}
                         >
 
