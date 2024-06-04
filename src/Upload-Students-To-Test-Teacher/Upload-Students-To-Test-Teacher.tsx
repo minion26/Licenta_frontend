@@ -8,6 +8,7 @@ import {Importer, ImporterField} from "react-csv-importer";
 // theme CSS for React CSV Importer
 import "react-csv-importer/dist/index.css";
 import {useNavigate, useParams} from "react-router-dom";
+import Swal from "sweetalert2";
 
 function UploadStudentsToTestTeacher(){
     const {idCourses ,idExam} = useParams();
@@ -89,7 +90,9 @@ function UploadStudentsToTestTeacher(){
                                     })
 
                                     if (!response.ok) {
-                                        throw new Error('Failed to upload file');
+                                        return response.json().then(err => {
+                                            throw new Error(err.message);
+                                        });
                                     }
 
                                     if (response.headers.get('content-type')?.includes('application/json')) {
@@ -99,7 +102,13 @@ function UploadStudentsToTestTeacher(){
                                         console.log('No JSON data returned');
                                     }
                                 }catch(error){
-                                    console.error('Error uploading file', error);
+                                    console.error('Error uploading file', (error as Error));
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: (error as Error).message || 'An error occurred',
+                                        showConfirmButton: false,
+                                        // timer: 1500
+                                    });
                                 }
 
                             }}

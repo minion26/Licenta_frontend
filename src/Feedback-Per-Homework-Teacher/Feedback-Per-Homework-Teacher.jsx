@@ -26,6 +26,7 @@ function FeedbackPerHomeworkTeacher() {
         fileName: []
     });
     const [files, setFiles] = useState([]);
+    const [noPermission, setNoPermission] = useState(false);
 
     useEffect(() => {
         fetch(`http://localhost:8081/api/v1/homework/idHomework=${idHomework}`, {
@@ -34,13 +35,27 @@ function FeedbackPerHomeworkTeacher() {
             headers: {
                 "Access-Control-Allow-Credentials": "true"
             }})
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        setNoPermission(true);
+                        return response.json().then(err => {
+                            throw new Error(err.message);
+                        });
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     setHomework(data);
                     console.log(data);
                 })
                 .catch((error) => {
                     console.error("Error:", error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: error.message || 'An error occurred',
+                        showConfirmButton: false,
+                        // timer: 1500
+                    });
                 })
     }, []);
 
@@ -68,59 +83,66 @@ function FeedbackPerHomeworkTeacher() {
     const [fileUrls, setFileUrls] = useState([]); // Change to an array of strings
 
     useEffect(() => {
-        const fetchPromises = files.map((file) => {
-            // console.log("here : ", file, type[index]);
-            const encodedURICOmponent = encodeURIComponent(file);
-            return fetch(`http://localhost:8081/api/v1/homework/list/${encodedURICOmponent}`, {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "Access-Control-Allow-Credentials": "true"
-                }
-            })
-                .then(response => response.blob())
-                .then(blob => {
-                     return URL.createObjectURL(blob);
-                });
-        });
-
-        Promise.all(fetchPromises)
-            .then(urls => {
-                setFileUrls(urls)
-                // console.log("urls : ", urls)
-            })
-            .catch((error) => {
-                console.error("Error:", error);
+        if (noPermission === false) {
+            const fetchPromises = files.map((file) => {
+                // console.log("here : ", file, type[index]);
+                const encodedURICOmponent = encodeURIComponent(file);
+                return fetch(`http://localhost:8081/api/v1/homework/list/${encodedURICOmponent}`, {
+                    method: "GET",
+                    credentials: "include",
+                    headers: {
+                        "Access-Control-Allow-Credentials": "true"
+                    }
+                })
+                    .then(response => response.blob())
+                    .then(blob => {
+                        return URL.createObjectURL(blob);
+                    });
             });
 
+            Promise.all(fetchPromises)
+                .then(urls => {
+                    setFileUrls(urls)
+                    // console.log("urls : ", urls)
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }else{
+            console.log("No permission to view files");
+        }
     }, [files]);
 
     const [notesDB, setNotesDB] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:8081/api/v1/feedback/all/idHomework=${idHomework}`, {
-            method: "GET",
-            credentials: "include",
-            headers: {
-                "Access-Control-Allow-Credentials": "true"
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("data : ", data);
-                const transformedNotes = data.map((note) => ({
-                    id: note.idFeedback,
-                    position: { x: note.positionX, y: note.positionY },
-                    text: note.noteText
-                }));
-                setNotesDB(transformedNotes);
-                setIsLoading(false); // Set loading to false when the fetch request is done
-                console.log(data);
+        if(noPermission === false) {
+            fetch(`http://localhost:8081/api/v1/feedback/all/idHomework=${idHomework}`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Access-Control-Allow-Credentials": "true"
+                }
             })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    console.log("data : ", data);
+                    const transformedNotes = data.map((note) => ({
+                        id: note.idFeedback,
+                        position: {x: note.positionX, y: note.positionY},
+                        text: note.noteText
+                    }));
+                    setNotesDB(transformedNotes);
+                    setIsLoading(false); // Set loading to false when the fetch request is done
+                    console.log(data);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }else{
+            console.log("No permission to view feedback");
+        }
     }, [idHomework]);
 
     const [notesDBCopy, setNotesDBCopy] = useState([]);
@@ -294,37 +316,42 @@ function FeedbackPerHomeworkTeacher() {
         // Find the deleted notes
         const deletedNotes = notesDBCopy.filter(note => !newNotesDBCopy.includes(note));
 
-        deletedNotes.forEach(note => {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Perform the deletion here
-                    fetch(`http://localhost:8081/api/v1/feedback/delete/idFeedback=${note.id}`, {
-                        method: "DELETE",
-                        credentials: "include",
-                        headers: {
-                            "Access-Control-Allow-Credentials": "true"
-                        }
-                    })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
+        if(noPermission === false){
+            deletedNotes.forEach(note => {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Perform the deletion here
+                        fetch(`http://localhost:8081/api/v1/feedback/delete/idFeedback=${note.id}`, {
+                            method: "DELETE",
+                            credentials: "include",
+                            headers: {
+                                "Access-Control-Allow-Credentials": "true"
                             }
-                            console.log(`Note with id ${note.id} deleted successfully.`);
                         })
-                        .catch((error) => {
-                            console.error("Error:", error);
-                        });
-                }
-            })
-        });
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                console.log(`Note with id ${note.id} deleted successfully.`);
+                            })
+                            .catch((error) => {
+                                console.error("Error:", error);
+                            });
+                    }
+                })
+            });
+        }else{
+            console.log("No permission to delete notes");
+        }
+
 
         // Update the copy of notesDB
         setNotesDBCopy(newNotesDBCopy);
@@ -362,49 +389,56 @@ function FeedbackPerHomeworkTeacher() {
             <div className={styles.container}>
 
                 <div className={styles.divContainer}>
-                    <form onSubmit={handleSubmit}>
-                        <Button
-                            variant="contained"
-                            endIcon={<CreateOutlinedIcon />}
-                            sx={{
-                                width: isSmallScreen ? '150px' : '175px',
-                                height: '50px',
-                                backgroundColor: '#F5F5F5',
-                                borderRadius: '20px',
-                                color: 'rgba(0,0,0,0.75)',
-                                fontFamily: 'Inter',
-                                fontSize: isSmallScreen ? '10px' : '12px',
-                                fontWeight: 'semi-bold',
-                                alignSelf: 'flex-end',
-                                marginTop: 'auto',
-                                marginLeft: '30px',
-                                marginRight: '20px',
-                                marginBottom: '50px',
-                                border: 'none',
-                                textTransform: 'none',
-                            }}
-                            type={"submit"}
-                        >
-                            Submit Feedback
-                        </Button>
-                    </form>
+                    {
+                        !noPermission && (
+                            <form onSubmit={handleSubmit}>
+                                <Button
+                                    variant="contained"
+                                    endIcon={<CreateOutlinedIcon/>}
+                                    sx={{
+                                        width: isSmallScreen ? '150px' : '175px',
+                                        height: '50px',
+                                        backgroundColor: '#F5F5F5',
+                                        borderRadius: '20px',
+                                        color: 'rgba(0,0,0,0.75)',
+                                        fontFamily: 'Inter',
+                                        fontSize: isSmallScreen ? '10px' : '12px',
+                                        fontWeight: 'semi-bold',
+                                        alignSelf: 'flex-end',
+                                        marginTop: 'auto',
+                                        marginLeft: '30px',
+                                        marginRight: '20px',
+                                        marginBottom: '50px',
+                                        border: 'none',
+                                        textTransform: 'none',
+                                    }}
+                                    type={"submit"}
+                                >
+                                    Submit Feedback
+                                </Button>
+                            </form>
+                        )
+                    }
+
                     <div>
 
-                        {isLoading ? <div>Loading...</div> : <ReactStickyNotes notes={notesDB} onBeforeChange={handleBeforeChange} onChange={handleChange} />}
+                        {!noPermission && isLoading ? <div>Loading...</div> :
+                            <ReactStickyNotes notes={notesDB} onBeforeChange={handleBeforeChange}
+                                              onChange={handleChange}/>}
                         {/*        /!*<ReactStickyNotes onBeforeChange={handleBeforeChange} onChange={handleChange}/>*!/*/}
                         {/*<ReactStickyNotes onBeforeChange={handleBeforeChange} onChange={handleChange}/>*/}
 
                     </div>
 
 
-                        {/*<ReactStickyNotes notes={notes} onChange={handleOnChange2}/>*/}
+                    {/*<ReactStickyNotes notes={notes} onChange={handleOnChange2}/>*/}
 
                 </div>
                 {
-                    fileUrls.map((url, index) => {
+                    !noPermission && fileUrls.map((url, index) => {
                         return (
                             <div className={styles.fileContainer} key={index}>
-                                <div >
+                                <div>
                                     <PdfViewerHomework documentURL={url} fileType={type[index]}/>
                                 </div>
                             </div>

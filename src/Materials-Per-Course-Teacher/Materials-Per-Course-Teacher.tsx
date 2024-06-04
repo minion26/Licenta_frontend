@@ -372,7 +372,7 @@ function MaterialsPerCourseTeacher() {
     const [lecture, setLecture] = useState<Lecture>();
     // const [course, setCourse] = useState<Course>();
     const [materialType, setMaterialType] = useState<string[]>([]);
-
+    const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -385,8 +385,21 @@ function MaterialsPerCourseTeacher() {
                 },
 
             });
-            const data = await response.json();
-            setLecture(data);
+            if(!response.ok){
+                const errorData = await response.json();
+                await Swal.fire({
+                    icon: 'error',
+                    title: errorData.message || 'An error occurred',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setHasError(true);
+            }else{
+                const data = await response.json();
+                setLecture(data);
+            }
+
+
         };
         fetchData();
     }, []);
@@ -459,7 +472,12 @@ function MaterialsPerCourseTeacher() {
                 </Link>
             }
 
-            <Buttons idLectures={idLectures} idCourses={idCourses}/>
+            {
+                !hasError && (
+                    <Buttons idLectures={idLectures} idCourses={idCourses}/>
+                )
+            }
+
 
 
         </div>

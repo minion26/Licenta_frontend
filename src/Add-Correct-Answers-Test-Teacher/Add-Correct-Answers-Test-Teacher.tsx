@@ -100,12 +100,27 @@ function AddCorrectAnswersTestTeacher(){
                 "Access-Control-Allow-Origin": "*",
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if(!response.ok){
+                    return response.json().then(err => {
+                        throw new Error(err.message);
+                    });
+                }
+                return response.json();
+            })
             .then((data) => {
                 setQuestions(data);
                 console.log("questions ", data);
             })
-            .catch(error => console.error('An error occured!', error));
+            .catch(error => {
+                console.error('An error occured!', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            });
     }, []);
 
     const [questionsWithAnswers, setQuestionsWithAnswers] = useState<QuestionDTO[]>([]);
@@ -155,18 +170,22 @@ function AddCorrectAnswersTestTeacher(){
                         confirmButtonText: 'Ok'
                     });
                 } else {
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'An error occurred while saving the correct answers!',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
+                    return response.json().then(err => {
+                        throw new Error(err.message);
                     });
 
-                    throw new Error('Network response was not ok');
+                    // throw new Error('Network response was not ok');
+
                 }
             })
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
             });
 
     };
@@ -283,18 +302,19 @@ function AddCorrectAnswersTestTeacher(){
                                             confirmButtonText: 'Ok'
                                         });
                                     } else {
-                                        Swal.fire({
-                                            title: 'Error',
-                                            text: 'An error occurred while saving the correct answers!',
-                                            icon: 'error',
-                                            confirmButtonText: 'Ok'
+                                        return response.json().then(err => {
+                                            throw new Error(err.message);
                                         });
-
-                                        throw new Error('Network response was not ok');
                                     }
                                 })
                                 .catch(error => {
                                     console.error('There has been a problem with your fetch operation:', error);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: error.message || 'An error occurred',
+                                        showConfirmButton: false,
+                                        // timer: 1500
+                                    });
                                 });
 
                         }}

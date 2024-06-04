@@ -80,10 +80,10 @@ function HomeworkAnnouncementTeacher() {
 
             navigate(`/materials-per-lecture/${idCourses}/${idLectures}`);
         }else{
-            Swal.fire({
-                position: "top-end",
-                icon: "error",
-                title: "Something went wrong",
+            const errorData = await response.json();
+            await Swal.fire({
+                icon: 'error',
+                title: errorData.message || 'An error occurred',
                 showConfirmButton: false,
                 timer: 1500
             });

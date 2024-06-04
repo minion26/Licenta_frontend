@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import SendIcon from '@mui/icons-material/Send';
 import {materialsDTO} from "../types.ts";
 import {useParams} from "react-router-dom";
+import Swal from "sweetalert2";
 
 function UploadMaterialsTeachers ({materialsDTO: materialsDTO} : {materialsDTO: materialsDTO}) {
     const theme = useTheme();
@@ -49,6 +50,16 @@ function UploadMaterialsTeachers ({materialsDTO: materialsDTO} : {materialsDTO: 
                         "Access-Control-Allow-Origin": "*",
                     }
                 });
+                
+                if(!result.ok) {
+                    const errorData = await result.json();
+                    await Swal.fire({
+                        icon: 'error',
+                        title: errorData.message || 'An error occurred',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
 
                 if (result.headers.get("content-type")?.includes("application/json")) {
                     const text = await result.text();

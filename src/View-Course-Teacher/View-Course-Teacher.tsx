@@ -5,11 +5,14 @@ import PDFViewer from "../PDF-viewer/PDF-viewer.tsx";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Materials} from "../types.ts";
+import Swal from "sweetalert2";
 
 function ViewCourseTeacher() {
     const { idLectures, materialType} = useParams();
     const [materials, setMaterials] = useState<Materials[]>([]);
     const [type, setType] = useState<string[]>([]);
+
+    const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,9 +25,25 @@ function ViewCourseTeacher() {
                         "Access-Control-Allow-Origin": "*",
                     },
                 });
-                const data = await response.json();
-                console.log("file url: ", data);
-                setMaterials(data);
+
+                if(!response.ok) {
+                    const err = await response.json();
+                    console.error('Error:', err.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: err.message || 'An error occurred',
+                        showConfirmButton: false,
+                        // timer: 1500
+                    });
+
+                    setHasError(true);
+                }else{
+                    const data = await response.json();
+                    console.log("file url: ", data);
+                    setMaterials(data);
+                }
+
+
 
             } catch (error) {
                 console.log(error);
@@ -77,7 +96,7 @@ function ViewCourseTeacher() {
       <UpperHeader title="WEEK 1" subtitle="Course" />
         <div className={styles.container}>
             {
-                fileUrls.map((url, index) => {
+                !hasError && fileUrls.map((url, index) => {
                     return (
                     <div key={index} style={{marginBottom:'120px'}}>
                         <PDFViewer fileURL={url} fileType={type[index]} />

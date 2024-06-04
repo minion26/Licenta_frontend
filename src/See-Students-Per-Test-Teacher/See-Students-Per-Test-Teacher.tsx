@@ -78,12 +78,28 @@ function SeeStudentsPerTestTeacher(){
                 "Access-Control-Allow-Origin": "*",
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.message);
+                    });
+                }
+                return response.json();
+            })
             .then((data) => {
                 setStudentExam(data);
                 console.log(data);
             })
-            .catch(error => console.error('An error occured!', error));
+            .catch(error => {
+                console.error('An error occured!', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+
+            });
     }, []);
 
     const [open, setOpen] = useState(false);
@@ -99,11 +115,26 @@ function SeeStudentsPerTestTeacher(){
                 "Access-Control-Allow-Origin": "*",
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.message);
+                    });
+                }
+                return response.json();
+            })
             .then((data) => {
                 setStudentEdit(data);
             })
-            .catch(error => console.error('An error occured!', error));
+            .catch(error => {
+                console.error('An error occured!', error)
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            });
 
 
     };

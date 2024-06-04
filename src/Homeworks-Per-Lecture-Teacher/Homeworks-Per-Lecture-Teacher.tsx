@@ -9,6 +9,7 @@ import {useTheme} from "@mui/material/styles";
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Course, HomeworkAnnouncements} from "../types.ts";
+import Swal from "sweetalert2";
 
 function HomeworksPerLectureTeacher() {
     const {idCourses, idLectures} = useParams();
@@ -30,12 +31,27 @@ function HomeworksPerLectureTeacher() {
                 'Access-Control-Allow-Origin': '*',
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.message);
+                    });
+                }
+                return response.json();
+            })
             .then((data) => {
                 setCourse(data);
                 console.log(data);
             })
-            .catch((error) => console.error('An error occured!', error));
+            .catch((error) => {
+                console.error('An error occured!', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            });
     }, [idCourses]);
 
     useEffect(() => {
@@ -47,12 +63,27 @@ function HomeworksPerLectureTeacher() {
                 'Access-Control-Allow-Origin': '*',
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.message);
+                    });
+                }
+                return response.json();
+            })
             .then((data) => {
                 setHomeworks(data);
                 console.log(data);
             })
-            .catch((error) => console.error('An error occured!', error));
+            .catch((error) => {
+                console.error('An error occured!', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            });
     }, [idLectures]);
 
 

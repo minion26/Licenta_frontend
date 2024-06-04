@@ -42,11 +42,29 @@ function AddQuestionsTestTeacher() {
                 "Access-Control-Allow-Origin": "*",
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.message);
+                    });
+                }
+
+                return response.json();
+
+            })
             .then((data) => {
                 setExam(data);
             })
-            .catch(error => console.error('An error occured!', error));
+            .catch(error => {
+                console.error('An error occured!', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            });
     }, []);
 
     // const [questionCount, setQuestionCount] = useState(1);
@@ -148,15 +166,16 @@ function AddQuestionsTestTeacher() {
 
             window.location.reload();
         }else{
-
-            Swal.fire({
-                position: "top-end",
-                icon: "error",
-                title: "An error occurred",
+            const errorData = await response.json();
+            await Swal.fire({
+                icon: 'error',
+                title: errorData.message || 'An error occurred',
                 showConfirmButton: false,
                 timer: 1500
             });
         }
+
+
 
     };
 

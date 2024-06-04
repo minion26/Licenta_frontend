@@ -243,6 +243,8 @@ function LecturesPerCourseTeachers(){
         description: '',
     });
 
+    const [hasError, setHasError] = useState(false);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -254,9 +256,24 @@ function LecturesPerCourseTeachers(){
                         "Access-Control-Allow-Origin": "*",
                     },
                 });
-                const data = await response.json();
-                console.log(data);
-                setCourse(data);
+
+                if(!response.ok){
+                    const err = await response.json();
+                    console.error('Error:', err.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: err.message || 'An error occurred',
+                        showConfirmButton: false,
+                        // timer: 1500
+                    });
+
+                    setHasError(true);
+                }else{
+                    const data = await response.json();
+                    console.log(data);
+                    setCourse(data);
+                }
+
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -278,9 +295,24 @@ function LecturesPerCourseTeachers(){
                         "Access-Control-Allow-Origin": "*",
                     },
                 });
-                const data = await response.json();
-                console.log(data);
-                setLectures(data);
+
+                if(!response.ok) {
+                    const err = await response.json();
+                    console.error('Error:', err.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: err.message || 'An error occurred',
+                        showConfirmButton: false,
+                        // timer: 1500
+                    });
+
+                    setHasError(true);
+                }else{
+                    const data = await response.json();
+                    console.log(data);
+                    setLectures(data);
+                }
+
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -328,8 +360,12 @@ function LecturesPerCourseTeachers(){
                     )))
 
                 }
+                {
+                    !hasError && (
+                        <Buttons idCourses={idCourses} />
+                    )
+                }
 
-                <Buttons idCourses={idCourses} />
 
             </div>
         </div>

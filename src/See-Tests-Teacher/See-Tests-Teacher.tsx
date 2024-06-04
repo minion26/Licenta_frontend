@@ -15,6 +15,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import StartIcon from '@mui/icons-material/Start';
 import {Course, ExamDTO} from "../types.ts";
 import {useEffect, useState} from "react";
+import Swal from "sweetalert2";
 
 
 function SeeTestsTeacher(){
@@ -53,13 +54,26 @@ function SeeTestsTeacher(){
                 "Access-Control-Allow-Origin": "*",
             }
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.message);
+                    });
+                }
+                return response.json();
+            })
             .then((data) => {
                 setExams(data);
                 console.log(data)
             })
             .catch((error) => {
                 console.error("Error:", error);
+                 Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
             });
     }, [idCourses]);
 
@@ -69,7 +83,7 @@ function SeeTestsTeacher(){
             <UpperHeader title={"Tests"} subtitle={course ? course.name : " "} />
             <div className={styles.container}>
                 {
-                    exams.map((exam, index) => {
+                    Array.isArray(exams) ? exams.map((exam, index) => {
                         return <CardElongated key={index} title={exam.name}  cardIndex={index} height={isSmallScreen ? 150 : 100}>
                             <Box sx={{
                                 display: 'flex',
@@ -204,7 +218,7 @@ function SeeTestsTeacher(){
                                 </Tooltip>
                             </Box>
                         </CardElongated>
-                    })
+                    }) : <p>Loading exams or an error occurred</p>
                 }
 
 

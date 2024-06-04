@@ -42,12 +42,29 @@ function EditHomeworkAnnouncementsTeacher() {
                 "Access-Control-Allow-Origin": "*",
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.message);
+                    });
+                }
+
+                return response.json();
+            })
             .then((data) => {
                 setHomeworkAnnouncement(data);
                 setHomeworkAnnouncementBackup(data);
                 console.log(data);
             })
+            .catch((error) => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            });
     }, [idHomeWorkAnnouncement]);
 
     function handleInputChange(property: keyof HomeworkAnnouncements, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -96,10 +113,10 @@ function EditHomeworkAnnouncementsTeacher() {
                     console.log(data);
                 }
             } else {
-                Swal.fire({
-                    position: "top-end",
-                    icon: "error",
-                    title: "An error occurred",
+                const errorData = await response.json();
+                await Swal.fire({
+                    icon: 'error',
+                    title: errorData.message || 'An error occurred',
                     showConfirmButton: false,
                     timer: 1500
                 });

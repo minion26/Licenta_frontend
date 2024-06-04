@@ -280,12 +280,14 @@ function EditTestTeacher(){
 
             // window.location.reload();
         }else{
+            const errorData = await response.json();
             await Swal.fire({
                 icon: 'error',
-                title: 'An error occurred',
+                title: errorData.message || 'An error occurred',
                 showConfirmButton: false,
                 timer: 1500
             });
+
         }
 
     }
