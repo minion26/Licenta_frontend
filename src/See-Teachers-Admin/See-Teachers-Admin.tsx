@@ -64,7 +64,7 @@ function SeeTeachersAdmin() {
             <UpperHeader title={"See accounts"} subtitle={"Teachers"} buttons={[{ key: "Search", label: "Search" }]} onSearch={handleSearch}/>
             <div className={styles.cardContainer}>
                 {filteredTeachers.map((teacher, index) => (
-                    <CardElongated key={index} title={teacher.firstName + " " + teacher.lastName} cardIndex={index+1} height={100}>
+                    <CardElongated key={index} title={teacher.firstName + " " + teacher.lastName} cardIndex={index+1} height={145}>
                         <Box sx={{ display: "flex" }}>
                             <CardContent
                                 sx={{

@@ -113,7 +113,7 @@ function SeeTeachersPerCourseAdmin(){
             <div className={styles.cardContainer}>
                 {teachers.map(
                     (teacher, index) => (
-                        <CardElongated key={index} title={`${teacher.teacherName} `} cardIndex={index} height={100}>
+                        <CardElongated key={index} title={`${teacher.teacherName} `} cardIndex={index} height={145}>
                             <Box sx={{ display: "flex" }}>
                                 <CardContent
                                     sx={{

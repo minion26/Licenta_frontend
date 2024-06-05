@@ -125,7 +125,7 @@ function HomeworksPerLectureTeacher() {
                                     fontWeight: 'semi-bold',
                                     alignSelf: 'flex-end',
                                     marginTop: 'auto',
-                                    marginLeft: 'auto',
+                                    marginLeft: '60%',
                                     marginRight: '20px',
                                     marginBottom: '50px',
                                     border: 'none',

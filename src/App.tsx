@@ -59,6 +59,8 @@ import DeleteMaterialsPerLectureTeacher
     from "./Delete-Materials-Per-Lecture-Teacher/Delete-Materials-Per-Lecture-Teacher.tsx";
 import SeeSubmissionsHomeworkTeacher from './See-Submissions-Homework-Teacher/See-Submissions-Homework-Teacher.tsx';
 import SeeStudentsPerTestTeacher from "./See-Students-Per-Test-Teacher/See-Students-Per-Test-Teacher.tsx";
+import SeeStudentsAnswersToQuestionsPerTestTeacher
+    from "./See-Students-Answers-To-Questions-Per-Test-Teacher/See-Students-Answers-To-Questions-Per-Test-Teacher.tsx";
 
 function App() {
 
@@ -140,23 +142,24 @@ function RoutesComponent() {
                             <Route path={"/view-auxiliar-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
                             <Route path={"/view-video-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
                             <Route path={"/homeworks-per-lecture/:idCourses/:idLectures"} element={<HomeworksPerLectureTeacher />}/>
-                            <Route path={"see-submissions/:idHomeworkAnnouncement"} element={<SeeSubmissionsHomeworkTeacher />}/>
+                            <Route path={"/see-submissions/:idHomeworkAnnouncement"} element={<SeeSubmissionsHomeworkTeacher />}/>
                             <Route path={"/add-feedback/:idHomeworkAnnouncement/:idHomework"} element={<FeedbackPerHomeworkTeacher />}/>
-                        <Route path={"/notifications-teacher"} element={<NotificationsTeacher />}/>
-                        <Route path={"/my-profile"} element={<MyProfileTeacher />} />
+                            <Route path={"/notifications-teacher"} element={<NotificationsTeacher />}/>
+                            <Route path={"/my-profile"} element={<MyProfileTeacher />} />
                             <Route path={"/add-homework-announcement/:idCourses/:idLectures"} element={<HomeworkAnnouncementTeacher />} />
                             <Route path={"/see-homework-announcement/:idCourses/:idLectures"} element={<SeeHomeworkAnnouncementTeacher />} />
                             <Route path={"/edit-homework-announcement/:idHomeWorkAnnouncement"} element={<EditHomeworkAnnouncementsTeacher /> } />
                             <Route path={"/add-materials-per-lecture/:idLectures"} element={<AddMaterialsTeacher />} />
-                        <Route path={"/create-test"} element={<CreateTestTeacher />} />
+                            <Route path={"/create-test/:idCourses"} element={<CreateTestTeacher />} />
                             <Route path={"/see-tests/:idCourses"} element={<SeeTestsTeacher />} />
                             <Route path={"/see-students-test/:idExam"} element={<SeeStudentsPerTestTeacher />} />
                             <Route path={"/edit-test/:idCourses/:idExam"} element={<EditTestTeacher />} />
                             <Route path={"/add-questions-test/:idExam"} element={<AddQuestionsTestTeacher />} />
                             <Route path={"/add-correct-answers/:idExam"} element={<AddCorrectAnswersTestTeacher />} />
                             <Route path={"/add-students-to-test/:idCourses/:idExam"} element={<UploadStudentsToTestTeacher />} />
-                        <Route path={"/add-review"} element={<NeedsReviewTeacher />} />
+                            <Route path={"/add-review/:idStudentAnswerExam"} element={<NeedsReviewTeacher />} />
                             <Route path={"/delete-materials-per-lecture/:idLectures"} element={<DeleteMaterialsPerLectureTeacher />} />
+                            <Route path={"/see-students-answers-per-test/:idExam/:idStudent"} element={<SeeStudentsAnswersToQuestionsPerTestTeacher />} />
                     </>
                 )}
 

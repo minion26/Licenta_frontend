@@ -57,7 +57,7 @@ function SeeAdminsAdmin() {
               {
                   filteredAdmins.map(
                       (admin, index) => (
-                          <CardElongated key={index} title={`${admin.firstName} ${admin.lastName}`} cardIndex={index+1} height={100}>
+                          <CardElongated key={index} title={`${admin.firstName} ${admin.lastName}`} cardIndex={index+1} height={145}>
                               <Box sx={{ display: "flex" }}>
                                   <CardContent
                                       sx={{

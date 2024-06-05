@@ -13,6 +13,8 @@ function Header() {
     setShowMenu(!showMenu);
   };
 
+  const lastVisitedId = localStorage.getItem('lastVisitedId');
+
   return (
     <div>
       <div className={styles.burger} onClick={toggleMenu}>
@@ -28,32 +30,35 @@ function Header() {
         <nav>
           <ul className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
             <Link to="/my-profile" className={styles.headerUlLiA}>
-              <li className={`${styles.headerUlLi}`}>  <FaUser /> My profile</li>
+              <li className={`${styles.headerUlLi}`}><FaUser/> My profile</li>
             </Link>
 
             <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
-              <a className={styles.headerUlLiA} href="/">
-                <FaBookOpen /> Courses
-              </a>
+              <Link to={"/main-page-teacher"} className={styles.headerUlLiA}>
+                <FaBookOpen/> Courses
+              </Link>
             </li>
+
             <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
-              <a className={styles.headerUlLiA} href="/">
-                <RiPagesFill /> Lectures
-              </a>
+              <Link to={`/lecture-per-course/${lastVisitedId}`} className={styles.headerUlLiA}>
+                <RiPagesFill/> Lectures
+              </Link>
             </li>
 
-            <Link to="/see-tests" className={styles.headerUlLiA}>
-              <li className={`${styles.headerUlLi} `}> <PiExamFill /> Tests</li>
-            </Link>
+            <li className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
+              <Link to={`/see-tests/${lastVisitedId}`} className={styles.headerUlLiA}>
+                <PiExamFill/> Tests
+              </Link>
+            </li>
 
-            <Link to="/notifications-teacher" className={styles.headerUlLiA}>
-              <li className={`${styles.headerUlLi} `}> <IoNotificationsSharp /> Notices</li>
-            </Link>
+              <Link to="/notifications-teacher" className={styles.headerUlLiA}>
+                <li className={`${styles.headerUlLi} `}><IoNotificationsSharp/> Notices</li>
+              </Link>
           </ul>
         </nav>
       </header>
     </div>
-  );
+);
 }
 
 export default Header;

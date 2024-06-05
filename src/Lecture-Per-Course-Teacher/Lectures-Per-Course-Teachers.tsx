@@ -147,7 +147,7 @@ function Buttons({ idCourses }: { idCourses: string | undefined}){
                             textTransform: 'none',
                         }}
                         component={Link}
-                        to="/create-test"
+                        to={`/create-test/${idCourses}`}
                     > Create Test
                     </Button>
 
@@ -234,6 +234,9 @@ function Buttons({ idCourses }: { idCourses: string | undefined}){
 
 function LecturesPerCourseTeachers(){
     const {idCourses} = useParams();
+    if (typeof idCourses === "string") {
+        localStorage.setItem('lastVisitedId', idCourses);
+    }
     const [course, setCourse] = useState<Course>({
         idCourses: '',
         name: '',
@@ -344,7 +347,7 @@ function LecturesPerCourseTeachers(){
                                     fontSize: '12px',
                                     fontWeight: 'semi-bold',
                                     alignSelf: 'flex-end',
-                                    marginLeft: 'auto',
+                                    marginLeft: '75%',
                                     marginRight: '20px',
                                     marginBottom: '50px',
                                     border: 'none',

@@ -149,6 +149,7 @@ function UpperHeader({ title, subtitle, buttons, onSearch}: UpperHeaderProps & {
                             })
                             .then(message => {
                                 console.log(message); // Should log "You have been logged out"
+                                window.location.reload();
                             })
                             .catch(error => {
                                 console.error('Failed to logout', error);

@@ -1,6 +1,6 @@
 import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import Header from "../Header-teacher/Header.tsx";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {ExamDTO, StudentExamFrontDTO} from "../types.ts";
 import {useEffect, useState} from "react";
 import styles from "./See-Students-Per-Test-Teacher.module.css";
@@ -10,6 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import CardElongated from "../Card-Elongated/Card-Elongated.tsx";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import Tooltip from "@mui/material/Tooltip";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -211,7 +212,7 @@ function SeeStudentsPerTestTeacher(){
                     studentExam.map((student, index) => (
                         <div key={index}>
                             <CardElongated
-                                height={100}
+                                height={150}
                                 title={student.studentName}
                                 description={
                                     ` Score : ${student.score === -1 ? "Not graded" : student.score}, Exam Status: ${
@@ -308,6 +309,32 @@ function SeeStudentsPerTestTeacher(){
 
                                         >
                                         </Button>
+
+                                        <Tooltip title="See student's answers">
+                                            <Button
+                                                variant="contained"
+                                                endIcon={<VisibilityIcon />}
+                                                sx={{
+                                                    width: isSmallScreen ? "35px" : "75px",
+                                                    height: "50px",
+                                                    backgroundColor: "#F5F5F5",
+                                                    borderRadius: "20px",
+                                                    color: "rgba(0,0,0,0.75)",
+                                                    fontFamily: "Inter",
+                                                    fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size
+                                                    fontWeight: "semi-bold",
+                                                    alignSelf: "flex-end",
+                                                    marginLeft: "auto",
+                                                    marginRight: isSmallScreen ? "5px" : "20px",
+                                                    marginBottom: isSmallScreen ? "0px" : "25px",
+                                                    border: "none",
+                                                    textTransform: "none",
+                                                }}
+                                                component={Link}
+                                                to={`/see-students-answers-per-test/${idExam}/${student.idStudent}`}
+
+                                            />
+                                        </Tooltip>
 
                                         <Tooltip title="Edit Test Details">
                                             <Button

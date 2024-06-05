@@ -8,11 +8,13 @@ import Swal from "sweetalert2";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
-import {Course, ExamDTO, QuestionDTO, StudentExamFrontDTO, Teacher} from "../types.ts";
+import { useNavigate, useParams} from "react-router-dom";
+import {Course, ExamDTO, QuestionDTO, Teacher} from "../types.ts";
 
 
 function EditTestTeacher(){
+    const navigate = useNavigate();
+
     const {idCourses, idExam} = useParams();
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -57,12 +59,11 @@ function EditTestTeacher(){
         }
     );
 
-    const [studentExam, setStudentExam] = useState<StudentExamFrontDTO[]>([]);
-    const [, setStudentExamBackup] = useState<StudentExamFrontDTO[]>([]);
 
     const [questions, setQuestions] = useState<QuestionDTO[]>([]);
     const [questionsBackup, setQuestionsBackup] = useState<QuestionDTO[]>([]);
 
+    const [hasError, setHasError] = useState(false);
 
     // luam cursul
     useEffect(() => {
@@ -74,11 +75,27 @@ function EditTestTeacher(){
                 "Access-Control-Allow-Origin": "*",
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if(!response.ok){
+                    setHasError(true);
+                    return response.json().then(err => {
+                        throw new Error(err.message)
+                    });
+                }
+                return response.json();
+            })
             .then((data) => {
                 setCourse(data);
             })
-            .catch(error => console.error('An error occured!', error));
+            .catch(error => {
+                console.error('An error occured!', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            });
     }, []);
 
     useEffect(() => {
@@ -90,13 +107,31 @@ function EditTestTeacher(){
                 "Access-Control-Allow-Origin": "*",
             },
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if(!response.ok){
+                    setHasError(true);
+                    return response.json().then(err => {
+                        throw new Error(err.message)
+                    });
+                }
+
+                return response.json();
+
+            })
             .then((data) => {
                 setExam(data);
                 setExamBackup(data);
                 console.log(data);
             })
-            .catch(error => console.error('An error occured!', error));
+            .catch(error => {
+                console.error('An error occured!', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            });
     }, []);
 
 
@@ -121,27 +156,40 @@ function EditTestTeacher(){
         }
         else{
             console.error("An error occurred while fetching teachers");
+            setHasError(true);
+            const err = await response.json();
+            console.error('Error:', err.message);
+            Swal.fire({
+                icon: 'error',
+                title: err.message || 'An error occurred',
+                showConfirmButton: false,
+                // timer: 1500
+            });
         }
     };
 
 
     //luam studentii
-    useEffect(() => {
-        fetch(`http://localhost:8081/api/v1/exam/get-students/idExam=${idExam}`, {
-            method: "GET",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setStudentExam(data);
-                setStudentExamBackup(data);
-            })
-            .catch(error => console.error('An error occured!', error));
-    }, []);
+    // useEffect(() => {
+    //     fetch(`http://localhost:8081/api/v1/exam/get-students/idExam=${idExam}`, {
+    //         method: "GET",
+    //         credentials: 'include',
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Access-Control-Allow-Origin": "*",
+    //         },
+    //     })
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             if (Array.isArray(data)) {
+    //                 setStudentExam(data);
+    //                 setStudentExamBackup(data);
+    //             } else {
+    //                 console.error('Error: data is not an array');
+    //             }
+    //         })
+    //         .catch(error => console.error('An error occured!', error));
+    // }, []);
 
 
     //luam intrebarile
@@ -217,18 +265,18 @@ function EditTestTeacher(){
         setQuestions(questionsBackup);
     }
 
-    useEffect(() => {
-        setExam((prevExam) => ({
-            ...prevExam,
-            studentExamDTO: studentExam.map((student) => ({
-                idStudentExam: student.idStudentExam,
-                idStudent: student.idStudent,
-                idExam: student.idExam,
-                score: student.score,
-                examStatus: student.examStatus,
-            })),
-        }));
-    }, [studentExam]);
+    // useEffect(() => {
+    //     setExam((prevExam) => ({
+    //         ...prevExam,
+    //         studentExamDTO: studentExam.map((student) => ({
+    //             idStudentExam: student.idStudentExam,
+    //             idStudent: student.idStudent,
+    //             idExam: student.idExam,
+    //             score: student.score,
+    //             examStatus: student.examStatus,
+    //         })),
+    //     }));
+    // }, [studentExam]);
 
     useEffect(() => {
         setExam((prevExam) => ({
@@ -278,7 +326,7 @@ function EditTestTeacher(){
                 console.log(data);
             }
 
-            // window.location.reload();
+            navigate(`/see-exams/${idCourses}`);
         }else{
             const errorData = await response.json();
             await Swal.fire({
@@ -292,7 +340,43 @@ function EditTestTeacher(){
 
     }
 
-    return(
+    const handleDelete = async () => {
+        fetch(`http://localhost:8081/api/v1/exam/delete/idExam=${idExam}`, {
+            method: "DELETE",
+            credentials: 'include',
+            headers: {
+                'Content-Type': "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+        })
+            .then((response) => {
+                if(response.ok){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Exam deleted successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+                    navigate(`/see-tests/${idCourses}`);
+                }else{
+                    return response.json().then(err => {
+                        throw new Error(err.message)
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('An error occured!', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            });
+    }
+
+    return( !hasError && (
         <form onSubmit={handleSubmit}>
             <Header/>
             <UpperHeader title={exam ? exam.name : ""} subtitle={"date"} />
@@ -397,7 +481,7 @@ function EditTestTeacher(){
                     </Box>
 
                 {/*Aici va fi un for pentru a afisa intrebarile*/}
-                    {questions.map((question, index) => (
+                    {!hasError && questions.map((question, index) => (
                         <Box key={index} sx={{
                             m: 1,
                             marginBottom: "20px",
@@ -425,23 +509,23 @@ function EditTestTeacher(){
 
                     {/*Aici un for pentru studentii care participa la examen*/}
 
-                    <Box  sx={{
-                        m: 1,
-                        marginBottom: "20px",
-                        p: 2,
-                        border: '1px solid grey',
-                        borderRadius: '5px',
-                        boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.15)',
-                        backgroundColor: 'white',
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}>
-                        <Link to={`/see-students-test/${idExam}`}>
-                            <Button variant="contained">
-                                See Students
-                            </Button>
-                        </Link>
-                    </Box>
+                    {/*<Box  sx={{*/}
+                    {/*    m: 1,*/}
+                    {/*    marginBottom: "20px",*/}
+                    {/*    p: 2,*/}
+                    {/*    border: '1px solid grey',*/}
+                    {/*    borderRadius: '5px',*/}
+                    {/*    boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.15)',*/}
+                    {/*    backgroundColor: 'white',*/}
+                    {/*    display: 'flex',*/}
+                    {/*    justifyContent: 'center'*/}
+                    {/*}}>*/}
+                    {/*    <Link to={`/see-students-test/${idExam}`}>*/}
+                    {/*        <Button variant="contained">*/}
+                    {/*            See Students*/}
+                    {/*        </Button>*/}
+                    {/*    </Link>*/}
+                    {/*</Box>*/}
 
                     {/*{*/}
                     {/*    studentExam.map((studentExam, index) => (*/}
@@ -506,6 +590,7 @@ function EditTestTeacher(){
                         }}
                     >
                         <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
+                        <Button variant="outlined" onClick={handleDelete}>Delete exam</Button>
                         <Button
                             variant="contained"
                             type={"submit"}
@@ -515,7 +600,7 @@ function EditTestTeacher(){
                     </Box>
                 </Box>
             </Box>
-        </form>
+        </form> )
     )
 }
 

@@ -65,7 +65,7 @@ return (
             {
                 filteredStudents.map(
                     (student, index) => (
-                        <CardElongated key={index} title={`${student.firstName} ${student.lastName}`} cardIndex={index+1} height={100}>
+                        <CardElongated key={index} title={`${student.firstName} ${student.lastName}`} cardIndex={index+1} height={145}>
                                 <Box sx={{ display: "flex" }}>
                                     <CardContent
                                         sx={{

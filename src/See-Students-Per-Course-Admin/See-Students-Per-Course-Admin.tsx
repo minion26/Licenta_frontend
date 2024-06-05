@@ -87,7 +87,7 @@ function SeeStudentsPerCourseAdmin(){
                     </Card>
                 ) : (
                     students.map((student, index) => (
-                        <CardElongated key={index} title={`${student.studentName} `} cardIndex={index} height={100}>
+                        <CardElongated key={index} title={`${student.studentName} `} cardIndex={index} height={145}>
                             <Box sx={{display: "flex"}}>
                                 <CardContent
                                     sx={{

@@ -18,7 +18,6 @@ export type QuestionDTO = {
 };
 
 export type CorrectAnswersExamCreationDTO = {
-    correctAnswer : string;
     score: number;
 }
 
@@ -144,6 +143,14 @@ export type User = {
     role: string;
 };
 
+export type UserEditDTO = {
+    idUsers: string;
+    firstName: string;
+    lastName: string;
+    facultyEmail: string;
+    personalEmail: string;
+}
+
 export type Lecture={
     idLecture: string;
     name: string;
@@ -217,6 +224,31 @@ export type Note = {
     noteText: string;
 }
 
+export type ReviewStudentAnswersDTO = {
+    idStudentAnswerExam:string;
+    idStudent: string;
+    idTeacher: Array<string>;
+    idExam: string;
+    idQuestion: string;
+    question: string;
+    studentAnswer: string;
+    needsReview: boolean;
+}
+
+
+export type CorrectAnswersExamDTO = {
+    idAnswerExam: string;
+    correctAnswer: string;
+    score: number;
+    idQuestionExam: string;
+}
+
+export type QuestionAndStudentsAnswersDTO = {
+    questionText : string;
+    correctAnswer : string;
+    studentAnswer : string;
+    score : number;
+}
 
 
 

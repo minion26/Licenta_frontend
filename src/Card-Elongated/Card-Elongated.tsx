@@ -52,7 +52,8 @@ function CardElongated({
         image={getImage(cardIndex)}
         alt="Live from space album cover"
       />
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flexGrow: 1 }}>
+        <Box>
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography
             component="div"
@@ -74,7 +75,10 @@ function CardElongated({
           </Typography>
         </CardContent>
       </Box>
+        <Box>
       {children}
+        </Box>
+      </Box>
     </Card>
   );
 }

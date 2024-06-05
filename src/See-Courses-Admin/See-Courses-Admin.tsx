@@ -56,7 +56,7 @@ function SeeCoursesAdmin(){
             />
             <div className={styles.cardContainer}>
                 {filteredCourses.map((course, index) => (
-                <CardElongated title={course.name} cardIndex={index} height={100} key={index}>
+                <CardElongated title={course.name} cardIndex={index} height={145} key={index}>
                     <Box sx={{ display: "flex" }}>
                         <CardContent
                             sx={{

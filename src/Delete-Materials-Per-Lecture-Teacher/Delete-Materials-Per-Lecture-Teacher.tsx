@@ -52,7 +52,7 @@ function DeleteMaterialsPerLectureTeacher(){
             <Header/>
             <div className={styles.cardContainer}>
                 {materials.map((material, index) => (
-                    <CardElongated height={100} title={material.name} cardIndex={index} key={index}>
+                    <CardElongated height={145} title={material.name} cardIndex={index} key={index}>
                         <Box sx={{ display: "flex" }}>
                             <Box
                                 sx={{

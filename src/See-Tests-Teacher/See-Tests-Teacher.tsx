@@ -8,6 +8,7 @@ import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {Link, useParams} from "react-router-dom";
 import Box from "@mui/material/Box";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CheckIcon from '@mui/icons-material/Check';
 import Tooltip from '@mui/material/Tooltip';
@@ -84,21 +85,22 @@ function SeeTestsTeacher(){
             <div className={styles.container}>
                 {
                     Array.isArray(exams) ? exams.map((exam, index) => {
-                        return <CardElongated key={index} title={exam.name}  cardIndex={index} height={isSmallScreen ? 150 : 100}>
+                        return <CardElongated key={index} title={exam.name}  cardIndex={index} height={isSmallScreen ? 160 : 150}>
                             <Box sx={{
                                 display: 'flex',
                                 flexWrap: 'wrap',
                                 justifyContent: 'flex-end',
-                                alignItems: 'space-between',
+                                alignItems: 'space-around',
                                 marginLeft: 'auto',
                                 marginTop: isSmallScreen ? "0px" : "5px",
                             }}>
+
                                 <Tooltip title="Start Test">
                                     <Button
                                         variant="contained"
                                         endIcon={<StartIcon />}
                                         sx={{
-                                            width: isSmallScreen ? "35px" : "130px",
+                                            width: isSmallScreen ? "35px" : "85px",
                                             height: "50px",
                                             backgroundColor: "#F5F5F5",
                                             borderRadius: "20px",
@@ -120,12 +122,13 @@ function SeeTestsTeacher(){
 
                                 </Tooltip>
 
+
                                 <Tooltip title="Edit Test Details">
                                     <Button
                                         variant="contained"
                                         endIcon={<CreateOutlinedIcon />}
                                         sx={{
-                                            width: isSmallScreen ? "35px" : "75px",
+                                            width: isSmallScreen ? "35px" : "35px",
                                             height: "50px",
                                             backgroundColor: "#F5F5F5",
                                             borderRadius: "20px",
@@ -149,7 +152,7 @@ function SeeTestsTeacher(){
                                         variant="contained"
                                         endIcon={<AddCircleOutlineIcon />}
                                         sx={{
-                                            width: isSmallScreen ? "35px" : "75px",
+                                            width: isSmallScreen ? "35px" : "35px",
                                             height: "50px",
                                             backgroundColor: "#F5F5F5",
                                             borderRadius: "20px",
@@ -173,7 +176,7 @@ function SeeTestsTeacher(){
                                         variant="contained"
                                         endIcon={<CheckIcon />}
                                         sx={{
-                                            width: isSmallScreen ? "35px" : "75px",
+                                            width: isSmallScreen ? "35px" : "35px",
                                             height: "50px",
                                             backgroundColor: "#F5F5F5",
                                             borderRadius: "20px",
@@ -197,7 +200,7 @@ function SeeTestsTeacher(){
                                         variant="contained"
                                         endIcon={<AddTaskIcon />}
                                         sx={{
-                                            width: isSmallScreen ? "35px" : "75px",
+                                            width: isSmallScreen ? "35px" : "35px",
                                             height: "50px",
                                             backgroundColor: "#F5F5F5",
                                             borderRadius: "20px",
@@ -214,6 +217,31 @@ function SeeTestsTeacher(){
                                         }}
                                         component={Link}
                                         to={`/add-students-to-test/${idCourses}/${exam.idExam}`}
+                                    />
+                                </Tooltip>
+
+                                <Tooltip title="See students">
+                                    <Button
+                                        variant="contained"
+                                        endIcon={<VisibilityIcon />}
+                                        sx={{
+                                            width: isSmallScreen ? "35px" : "35px",
+                                            height: "50px",
+                                            backgroundColor: "#F5F5F5",
+                                            borderRadius: "20px",
+                                            color: "rgba(0,0,0,0.75)",
+                                            fontFamily: "Inter",
+                                            fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size
+                                            fontWeight: "semi-bold",
+                                            alignSelf: "flex-end",
+                                            marginLeft: "auto",
+                                            marginRight: isSmallScreen ? "5px" : "20px",
+                                            marginBottom: isSmallScreen ? "0px" : "25px",
+                                            border: "none",
+                                            textTransform: "none",
+                                        }}
+                                        component={Link}
+                                        to={`/see-students-test/${exam.idExam}`}
                                     />
                                 </Tooltip>
                             </Box>

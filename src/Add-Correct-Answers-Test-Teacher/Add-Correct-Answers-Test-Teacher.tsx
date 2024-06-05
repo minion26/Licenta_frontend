@@ -169,6 +169,8 @@ function AddCorrectAnswersTestTeacher(){
                         icon: 'success',
                         confirmButtonText: 'Ok'
                     });
+
+                    window.location.reload();
                 } else {
                     return response.json().then(err => {
                         throw new Error(err.message);
@@ -284,40 +286,50 @@ function AddCorrectAnswersTestTeacher(){
 
                             console.log("transformedQuestionsWithAnswers", JSON.stringify(transformedQuestionsWithAnswers));
 
-                            fetch(`http://localhost:8081/api/v1/correct-answers-exam/updateByExam/idExam=${idExam}`, {
-                                method: 'PATCH',
-                                credentials: 'include',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Access-Control-Allow-Origin': '*',
-                                },
-                                body: JSON.stringify(transformedQuestionsWithAnswers),
-                            })
-                                .then(response => {
-                                    if(response.ok){
-                                        Swal.fire({
-                                            title: 'Success',
-                                            text: 'The correct answers have been saved!',
-                                            icon: 'success',
-                                            confirmButtonText: 'Ok'
-                                        });
-                                    } else {
-                                        return response.json().then(err => {
-                                            throw new Error(err.message);
-                                        });
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('There has been a problem with your fetch operation:', error);
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: error.message || 'An error occurred',
-                                        showConfirmButton: false,
-                                        // timer: 1500
-                                    });
+                            if(Object.keys(transformedQuestionsWithAnswers).length === 0) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'No correct answers to edit were found!',
+                                    showConfirmButton: false,
+                                    // timer: 1500
                                 });
+                                return;
+                            }else{
+                                fetch(`http://localhost:8081/api/v1/correct-answers-exam/updateByExam/idExam=${idExam}`, {
+                                    method: 'PATCH',
+                                    credentials: 'include',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Access-Control-Allow-Origin': '*',
+                                    },
+                                    body: JSON.stringify(transformedQuestionsWithAnswers),
+                                })
+                                    .then(response => {
+                                        if(response.ok){
+                                            Swal.fire({
+                                                title: 'Success',
+                                                text: 'The correct answers have been saved!',
+                                                icon: 'success',
+                                                confirmButtonText: 'Ok'
+                                            });
+                                        } else {
+                                            return response.json().then(err => {
+                                                throw new Error(err.message);
+                                            });
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('There has been a problem with your fetch operation:', error);
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: error.message || 'An error occurred',
+                                            showConfirmButton: false,
+                                            // timer: 1500
+                                        });
+                                    });
 
-                        }}
+                            }}
+                        }
                     >
                         Edit
                     </Button>

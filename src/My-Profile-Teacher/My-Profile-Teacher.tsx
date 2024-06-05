@@ -7,13 +7,118 @@ import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Swal from "sweetalert2";
+import {useEffect, useState} from "react";
+import {User, UserEditDTO} from "../types.ts";
 
 function MyProfileTeacher() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const [user, setUser] = useState<UserEditDTO>({
+        idUsers: '',
+        firstName: '',
+        lastName: '',
+        facultyEmail: '',
+        personalEmail: '',
+  });
+
+  const [userBackup, setUserBackup] = useState<UserEditDTO>({
+        idUsers: '',
+        firstName: '',
+        lastName: '',
+        facultyEmail: '',
+        personalEmail: '',
+  });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:8081/api/v1/username', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                });
+                const data = await response.json();
+                console.log("email: " + data.username);
+                // setUsername(data.username);
+
+                const userResponse = await fetch(`http://localhost:8081/api/v1/users/email/${data.username}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                });
+                const userData = await userResponse.json();
+                console.log(userData);
+                setUser(userData);
+                setUserBackup(userData);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    function handleInputChange(property: keyof User, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const newValue = event.target.value;
+        setUser((prevUser) => ({
+            idUsers: prevUser?.idUsers || '',
+            firstName: prevUser?.firstName || '',
+            lastName: prevUser?.lastName || '',
+            facultyEmail: prevUser?.facultyEmail || '',
+            personalEmail: prevUser?.personalEmail || '',
+            [property]: newValue,
+        }));
+    }
+
+    function handleCancel(){
+        setUser(userBackup);
+    }
+
+    const handleSubmit = async (e :  React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(user);
+        fetch(`http://localhost:8081/api/v1/users/update/${user.idUsers}`, {
+            method: 'PATCH',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(user),
+        })
+            .then(async (response) => {
+                const text = await response.text();
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}, message: ${text}`);
+
+                }
+                return text ? JSON.parse(text) : {};
+            })
+            .then((data) => {
+                console.log(data);
+                Swal.fire({
+                    title: "Profile updated!",
+                    text: "Your profile has been updated.",
+                    icon: "success",
+                });
+
+                window.location.reload();
+
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <Header />
 
       <UpperHeader
@@ -38,26 +143,51 @@ function MyProfileTeacher() {
           <TextField
             label="First Name"
             id="outlined-start-adornment-firstname"
+            InputLabelProps={{ shrink: true }}
             sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
+            value={user.firstName}
+            name={"firstName"}
+            onChange={(e) => handleInputChange("firstName", e)}
           />
           <TextField
             label="Last Name"
             id="outlined-start-adornment-lastname"
+            InputLabelProps={{ shrink: true }}
             sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
+            value={user.lastName}
+            name={"lastName"}
+            onChange={(e) => handleInputChange("lastName", e)}
           />
 
           <TextField
             sx={{ m: 1, marginBottom: "20px" }}
+            InputLabelProps={{ shrink: true }}
             fullWidth
             label="Email"
             id="fullWidth"
+            value={user.facultyEmail}
+            name={"facultyEmail"}
+            onChange={(e) => handleInputChange("facultyEmail", e)}
           />
+
+            <TextField
+                sx={{ m: 1, marginBottom: "20px" }}
+                InputLabelProps={{ shrink: true }}
+                fullWidth
+                label="Personal Email"
+                id="fullWidth-personal-email"
+                value={user.personalEmail}
+                name={"personalEmail"}
+                onChange={(e) => handleInputChange("personalEmail", e)}
+            />
+
           <TextField
             id="outlined-old-password-input"
             label="Old Password"
             type="password"
             sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
             autoComplete="current-password"
+
           />
           <TextField
             id="outlined-new-password-input"
@@ -83,25 +213,17 @@ function MyProfileTeacher() {
               m: 1,
             }}
           >
-            <Button variant="outlined">Cancel</Button>
+            <Button variant="outlined" onClick={handleCancel}>Cancel</Button>
               <Button
                   variant="contained"
-                  onClick={() => {
-                      Swal.fire({
-                          position: "top-end",
-                          icon: "success",
-                          title: "Your work has been saved",
-                          showConfirmButton: false,
-                          timer: 1500
-                      });
-                  }}
+                  type={"submit"}
               >
                   Save
               </Button>
           </Box>
         </Box>
       </Box>
-    </div>
+    </form>
   );
 }
 
