@@ -1,6 +1,7 @@
 import styles from "./Header-admin.module.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {FaUser} from "react-icons/fa";
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
 
@@ -28,7 +29,7 @@ function Header() {
         <nav>
           <ul className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
             <Link to="/my-profile" className={styles.headerUlLiA}>
-              <li className={`${styles.headerUlLi}`}>My profile</li>
+              <li className={`${styles.headerUlLi}`}><FaUser/> My profile</li>
             </Link>
 
             {/*<Link to={"/students"} className={styles.headerUlLiA}>*/}
