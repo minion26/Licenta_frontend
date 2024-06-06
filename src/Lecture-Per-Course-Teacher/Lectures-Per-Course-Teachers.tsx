@@ -76,9 +76,11 @@ function Buttons({ idCourses }: { idCourses: string | undefined}){
             if (response.headers.get("content-type")?.includes("application/json")) {
                 const data = await response.json();
                 console.log(data);
+                // Actualizăm starea lectures cu noua prelegere
+                setCreateLecture(data);
             }
 
-            window.location.reload();
+            // window.location.reload();
 
         } else {
             Swal.fire({

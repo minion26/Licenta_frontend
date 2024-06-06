@@ -1,124 +1,124 @@
 import Header from "../Header-students/Header.tsx";
 import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import {useTheme} from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {Course, HomeworkAnnouncements} from "../types.ts";
+import styles from "../See-Homework-Announcemet-Teacher/See-Homework-Announcemet-Teacher.module.css";
+import CardElongated from "../Card-Elongated/Card-Elongated.tsx";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Tooltip from "@mui/material/Tooltip";
 
-function Buttons(){
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+function Buttons({idHomeworkAnnouncement}: {idHomeworkAnnouncement: string}){
+    return (<div>
 
-    return ( <Card sx={{ display: 'flex',
-            width: isSmallScreen ? '100%' : '250px',
-            height: isSmallScreen ? '50%' : '100px',
-            backgroundColor: "#FAFAF5",
-            borderRadius: '24px',
-            alignSelf: 'center',
-            justifyContent: 'center',
-
-        }}>
-            <Box sx={{ display: 'flex', }}>
-                <CardContent sx={{ flex: '1 0 auto',
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}>
-                    <Button
-                        variant="contained"
-                        endIcon={<CreateOutlinedIcon />}
-                        sx={{
-                            width: '150px',
-                            height: '50px',
-                            backgroundColor: '#F5F5F5',
-                            borderRadius: '20px',
-                            color: 'rgba(0,0,0,0.75)',
-                            fontFamily: 'Inter',
-                            fontSize: '12px',
-                            fontWeight: 'semi-bold',
-                            alignSelf: 'flex-end',
-                            marginLeft: 'auto',
-                            marginRight: '20px',
-                            marginBottom: '10px',
-                            border: 'none',
-                            textTransform: 'none',
-                        }}
-                        component={Link}
-                        to="/add-homework-student"
-                    > Add Homework
-                    </Button>
-
-                </CardContent>
-            </Box>
-        </Card>
+            <Tooltip title={"See the homework and add a solution"}>
+            <Button
+                variant="contained"
+                endIcon={<AddCircleIcon />}
+                sx={{
+                    width: "50px",
+                    height: "50px",
+                    backgroundColor: "#F5F5F5",
+                    borderRadius: "20px",
+                    color: "rgba(0,0,0,0.75)",
+                    fontFamily: "Inter",
+                    fontSize: "12px",
+                    fontWeight: "semi-bold",
+                    alignSelf: "flex-end",
+                    marginLeft: "auto",
+                    marginRight: "20px",
+                    marginBottom: "10px",
+                    border: "none",
+                    textTransform: "none",
+                }}
+                component={Link}
+                to={`/see-homework-details/${idHomeworkAnnouncement}`}
+            >
+            </Button>
+            </Tooltip>
+        </div>
     );
 }
 
 
 
 function SeeHomeworkAnnouncementStudent() {
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+    const {idCourses, idLecture} = useParams();
+    // const theme = useTheme();
+    // const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+    const [course, setCourse] = useState<Course>();
+    const [homeworks, setHomeworks] = useState<HomeworkAnnouncements[]>([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:8081/api/v1/courses/${idCourses}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setCourse(data);
+                console.log(data);
+            })
+            .catch((error) => console.error('An error occured!', error));
+
+        fetch(`http://localhost:8081/api/v1/homework-announcements/idLecture=${idLecture}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setHomeworks(data);
+                console.log(data);
+            })
+            .catch((error) => console.error('An error occured!', error));
+    }, [idCourses, idLecture]);
+
+
+
 
     return (
         <div>
             <Header />
-            <UpperHeader title={"Homework Announcement"} subtitle={"date"}/>
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                    marginLeft: isSmallScreen ? "0px" : "125px",
-                    marginTop: "20px",
-                    width: "75%",
-                }}
+            <UpperHeader title={"Homework" } subtitle={course ? course.name : ""}/>
+            <div className={styles.cardContainer}>
+                {
+                    homeworks.map((homework, index) => {
+                        return (
+                            <CardElongated title={homework.title} cardIndex={index} height={145}>
+                                <Box sx={{ display: "flex" }}>
+                                    <CardContent
+                                        sx={{
+                                            flex: "1 0 auto",
+                                            display: "flex",
+                                            flexDirection: "row",
+                                        }}
+                                    >
+                                        <Buttons idHomeworkAnnouncement={homework.idHomeworkAnnouncement}/>
+                                    </CardContent>
+                                </Box>
+                            </CardElongated>
+                        );
+                    })
+                }
 
-            >
-                <Box>
-                    <TextField
-                        label="Title"
-                        id="outlined-start-adornment-title"
-                        sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
-                        value={"titlu tema 1"}
-                    />
-
-
-                    <TextField
-                        sx={{ m: 1, marginBottom: "20px" }}
-                        fullWidth
-                        label="Description"
-                        id="description"
-                        value={"descriere tema 1"}
-                    />
+            </div>
 
 
-                    <TextField
-                        id="outlined-score"
-                        label="Score"
-                        type="number"
-                        sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        inputProps={{
-                            min: 1,
-                            max: 100,
-                        }}
 
-                        value={"100"}
-
-                    />
-
-                </Box>
-<Buttons/>
-            </Box>
 
         </div>
     );

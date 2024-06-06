@@ -11,3 +11,9 @@
 .noDecoration {
     text-decoration: none;
 }
+
+@media (max-width: 540px) {
+    .cardContainer {
+        margin-left: 0;
+    }
+}

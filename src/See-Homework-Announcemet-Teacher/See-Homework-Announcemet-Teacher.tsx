@@ -167,7 +167,7 @@ function SeeHomeworkAnnouncementTeacher() {
             {
                 homeworks.map((homework, index) => {
                     return (
-                        <CardElongated title={homework.title} cardIndex={index} height={100}>
+                        <CardElongated key={index} title={homework.title} cardIndex={index} height={145}>
                             <Box sx={{ display: "flex" }}>
                                 <CardContent
                                     sx={{

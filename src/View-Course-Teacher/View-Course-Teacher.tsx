@@ -4,7 +4,7 @@ import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import PDFViewer from "../PDF-viewer/PDF-viewer.tsx";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {Materials} from "../types.ts";
+import {Lecture, Materials} from "../types.ts";
 import Swal from "sweetalert2";
 
 function ViewCourseTeacher() {
@@ -13,6 +13,40 @@ function ViewCourseTeacher() {
     const [type, setType] = useState<string[]>([]);
 
     const [hasError, setHasError] = useState(false);
+
+
+    const [lecture, setLecture] = useState<Lecture>();
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`http://localhost:8081/api/v1/lectures/${idLectures}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+
+            });
+            if(!response.ok){
+                const errorData = await response.json();
+                setHasError(true);
+                await Swal.fire({
+                    icon: 'error',
+                    title: errorData.message || 'An error occurred',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+            }else{
+                const data = await response.json();
+                setLecture(data);
+
+            }
+
+
+        };
+        fetchData();
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -93,7 +127,7 @@ function ViewCourseTeacher() {
   return (
     <div>
       <Header />
-      <UpperHeader title="WEEK 1" subtitle="Course" />
+      <UpperHeader title={lecture ? lecture.name : ""} subtitle={materialType ? materialType : ""} />
         <div className={styles.container}>
             {
                 !hasError && fileUrls.map((url, index) => {

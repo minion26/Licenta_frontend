@@ -250,6 +250,15 @@ export type QuestionAndStudentsAnswersDTO = {
     score : number;
 }
 
+export type LecturesDTO = {
+    idLecture: string;
+    name: string;
+    description: string;
+    week: number;
+    semester: number;
+    year: number;
+}
+
 
 
 

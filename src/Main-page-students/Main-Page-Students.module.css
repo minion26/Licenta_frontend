@@ -16,6 +16,7 @@ body {
 
     display: flex;
     justify-content: space-between;
+    background-color: rgba(0, 126, 180, 0.2);
 }
 
 .calendarContainer {
@@ -26,9 +27,49 @@ body {
 
 
 
-.title{
+/*.title{*/
+/*    font-family: 'Newsreader', serif;*/
+/*    font-size: 48px;*/
+/*    margin-top: 50px;*/
+/*    margin-bottom: 50px;*/
+/*    text-align: center;*/
+/*}*/
+
+.newsreader {
     font-family: 'Newsreader', serif;
     font-size: 48px;
+}
+
+.imageContainerTitle {
+    order: 2; /* Place the h1 in the middle */
+}
+
+.imageContainerFirstChild {
+    order: 1; /* Place the first image before the h1 */
+}
+
+.imageContainerLastChild {
+    order: 3; /* Place the second image after the h1 */
+}
+
+
+.imageContainerImg {
+    width: 100px; /* Ajustează lățimea imaginilor */
+    height: 98px; /* Menține proporția imaginilor */
+    border-radius: 27px;
+}
+
+.imageContainer {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row; /* Display the images and the h1 in a row on large screens */
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+
+.title{
     margin-top: 50px;
     margin-bottom: 50px;
     text-align: center;
@@ -46,7 +87,8 @@ body {
 .btn {
     width: 200px; /* Adjust this value as needed */
     border-radius : 27px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    background-color: #e7e7e7;
 }
 
 
@@ -73,6 +115,32 @@ body {
         margin-left: 175px;
     }
 
+    .imageContainer {
+        flex-direction: column; /* Stack the images and the h1 vertically on small screens */
+    }
+
+    .imageContainerTitle {
+        order: 3; /* Place the h1 below the images */
+    }
+
+    .imageContainerFirstChild {
+        order: 1; /* Place the first image at the top */
+    }
+
+    .imageContainerLastChild {
+        order: 2; /* Place the second image in the middle */
+    }
+
+    .imageContainer {
+        /*flex-direction: column; !* Stack the images vertically on small screens *!*/
+        gap: 25px; /* Reduce the space between images */
+    }
+
+    .imageContainerImg {
+        width: 100px; /* Make the images take up the full width of their container */
+        height: 100px; /* Let the images maintain their aspect ratio */
+    }
+
 }
 
 @media screen and (min-height: 1000px){
@@ -80,7 +148,7 @@ body {
     .main {
         flex-direction: column;
         align-items: center;
-        margin-left: 50px;
+        margin-left: 80px;
     }
 
     .calendarContainer, .buttons {
@@ -91,6 +159,11 @@ body {
     .buttons{
         margin-top: 150px;
         margin-left: 550px;
+    }
+
+    .imageContainer{
+        margin-left: 100px;
+
     }
 
 }
