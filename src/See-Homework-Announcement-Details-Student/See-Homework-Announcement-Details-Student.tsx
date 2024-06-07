@@ -12,8 +12,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Tooltip from "@mui/material/Tooltip";
 
-function Buttons({idHomeworkAnnouncement}: {idHomeworkAnnouncement: string | undefined}){
+function Buttons({idCourses,idHomeworkAnnouncement}: {idCourses: string | undefined ,idHomeworkAnnouncement: string | undefined}){
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -40,11 +41,12 @@ function Buttons({idHomeworkAnnouncement}: {idHomeworkAnnouncement: string | und
                     <CardContent sx={{
                         flex: '1 0 auto',
                         display: 'flex',
-                        flexDirection: 'center',
+                        flexDirection: 'column',
                         justifyContent: 'center', // Centrare pe axa orizontală
                         alignItems: 'center' // Centrare pe axa verticală
                     }}>
 
+                        <Tooltip title={"Upload homework"}>
                         <Button
                             variant="contained"
                             endIcon={<AddCircleIcon/>}
@@ -65,9 +67,10 @@ function Buttons({idHomeworkAnnouncement}: {idHomeworkAnnouncement: string | und
                                 textTransform: 'none',
                             }}
                             component={Link}
-                            to={`/add-homework/${idHomeworkAnnouncement}`}
+                            to={`/add-homework/${idCourses}/${idHomeworkAnnouncement}`}
                         > Add Homework
                         </Button>
+                        </Tooltip>
 
                     </CardContent>
                 </Box>
@@ -79,7 +82,7 @@ function Buttons({idHomeworkAnnouncement}: {idHomeworkAnnouncement: string | und
 
 
 function SeeHomeworkAnnouncementDetailsStudent() {
-    const {idHomeworkAnnouncement} = useParams();
+    const {idCourses,idHomeworkAnnouncement} = useParams();
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -178,7 +181,7 @@ function SeeHomeworkAnnouncementDetailsStudent() {
                     />
 
                 </Box>
-                <Buttons idHomeworkAnnouncement={idHomeworkAnnouncement}/>
+                <Buttons idCourses={idCourses} idHomeworkAnnouncement={idHomeworkAnnouncement} />
             </Box>
 
         </div>

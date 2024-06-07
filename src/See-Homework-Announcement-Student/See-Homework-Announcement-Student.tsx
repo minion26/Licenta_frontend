@@ -5,13 +5,14 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {Course, HomeworkAnnouncements} from "../types.ts";
+import {Course,  HomeworkAnnouncements} from "../types.ts";
 import styles from "../See-Homework-Announcemet-Teacher/See-Homework-Announcemet-Teacher.module.css";
 import CardElongated from "../Card-Elongated/Card-Elongated.tsx";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Tooltip from "@mui/material/Tooltip";
 
-function Buttons({idHomeworkAnnouncement}: {idHomeworkAnnouncement: string}){
+
+function Buttons({idCourses,idHomeworkAnnouncement}: {idCourses: string | undefined ,idHomeworkAnnouncement: string}){
     return (<div>
 
             <Tooltip title={"See the homework and add a solution"}>
@@ -35,10 +36,11 @@ function Buttons({idHomeworkAnnouncement}: {idHomeworkAnnouncement: string}){
                     textTransform: "none",
                 }}
                 component={Link}
-                to={`/see-homework-details/${idHomeworkAnnouncement}`}
+                to={`/see-homework-details/${idCourses}/${idHomeworkAnnouncement}`}
             >
             </Button>
             </Tooltip>
+
         </div>
     );
 }
@@ -107,7 +109,7 @@ function SeeHomeworkAnnouncementStudent() {
                                             flexDirection: "row",
                                         }}
                                     >
-                                        <Buttons idHomeworkAnnouncement={homework.idHomeworkAnnouncement}/>
+                                        <Buttons idCourses={idCourses} idHomeworkAnnouncement={homework.idHomeworkAnnouncement} />
                                     </CardContent>
                                 </Box>
                             </CardElongated>

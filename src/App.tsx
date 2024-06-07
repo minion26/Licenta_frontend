@@ -63,6 +63,7 @@ import SeeStudentsAnswersToQuestionsPerTestTeacher
     from "./See-Students-Answers-To-Questions-Per-Test-Teacher/See-Students-Answers-To-Questions-Per-Test-Teacher.tsx";
 import SeeHomeworkAnnouncementDetailsStudent
     from "./See-Homework-Announcement-Details-Student/See-Homework-Announcement-Details-Student.tsx";
+import SeeUploadedHomeworkStudents from "./See-Uploaded-Homework-Students/See-Uploaded-Homework-Students.tsx";
 
 function App() {
 
@@ -120,13 +121,14 @@ function RoutesComponent() {
                     <Route path={"/main-page-student"} element={<MainPageStudents />} />
                     <Route path={"/semester/:semesterNumber"} element={<CoursesPageStudents />} />
                     <Route path={"/lecture-per-course/:idCourses"} element={<LecturePerCourseStudents />} />
-                <Route path={"/homework"} element={<HomeworkHistoryStudents />} />
+                    <Route path={"/homework"} element={<HomeworkHistoryStudents />} />
+                <Route path={"/see-homeworks/:idHomework"} element={<SeeUploadedHomeworkStudents />} />
                 <Route path={"/my-profile"} element={<MyProfileTeacher />} />
                     <Route path={"/materials-per-lecture/:idCourses/:idLecture"} element={<MaterialsPerLectureStudents />} />
                     <Route path={"/view-course/:idCourses/:idLecture/:materialType"} element={<ViewCourseStudents />} />
                     <Route path={"/see-homework-announcement/:idCourses/:idLecture"} element={<SeeHomeworkAnnouncementStudent />} />
-                    <Route path={"/see-homework-details/:idHomeworkAnnouncement"} element={<SeeHomeworkAnnouncementDetailsStudent />} />
-                <Route path={"/add-homework/:idHomeworkAnnouncement"} element={<AddHomeworkStudent />} />
+                    <Route path={"/see-homework-details/:idCourses/:idHomeworkAnnouncement"} element={<SeeHomeworkAnnouncementDetailsStudent />} />
+                    <Route path={"/add-homework/:idCourses/:idHomeworkAnnouncement"} element={<AddHomeworkStudent />} />
                 <Route path={"/tests"} element={<SeeTestsStudent />} />
                 <Route path={"/take-test"} element={<TakeTestsStudent />} />
                 </>

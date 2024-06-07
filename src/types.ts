@@ -259,6 +259,15 @@ export type LecturesDTO = {
     year: number;
 }
 
+export type StudentHomeworkDTO = {
+    idStudentHomework: string;
+    idHomework: string;
+    idStudent: string;
+    idHomeworkFiles: Array<string>;
+    homeworkName: string;
+    grade: number;
+}
+
 
 
 
