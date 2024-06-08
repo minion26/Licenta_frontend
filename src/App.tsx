@@ -64,6 +64,8 @@ import SeeStudentsAnswersToQuestionsPerTestTeacher
 import SeeHomeworkAnnouncementDetailsStudent
     from "./See-Homework-Announcement-Details-Student/See-Homework-Announcement-Details-Student.tsx";
 import SeeUploadedHomeworkStudents from "./See-Uploaded-Homework-Students/See-Uploaded-Homework-Students.tsx";
+import SeeHomeworkFileStudent from "./See-Homework-File-Student/See-Homework-File-Student.jsx";
+import MyProfileStudent from "./My-Profile-Student/My-Profile-Student.tsx";
 
 function App() {
 
@@ -122,8 +124,9 @@ function RoutesComponent() {
                     <Route path={"/semester/:semesterNumber"} element={<CoursesPageStudents />} />
                     <Route path={"/lecture-per-course/:idCourses"} element={<LecturePerCourseStudents />} />
                     <Route path={"/homework"} element={<HomeworkHistoryStudents />} />
-                <Route path={"/see-homeworks/:idHomework"} element={<SeeUploadedHomeworkStudents />} />
-                <Route path={"/my-profile"} element={<MyProfileTeacher />} />
+                    <Route path={"/see-homeworks/:idHomework"} element={<SeeUploadedHomeworkStudents />} />
+                    <Route path={"/see-homework-feedback/:idHomework"} element={<SeeHomeworkFileStudent />} />
+                    <Route path={"/my-profile"} element={<MyProfileStudent />} />
                     <Route path={"/materials-per-lecture/:idCourses/:idLecture"} element={<MaterialsPerLectureStudents />} />
                     <Route path={"/view-course/:idCourses/:idLecture/:materialType"} element={<ViewCourseStudents />} />
                     <Route path={"/see-homework-announcement/:idCourses/:idLecture"} element={<SeeHomeworkAnnouncementStudent />} />

@@ -9,6 +9,9 @@ import Swal from "sweetalert2";
 
 function CoursesPageStudents(){
     const {semesterNumber } = useParams();
+    if (typeof semesterNumber === "string") {
+        localStorage.setItem('semesterNumber', semesterNumber);
+    }
     if (semesterNumber === undefined) {
         throw new Error("semesterNumber is undefined");
     }

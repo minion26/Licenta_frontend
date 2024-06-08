@@ -41,8 +41,9 @@ function HomeworkHistoryStudents() {
 
                 {
                     studentHomework.map((homework, index) => {
+
                         return (
-                            <CardElongated title={homework.homeworkName} description={"Grade: " + homework.grade} cardIndex={index}>
+                            <CardElongated title={homework.homeworkName} description={"Grade: " + (homework.grade===-1 ? "not graded yet" : homework.grade)} cardIndex={index}>
                                 <Button variant="contained" endIcon={<ArrowForwardRoundedIcon />} sx={{
                                     width: isSmallScreen ? '10px' : '50px',
                                     height: isSmallScreen ? '20px' : '50px',

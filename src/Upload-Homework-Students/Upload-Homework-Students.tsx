@@ -8,7 +8,7 @@ import React, {useEffect, useState} from "react";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Swal from "sweetalert2";
-import { User} from "../types.ts";
+import {HomeworkAnnouncements, User} from "../types.ts";
 
 function UploadHomeworkStudents({idHomeworkAnnouncement} : {idHomeworkAnnouncement : string | undefined}) {
     const theme = useTheme();
@@ -28,6 +28,42 @@ function UploadHomeworkStudents({idHomeworkAnnouncement} : {idHomeworkAnnounceme
         password: '',
         role: '',
     });
+
+    const [homeworkAnnouncement, setHomeworkAnnouncement] = useState<HomeworkAnnouncements>({
+        idHomeworkAnnouncement: '',
+        title: '',
+        description: '',
+        dueDate: '',
+        score: 0,
+        idTeacher: '',
+        idLecture: ''
+    });
+
+    useEffect(() => {
+        fetch(`http://localhost:8081/api/v1/homework-announcements/idHomeworkAnnouncement=${idHomeworkAnnouncement}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log("due date: ", data.dueDate);
+                setHomeworkAnnouncement(data);
+            })
+            .catch(err => {
+                console.log("error: ", err);
+                Swal.fire({
+                    icon: 'error',
+                    title: (err as Error).message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            });
+    }, []);
+
 
 
     useEffect(() => {
@@ -83,7 +119,19 @@ function UploadHomeworkStudents({idHomeworkAnnouncement} : {idHomeworkAnnounceme
     };
 
     const handleUpload = async () => {
-        if(files){
+        if (homeworkAnnouncement.dueDate) {
+            const deadline = new Date(homeworkAnnouncement.dueDate);
+            const currentDate = new Date();
+            if (currentDate > deadline) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "The deadline has passed!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return;
+            }
+        }else if(files){
             setStatus("uploading");
 
             const formData = new FormData();

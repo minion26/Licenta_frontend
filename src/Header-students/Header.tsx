@@ -14,6 +14,9 @@ function Header() {
         setShowMenu(!showMenu);
     };
 
+    const lastVisitedSemester = localStorage.getItem('semesterNumber');
+    const lastVisitedIdCourses = localStorage.getItem('lastVisitedIdCourses');
+
     return (
     <div className="nav flex-column">
         <div className={styles.burger} onClick={toggleMenu}>
@@ -29,11 +32,11 @@ function Header() {
                         <li className={`${styles.headerUlLi}`}><FaUser/>My profile</li>
                     </Link>
 
-                    <Link to="/courses" className={styles.headerUlLiA}>
+                    <Link to={`/semester/${lastVisitedSemester}`} className={styles.headerUlLiA}>
                         <li className={`${styles.headerUlLi}`}><FaBookOpen/>Courses</li>
                     </Link>
 
-                    <Link to="/lectures" className={styles.headerUlLiA}>
+                    <Link to={`/lecture-per-course/${lastVisitedIdCourses}`} className={styles.headerUlLiA}>
                         <li className={`${styles.headerUlLi}`}><RiPagesFill/>Lectures</li>
                     </Link>
 

@@ -10,6 +10,9 @@ import {Course, Lecture} from "../types.ts";
 
 function LecturePerCourseStudents() {
     const {idCourses} = useParams();
+    if (typeof idCourses === "string") {
+        localStorage.setItem('lastVisitedIdCourses', idCourses);
+    }
     const [course, setCourse] = useState<Course>({
         name: '',
         idCourses: '',
