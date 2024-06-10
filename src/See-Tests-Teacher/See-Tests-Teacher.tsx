@@ -115,7 +115,30 @@ function SeeTestsTeacher(){
                                             border: "none",
                                             textTransform: "none",
                                         }}
-                                        // onClick={startTest}
+                                        onClick={() => {
+                                                fetch(`http://localhost:8081/api/v1/exam/start-exam/idExam=${exam.idExam}`, {
+                                                    method: "POST",
+                                                    credentials: "include",
+                                                    headers: {
+                                                        "Content-Type": "application/json",
+                                                        "Access-Control-Allow-Origin": "*",
+                                                    },
+                                                })
+                                                    .then((response) => {
+                                                        if (response.headers.get('content-type')?.includes('application/json')) {
+                                                            const data = response.json();
+                                                            console.log('File uploaded', data);
+                                                        } else {
+                                                            console.log('No JSON data returned');
+                                                        }
+                                                    })
+
+                                                    .catch((error) => {
+                                                        console.error("Error:", error);
+                                                })
+
+
+                                        }}
                                     >
                                         Start Test
                                     </Button>

@@ -268,6 +268,24 @@ export type StudentHomeworkDTO = {
     grade: number;
 }
 
+export type StudentExamDetailsDTO = {
+    idStudentExam: string;
+    idStudent: string;
+    courseName: string;
+    idExam: string;
+    score: number;
+    examStatus: number;
+}
+
+export type StudentAnswersExamCreationDTO = {
+    idStudentExam: string;
+    answers: Array<QuestionAnswersDTO>;
+}
+
+export type QuestionAnswersDTO = {
+    idQuestionExam: string;
+    answer: string;
+}
 
 
 

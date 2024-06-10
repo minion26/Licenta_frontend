@@ -133,7 +133,7 @@ function RoutesComponent() {
                     <Route path={"/see-homework-details/:idCourses/:idHomeworkAnnouncement"} element={<SeeHomeworkAnnouncementDetailsStudent />} />
                     <Route path={"/add-homework/:idCourses/:idHomeworkAnnouncement"} element={<AddHomeworkStudent />} />
                 <Route path={"/tests"} element={<SeeTestsStudent />} />
-                <Route path={"/take-test"} element={<TakeTestsStudent />} />
+                <Route path={"/take-test/:idExam/:idStudentExam"} element={<TakeTestsStudent />} />
                 </>
             )}
 

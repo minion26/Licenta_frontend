@@ -1,9 +1,10 @@
 import styles from "./Header-admin.module.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {FaUser} from "react-icons/fa";
 function Header() {
   const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     console.log("Burger icon clicked"); // Add this line
@@ -22,9 +23,7 @@ function Header() {
         onClick={toggleMenu}
       >
           {/*<Tooltip title={"Navigate to main page"}>*/}
-          <Link to={"/main-page-admin"}>
-            <h1 className={styles.webApp}>web app</h1>
-          </Link>
+            <h1 className={styles.webApp} onClick={() => navigate("/main-page-teacher")}>web app</h1>
           {/*</Tooltip>*/}
         <nav>
           <ul className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>
