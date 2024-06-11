@@ -130,49 +130,49 @@ function UploadHomeworkStudents({idHomeworkAnnouncement} : {idHomeworkAnnounceme
                     timer: 1500
                 });
                 return;
-            }
-        }else if(files){
-            setStatus("uploading");
+            }else if(files){
+                setStatus("uploading");
 
-            const formData = new FormData();
+                const formData = new FormData();
 
-            [...files].forEach((file) => {
-                formData.append("file", file);
-            });
-
-            try {
-                const result  = await fetch(`http://localhost:8081/api/v1/homework/upload/idHomeworkAnnouncement=${idHomeworkAnnouncement}/idStudent=${user.idUsers}`, {
-                    method: "POST",
-                    body: formData,
-                    credentials: "include",
-                    headers: {
-                        "Access-Control-Allow-Origin": "*",
-                    }
+                [...files].forEach((file) => {
+                    formData.append("file", file);
                 });
 
-                if(!result.ok){
-                    const errorData = await result.json();
-                    await Swal.fire({
-                        icon: 'error',
-                        title: errorData.message || 'An error occurred',
-                        showConfirmButton: false,
-                        timer: 1500
+                try {
+                    const result  = await fetch(`http://localhost:8081/api/v1/homework/upload/idHomeworkAnnouncement=${idHomeworkAnnouncement}/idStudent=${user.idUsers}`, {
+                        method: "POST",
+                        body: formData,
+                        credentials: "include",
+                        headers: {
+                            "Access-Control-Allow-Origin": "*",
+                        }
                     });
-                }
 
-                if (result.headers.get("content-type")?.includes("application/json")) {
-                    const text = await result.text();
-                    if (text !== "") { // Check if the body is not empty
-                        const data = JSON.parse(text);
-                        console.log(data);
+                    if(!result.ok){
+                        const errorData = await result.json();
+                        await Swal.fire({
+                            icon: 'error',
+                            title: errorData.message || 'An error occurred',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     }
-                }
-                setStatus("success");
-            } catch (error) {
-                console.error(error);
-                setStatus("fail");
-            }
 
+                    if (result.headers.get("content-type")?.includes("application/json")) {
+                        const text = await result.text();
+                        if (text !== "") { // Check if the body is not empty
+                            const data = JSON.parse(text);
+                            console.log(data);
+                        }
+                    }
+                    setStatus("success");
+                } catch (error) {
+                    console.error(error);
+                    setStatus("fail");
+                }
+
+            }
         }
     };
 

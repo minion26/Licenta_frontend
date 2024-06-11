@@ -12,6 +12,7 @@ import {Link} from "react-router-dom";
 import Header from "../Header-students/Header.tsx";
 import {StudentExamDetailsDTO} from "../types.ts";
 import {useEffect, useState} from "react";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 
 
@@ -47,6 +48,11 @@ function SeeTestsStudent(){
         console.log("started: ", startedExams);
     }, [exams]);
 
+    //daca exista in local storage timer il sterg
+    useEffect(() => {
+        localStorage.removeItem('timer');
+    }, []);
+
     return(
         <div>
            <Header/>
@@ -66,117 +72,124 @@ function SeeTestsStudent(){
                     <p>If you switch the tab, you can't resolve any more questions.</p>
                     <p>When the timer is up, your work will be automatically submitted.</p>
                 </Box>
+                <div>
+                    {
+                        notStartedExams.map((exam, index) => {
+                            return (
+                                <CardElongated title={exam.courseName}
+                                               description={
+                                                   ` Score : Not graded , Exam Status: Not started`
+                                               }
+                                               cardIndex={index}
+                                               height={160}
+                                               key={index}
+                                >
+                                    <Box sx={{
+                                        display: 'flex',
+                                        justifyContent: 'flex-end',
+                                        alignItems: 'space-between',
+                                        marginLeft: 'auto',
+                                        marginTop: '5px',
+                                    }}>
+                                        <Tooltip title="Start Test">
+                                            <Button
+                                                variant="contained"
+                                                endIcon={<StartIcon/>}
+                                                sx={{
+                                                    width: isSmallScreen ? "75px" : "130px",
+                                                    height: "50px",
+                                                    backgroundColor: "#F5F5F5",
+                                                    borderRadius: "20px",
+                                                    color: "rgba(0,0,0,0.75)",
+                                                    fontFamily: "Inter",
+                                                    fontSize: isSmallScreen ? "10px" : "12px",
+                                                    fontWeight: "semi-bold",
+                                                    alignSelf: "flex-end",
+                                                    marginLeft: "auto",
+                                                    marginRight: "20px",
+                                                    marginBottom: "25px",
+                                                    border: "none",
+                                                    textTransform: "none",
+                                                }}
+                                                component={Link}
+                                                to={`/take-test/${exam.idExam}/${exam.idStudentExam}`}
+                                            >
+                                                Start Test
+                                            </Button>
+                                        </Tooltip>
+                                    </Box>
+                                </CardElongated>
+                            );
+                        })
+                    }
+                </div>
 
-                {
-                    notStartedExams.map((exam, index) => {
-                        return (
-                            <CardElongated title={exam.courseName}
-                                           description={
-                                               ` Score : Not graded , Exam Status: Not started`
-                                           }
-                                           cardIndex={index}
-                                           height={160}>
-                                <Box sx={{
-                                    display: 'flex',
-                                    justifyContent: 'flex-end',
-                                    alignItems: 'space-between',
-                                    marginLeft: 'auto',
-                                    marginTop: '5px',
-                                }}>
-                                    <Tooltip title="Start Test">
-                                        <Button
-                                            variant="contained"
-                                            endIcon={<StartIcon/>}
-                                            sx={{
-                                                width: isSmallScreen ? "75px" : "130px",
-                                                height: "50px",
-                                                backgroundColor: "#F5F5F5",
-                                                borderRadius: "20px",
-                                                color: "rgba(0,0,0,0.75)",
-                                                fontFamily: "Inter",
-                                                fontSize: isSmallScreen ? "10px" : "12px",
-                                                fontWeight: "semi-bold",
-                                                alignSelf: "flex-end",
-                                                marginLeft: "auto",
-                                                marginRight: "20px",
-                                                marginBottom: "25px",
-                                                border: "none",
-                                                textTransform: "none",
-                                            }}
-                                            component={Link}
-                                            to={`/take-test/${exam.idExam}/${exam.idStudentExam}`}
-                                        >
-                                            Start Test
-                                        </Button>
-                                    </Tooltip>
-                                </Box>
-                            </CardElongated>
-                        );
-                    })
-                }
+                <div style={{height: '4px', backgroundColor: '#007EB4', width:'100%'}}/>
 
-                <hr/>
-
-                {
-                    startedExams.map((exam, index) => {
-                        return (
-                            <CardElongated title={exam.courseName}
-                                           description={
-                                               ` Score : ${exam.score === -1 ? "Not graded" : exam.score}, Exam Status: ${
-                                                   (() => {
-                                                       switch (exam.examStatus) {
-                                                           case -1:
-                                                               return "Not started";
-                                                           case 0:
-                                                               return "Failed";
-                                                           case 1:
-                                                               return "Passed";
-                                                           default:
-                                                               return exam.examStatus;
-                                                       }
-                                                   })()
-                                               }`
-                                           }
-                                           cardIndex={index}
-                                           height={160}>
-                                <Box sx={{
-                                    display: 'flex',
-                                    justifyContent: 'flex-end',
-                                    alignItems: 'space-between',
-                                    marginLeft: 'auto',
-                                    marginTop: '5px',
-                                }}>
-                                    <Tooltip title="View Test">
-                                        <Button
-                                            variant="contained"
-                                            endIcon={<StartIcon/>}
-                                            sx={{
-                                                width: isSmallScreen ? "75px" : "130px",
-                                                height: "50px",
-                                                backgroundColor: "#F5F5F5",
-                                                borderRadius: "20px",
-                                                color: "rgba(0,0,0,0.75)",
-                                                fontFamily: "Inter",
-                                                fontSize: isSmallScreen ? "10px" : "12px",
-                                                fontWeight: "semi-bold",
-                                                alignSelf: "flex-end",
-                                                marginLeft: "auto",
-                                                marginRight: "20px",
-                                                marginBottom: "25px",
-                                                border: "none",
-                                                textTransform: "none",
-                                            }}
-                                            component={Link}
-                                            to={``}
-                                        >
-                                            View Test
-                                        </Button>
-                                    </Tooltip>
-                                </Box>
-                            </CardElongated>
-                        );
-                    })
-                }
+                <div>
+                    {
+                        startedExams.map((exam, index) => {
+                            return (
+                                <CardElongated title={exam.courseName}
+                                               description={
+                                                   ` Score : ${exam.score === -1 ? "Not graded" : exam.score}, Exam Status: ${
+                                                       (() => {
+                                                           switch (exam.examStatus) {
+                                                               case -1:
+                                                                   return "Not started";
+                                                               case 0:
+                                                                   return "Failed";
+                                                               case 1:
+                                                                   return "Passed";
+                                                               default:
+                                                                   return exam.examStatus;
+                                                           }
+                                                       })()
+                                                   }`
+                                               }
+                                               cardIndex={index + 1}
+                                               height={160}
+                                               key={index}
+                                >
+                                    <Box sx={{
+                                        display: 'flex',
+                                        justifyContent: 'flex-end',
+                                        alignItems: 'space-between',
+                                        marginLeft: 'auto',
+                                        marginTop: '5px',
+                                    }}>
+                                        <Tooltip title="View Test">
+                                            <Button
+                                                variant="contained"
+                                                endIcon={<RemoveRedEyeIcon/>}
+                                                sx={{
+                                                    width: isSmallScreen ? "75px" : "130px",
+                                                    height: "50px",
+                                                    backgroundColor: "#F5F5F5",
+                                                    borderRadius: "20px",
+                                                    color: "rgba(0,0,0,0.75)",
+                                                    fontFamily: "Inter",
+                                                    fontSize: isSmallScreen ? "10px" : "12px",
+                                                    fontWeight: "semi-bold",
+                                                    alignSelf: "flex-end",
+                                                    marginLeft: "auto",
+                                                    marginRight: "20px",
+                                                    marginBottom: "25px",
+                                                    border: "none",
+                                                    textTransform: "none",
+                                                }}
+                                                component={Link}
+                                                to={`/see-submitted-test/${exam.idExam}`}
+                                            >
+                                                View Test
+                                            </Button>
+                                        </Tooltip>
+                                    </Box>
+                                </CardElongated>
+                            );
+                        })
+                    }
+                </div>
 
             </div>
         </div>

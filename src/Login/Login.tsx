@@ -1,6 +1,6 @@
 import styles from "./Login.module.css";
 import {ChangeEvent, FormEvent, useState} from "react";
-import { TextField, Button, Checkbox, FormControlLabel } from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Header from "../Header-main-page/Header.tsx";
@@ -13,7 +13,7 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword /*setShowPassword*/] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  // const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
   const { role, setRole } = useAuth();
@@ -26,9 +26,9 @@ function LoginForm() {
     setPassword(event.target.value);
   };
 
-  const handleRememberMeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setRememberMe(event.target.checked);
-  };
+  // const handleRememberMeChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   setRememberMe(event.target.checked);
+  // };
 
     useEffect(() => {
         if (role === 1) {
@@ -45,7 +45,7 @@ function LoginForm() {
       // Handle form submission logic here
       console.log("Email:", email);
       console.log("Password:", password);
-      console.log("Remember Me:", rememberMe);
+      // console.log("Remember Me:", rememberMe);
 
       // Create an object representing the login data
       const loginData = {
@@ -177,15 +177,15 @@ function LoginForm() {
                   // ),
                 }}
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={rememberMe}
-                    onChange={handleRememberMeChange}
-                  />
-                }
-                label="Remember me"
-              />
+              {/*<FormControlLabel*/}
+              {/*  control={*/}
+              {/*    <Checkbox*/}
+              {/*      checked={rememberMe}*/}
+              {/*      onChange={handleRememberMeChange}*/}
+              {/*    />*/}
+              {/*  }*/}
+              {/*  label="Remember me"*/}
+              {/*/>*/}
               {/*/main-page-student*/}
               {/*/main-page-teacher*/}
               {/* /main-page-admin */}
@@ -199,14 +199,14 @@ function LoginForm() {
                 className={styles.p}
                 style={{ textAlign: "right", fontSize: "14px" }}
               >
-                <a
-                  href="https://www.google.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
+                {/*<a*/}
+                {/*  href="https://www.google.com"*/}
+                {/*  target="_blank"*/}
+                {/*  rel="noopener noreferrer"*/}
+                {/*  style={{ textDecoration: "none", color: "inherit" }}*/}
+                {/*>*/}
                   Need help?
-                </a>
+                {/*</a>*/}
               </p>
               <p
                 style={{
@@ -214,16 +214,7 @@ function LoginForm() {
                   fontSize: "14px",
                 }}
               >
-                This page is protected by Google reCAPTCHA to ensure you're not
-                a bot. &nbsp;
-                <a
-                  href="https://www.google.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  Learn more.
-                </a>
+                  Welcome to our application! Please enter your credentials to sign in.
               </p>
             </form>
           </CardContent>

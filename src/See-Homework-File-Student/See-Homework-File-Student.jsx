@@ -136,8 +136,6 @@ function SeeHomeworkFileStudent() {
 
     }, [idHomework]);
 
-
-
   return (
       <div>
           <Header/>

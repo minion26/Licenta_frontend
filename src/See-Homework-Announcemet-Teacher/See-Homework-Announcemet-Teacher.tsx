@@ -163,7 +163,7 @@ function SeeHomeworkAnnouncementTeacher() {
     <div>
         <Header/>
         <UpperHeader title={"Homework " + course?.name} subtitle={"date"}/>
-        <div className={styles.cardContainer}>
+        <div className={styles.cardContainer} key={1}>
             {
                 homeworks.map((homework, index) => {
                     return (

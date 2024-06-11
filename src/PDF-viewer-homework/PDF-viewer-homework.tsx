@@ -7,6 +7,7 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 
 import styles from './PDF-viewer-homework.module.css';
 import {useState} from "react";
+import * as mammoth from "mammoth";
 
 
 
@@ -15,7 +16,7 @@ import {useState} from "react";
 // Your render function
 function PdfViewerHomework({documentURL, fileType} : {documentURL: string, fileType:string}) {
     const [loading, setLoading] = useState(true);
-
+    const [docContent, setDocContent] = useState<string | null>(null);
     // Check if fileURL is defined
     if (!documentURL) {
         return <div>No file URL provided</div>;
@@ -25,6 +26,31 @@ function PdfViewerHomework({documentURL, fileType} : {documentURL: string, fileT
         const fileExtension = fileType;
 
         switch(fileExtension) {
+            case 'docx':
+                fetch(documentURL)
+                    .then(response => {
+                        console.log('fetch response:', response);
+                        return response.arrayBuffer();
+                    })
+                    .then(arrayBuffer => {
+                        console.log('arrayBuffer:', arrayBuffer);
+                        mammoth.convertToHtml({arrayBuffer: arrayBuffer})
+                            .then(function(result){
+                                const html = result.value; // The generated HTML
+                                setDocContent(html);
+                            })
+                            .catch(function(err){
+                                console.log('mammoth.convertToHtml error:', err);
+                            });
+                    })
+                    .catch(function(err){
+                        console.log('fetch error:', err);
+                    });
+                if (docContent) {
+                    return <div dangerouslySetInnerHTML={{ __html: docContent }} />;
+                } else {
+                    return <div>Loading...</div>;
+                }
             case 'pdf':
                 return(
                     <div >

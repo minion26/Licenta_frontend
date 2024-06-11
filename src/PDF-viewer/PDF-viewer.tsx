@@ -61,7 +61,6 @@ function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
     // const defaultLayoutPluginInstance = defaultLayoutPlugin(
     //     // props?: DefaultLayoutPluginProps
     // );
-
     const toolbarPluginInstance = toolbarPlugin();
     const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
 
@@ -81,7 +80,8 @@ function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
     const [docContent, setDocContent] = useState<string | null>(null);
 
     useEffect(() => {
-        if (fileType === 'docx' || fileType === 'doc') {
+        if (fileType === 'docx' || fileType === 'doc'){
+            console.log("HERE");
             fetch(fileURL)
                 .then(response => response.arrayBuffer())
                 .then(arrayBuffer => {
@@ -113,7 +113,29 @@ function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
 
         }
 
+        console.log('Before switch, fileType:', fileType);
         switch (fileExtension) {
+            case 'docx':
+                fetch(fileURL)
+                    .then(response => {
+                        console.log('fetch response:', response);
+                        return response.arrayBuffer();
+                    })
+                    .then(arrayBuffer => {
+                        console.log('arrayBuffer:', arrayBuffer);
+                        mammoth.convertToHtml({arrayBuffer: arrayBuffer})
+                            .then(function(result){
+                                const html = result.value; // The generated HTML
+                                setDocContent(html);
+                            })
+                            .catch(function(err){
+                                console.log('mammoth.convertToHtml error:', err);
+                            });
+                    })
+                    .catch(function(err){
+                        console.log('fetch error:', err);
+                    });
+                return <div>Loading...</div>;
             case 'pdf':
                 return (
 

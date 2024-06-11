@@ -287,6 +287,10 @@ export type QuestionAnswersDTO = {
     answer: string;
 }
 
-
+export type UserChangePasswordDTO = {
+    oldPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+}
 
 

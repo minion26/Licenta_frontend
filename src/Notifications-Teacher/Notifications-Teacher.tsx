@@ -68,7 +68,7 @@ function NotificationsTeacher() {
                 needsReview.map((review, index) => {
                 const user = users.find(user => user.idUsers === review.idStudent);
                  return   (
-                    <CardElongated title={user ? user.firstName + " " + user.lastName : " "} description={"Question: " + review.question} cardIndex={index} height={150}>
+                    <CardElongated key={index} title={user ? user.firstName + " " + user.lastName : " "} description={"Question: " + review.question} cardIndex={index} height={150}>
                         <Button
                             variant="contained"
                             endIcon={<CreateOutlinedIcon />}

@@ -78,6 +78,28 @@ function SeeTestsTeacher(){
             });
     }, [idCourses]);
 
+    const [examStatuses, setExamStatuses] = useState<Record<string, boolean>>({});
+
+    useEffect(() => {
+        if (Array.isArray(exams)) {
+            exams.forEach((exam) => {
+                fetch(`http://localhost:8081/api/v1/exam/is-started/idExam=${exam.idExam}`, {
+                    method: "GET",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        setExamStatuses(prevStatuses => ({ ...prevStatuses, [exam.idExam]: data }));
+                    })
+                    .catch(error => console.error("Error:", error));
+            });
+        }
+    }, [exams]);
+
     return(
         <div>
             <Header/>
@@ -85,6 +107,8 @@ function SeeTestsTeacher(){
             <div className={styles.container}>
                 {
                     Array.isArray(exams) ? exams.map((exam, index) => {
+                        const isStarted = examStatuses[exam.idExam];
+
                         return <CardElongated key={index} title={exam.name}  cardIndex={index} height={isSmallScreen ? 160 : 150}>
                             <Box sx={{
                                 display: 'flex',
@@ -115,6 +139,7 @@ function SeeTestsTeacher(){
                                             border: "none",
                                             textTransform: "none",
                                         }}
+                                        disabled={isStarted}
                                         onClick={() => {
                                                 fetch(`http://localhost:8081/api/v1/exam/start-exam/idExam=${exam.idExam}`, {
                                                     method: "POST",

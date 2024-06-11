@@ -40,12 +40,27 @@ function SeeUploadedHomeworkStudents(){
                 'Content-Type': 'application/json',
             }
         })
-            .then(response => response.json())
+            .then(response => {
+                if(!response.ok){
+                    return response.json().then(error => {
+                        throw new Error(error.message);
+
+                    })
+                }
+                return response.json();
+            })
             .then(data => {
                 setHomework(data);
             })
             .catch((error) => {
                 console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: (error as Error).message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+
             });
     }, []);
 
@@ -163,7 +178,12 @@ function SeeUploadedHomeworkStudents(){
                                                             console.error(`Server responded with status code ${response.status}`);
                                                             throw new Error('Failed to delete the account');
                                                         }
-                                                        return response.json();
+                                                        const contentType = response.headers.get("content-type");
+                                                        if (contentType && contentType.indexOf("application/json") !== -1) {
+                                                            return response.json();
+                                                        }else{
+                                                            console.log("No JSON returned");
+                                                        }
 
                                                     })
                                                     .then((data) => {
@@ -173,6 +193,9 @@ function SeeUploadedHomeworkStudents(){
                                                             text: "The file has been deleted.",
                                                             icon: "success"
                                                         });
+                                                        //delete the file from the homework too
+
+
 
                                                         window.location.reload();
                                                     })

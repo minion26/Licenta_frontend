@@ -7,13 +7,13 @@ import styles from "./Take-Tests-Student.module.css";
 import {TimerComponent} from "../TimerComponent/TimerComponent.tsx";
 import Button from "@mui/material/Button";
 import Swal from "sweetalert2";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {ExamDTO, QuestionsExamDTO, StudentAnswersExamCreationDTO} from "../types.ts";
 
-// import {ExamType, StudentExamDTO, CorrectAnswer, Question} from "../types";
 
 function TakeTestsStudent(){
     const {idExam ,idStudentExam} = useParams();
+    const navigate = useNavigate();
 
     const [exam, setExam] = useState<ExamDTO>({
         idExam: "",
@@ -46,9 +46,38 @@ function TakeTestsStudent(){
             });
     }, []);
 
+
+    const [examStarted, setExamStarted] = useState(false);
+
     useEffect(() => {
-        console.log(exam);
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`http://localhost:8081/api/v1/exam/is-started/idExam=${idExam}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Credentials': '*',
+                    }
+                });
+                const data = await response.json();
+                if(data === true){
+                    setExamStarted(true);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchData();
+
+        const intervalId = setInterval(fetchData, 5000); // 5000 ms = 5 secunde
+
+        return () => {
+            clearInterval(intervalId);
+        };
     }, [idExam]);
+
 
     const [questionExam, setQuestionExam] = useState<QuestionsExamDTO[]>([]);
 
@@ -70,6 +99,9 @@ function TakeTestsStudent(){
             });
     }, []);
 
+    useEffect(() => {
+        console.log("time in minutes: ", exam.timeInMinutes);
+    }, []);
 
 
     const [studentAnswers, setStudentAnswers] = useState<StudentAnswersExamCreationDTO>({
@@ -128,7 +160,7 @@ function TakeTestsStudent(){
 
         console.log("students answers: ",studentAnswers);
 
-        const response = await fetch(``, {
+        const response = await fetch(`http://localhost:8081/api/v1/student-answers/submit`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -154,6 +186,7 @@ function TakeTestsStudent(){
             });
         }
 
+        navigate(`/tests`)
 
     };
 
@@ -163,60 +196,124 @@ function TakeTestsStudent(){
             <Header />
             <UpperHeader title={exam.name} subtitle={exam.courseName} />
             <div className={styles.container}>
-                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    {exam.timeInMinutes ? (
-                        <TimerComponent onTimeUp={handleSubmit} time={exam.timeInMinutes * 60}/>
-                    ) : (
-                        <div>Loading...</div>
-                    )}
-                </div>
 
-                <Box sx={
-                    {
-                        width: '100%',
-                    }
-                }>
+                {
+                    examStarted ? (
+                        <>
+                    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                            {exam.timeInMinutes ? (
+                                <TimerComponent onTimeUp={handleSubmit} initialTime={exam.timeInMinutes * 60}/>
+                            ) : (
+                                <div>Loading...</div>
+                            )}
+                        </div>
 
-                    {exam.question.map((question, index) => (
-                        <Box key={index} sx={{display: 'flex', alignItems: 'center'}}>
-                            <TextField
-                                sx={{m: 1, marginBottom: "20px"}}
-                                fullWidth
-                                label="Question Text"
-                                id={`question-text-${index}`}
-                                value={question.questionText}
+                        <Box sx={
+                            {
+                                width: '100%',
+                            }
+                        }>
 
-                            />
+                            {exam.question.map((question, index) => (
+                                <Box key={index} sx={{display: 'flex', alignItems: 'center'}}>
+                                    <TextField
+                                        sx={{m: 1, marginBottom: "20px"}}
+                                        fullWidth
+                                        label="Question Text"
+                                        id={`question-text-${index}`}
+                                        value={question.questionText}
 
-                            <TextField
-                                fullWidth
-                                label="Correct Answer"
-                                id={`outlined-start-adornment-correctAnswer-${index}`}
-                                sx={{m: 1, marginBottom: "20px"}}
-                                onChange={(e) => handleAnswerChange(question.idQuestion, e.target.value)}
-                                disabled={!isTabActive}
-                            />
+                                    />
+
+                                    <TextField
+                                        fullWidth
+                                        label="Correct Answer"
+                                        id={`outlined-start-adornment-correctAnswer-${index}`}
+                                        sx={{m: 1, marginBottom: "20px"}}
+                                        onChange={(e) => handleAnswerChange(question.idQuestion, e.target.value)}
+                                        disabled={!isTabActive}
+                                    />
+                                </Box>
+                            ))}
+
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    marginTop: "20px",
+                                    m: 1,
+                                }}
+                            >
+
+                                <Button
+                                    variant="contained"
+                                    onClick={handleSubmit}
+                                >
+                                    Submit
+                                </Button>
+                            </Box>
+
                         </Box>
-                    ))}
 
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            marginTop: "20px",
-                            m: 1,
-                        }}
-                    >
+                    </>
+                    ) : <h1>Wait for the professor to start the exam</h1>
+                }
 
-                        <Button
-                            variant="contained"
-                            onClick={handleSubmit}
-                        >
-                            Submit
-                        </Button>
-                    </Box>
 
-                </Box>
+            {/*    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>*/}
+            {/*        {exam.timeInMinutes ? (*/}
+            {/*            <TimerComponent onTimeUp={handleSubmit} time={exam.timeInMinutes * 60}/>*/}
+            {/*        ) : (*/}
+            {/*            <div>Loading...</div>*/}
+            {/*        )}*/}
+            {/*    </div>*/}
+
+            {/*    <Box sx={*/}
+            {/*        {*/}
+            {/*            width: '100%',*/}
+            {/*        }*/}
+            {/*    }>*/}
+
+            {/*        {exam.question.map((question, index) => (*/}
+            {/*            <Box key={index} sx={{display: 'flex', alignItems: 'center'}}>*/}
+            {/*                <TextField*/}
+            {/*                    sx={{m: 1, marginBottom: "20px"}}*/}
+            {/*                    fullWidth*/}
+            {/*                    label="Question Text"*/}
+            {/*                    id={`question-text-${index}`}*/}
+            {/*                    value={question.questionText}*/}
+
+            {/*                />*/}
+
+            {/*                <TextField*/}
+            {/*                    fullWidth*/}
+            {/*                    label="Correct Answer"*/}
+            {/*                    id={`outlined-start-adornment-correctAnswer-${index}`}*/}
+            {/*                    sx={{m: 1, marginBottom: "20px"}}*/}
+            {/*                    onChange={(e) => handleAnswerChange(question.idQuestion, e.target.value)}*/}
+            {/*                    disabled={!isTabActive}*/}
+            {/*                />*/}
+            {/*            </Box>*/}
+            {/*        ))}*/}
+
+            {/*        <Box*/}
+            {/*            sx={{*/}
+            {/*                display: "flex",*/}
+            {/*                justifyContent: "space-between",*/}
+            {/*                marginTop: "20px",*/}
+            {/*                m: 1,*/}
+            {/*            }}*/}
+            {/*        >*/}
+
+            {/*            <Button*/}
+            {/*                variant="contained"*/}
+            {/*                onClick={handleSubmit}*/}
+            {/*            >*/}
+            {/*                Submit*/}
+            {/*            </Button>*/}
+            {/*        </Box>*/}
+
+            {/*    </Box>*/}
 
             </div>
         </div>
