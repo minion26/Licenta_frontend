@@ -10,6 +10,7 @@ import styles from "../See-Homework-Announcemet-Teacher/See-Homework-Announcemet
 import CardElongated from "../Card-Elongated/Card-Elongated.tsx";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Tooltip from "@mui/material/Tooltip";
+import Swal from "sweetalert2";
 
 
 function Buttons({idCourses,idHomeworkAnnouncement}: {idCourses: string | undefined ,idHomeworkAnnouncement: string}){
@@ -80,13 +81,27 @@ function SeeHomeworkAnnouncementStudent() {
             },
         })
             .then((response) => {
+                if(!response.ok){
+                    return response.json().then(error => {
+                        throw new Error(error.message);
+                    });
+                }
                 return response.json();
             })
             .then((data) => {
                 setHomeworks(data);
                 console.log(data);
             })
-            .catch((error) => console.error('An error occured!', error));
+            .catch((error) => {
+                console.error('An error occured!', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+
+                });
+            });
     }, [idCourses, idLecture]);
 
 
@@ -97,7 +112,7 @@ function SeeHomeworkAnnouncementStudent() {
             <Header />
             <UpperHeader title={"Homework" } subtitle={course ? course.name : ""}/>
             <div className={styles.cardContainer}>
-                {
+                { homeworks.length === 0 ? <h1>No homeworks available</h1> :
                     homeworks.map((homework, index) => {
                         return (
                             <CardElongated title={homework.title} cardIndex={index} height={145}>

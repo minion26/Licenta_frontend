@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Course, Lecture} from "../types.ts";
+import Swal from "sweetalert2";
 
 function LecturePerCourseStudents() {
     const {idCourses} = useParams();
@@ -31,13 +32,26 @@ function LecturePerCourseStudents() {
                 'Access-Control-Allow-Origin': '*',
             },
         })
-            .then(response => response.json())
+            .then(response => {
+                if(!response.ok){
+                    return response.json().then(error => {
+                        throw new Error(error.message);
+                    })
+                }
+                return response.json();
+            })
             .then(data => {
                 setCourse(data);
 
             })
             .catch((error) => {
                 console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
             });
     }, []);
 
@@ -52,13 +66,25 @@ function LecturePerCourseStudents() {
                 'Access-Control-Allow-Origin': '*',
             },
         })
-            .then(response => response.json())
+            .then(response => {
+                if(!response.ok){
+                    return response.json().then(error => {
+                        throw new Error(error.message);
+                    })
+                }
+                return response.json();
+            })
             .then(data => {
                 setLectures(data);
 
             })
             .catch((error) => {
                 console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                })
             });
     }, [idCourses]);
 

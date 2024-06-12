@@ -112,7 +112,12 @@ function SeeCoursesAdmin(){
                                                        console.error(`Server responded with status code ${response.status}`);
                                                        throw new Error('Failed to delete student');
                                                    }
-                                                   return response.json();
+                                                   const contentType = response.headers.get("content-type");
+                                                   if (contentType && contentType.indexOf("application/json") !== -1) {
+                                                       return response.json();
+                                                   }else{
+                                                       console.log("No JSON returned");
+                                                   }
                                                })
                                                .then(data => {
                                                     console.log(data);

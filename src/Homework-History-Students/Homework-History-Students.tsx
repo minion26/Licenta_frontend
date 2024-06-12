@@ -40,6 +40,7 @@ function HomeworkHistoryStudents() {
             <div className={styles.container}>
 
                 {
+                    studentHomework.length === 0 ? <h1>No homeworks uploaded</h1> :
                     studentHomework.map((homework, index) => {
 
                         return (

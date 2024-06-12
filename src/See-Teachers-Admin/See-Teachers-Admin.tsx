@@ -9,7 +9,7 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
 import styles from "../Courses-Page-Students/Courses-Page-Students.module.css";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Swal from 'sweetalert2';
 import {TeacherName} from "../types";
 import {useEffect, useState} from "react";
@@ -18,7 +18,7 @@ import {useEffect, useState} from "react";
 function SeeTeachersAdmin() {
     // const theme = useTheme();
     // const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [searchInput, setSearchInput] = useState('');
 
@@ -33,7 +33,15 @@ function SeeTeachersAdmin() {
                 "Access-Control-Allow-Origin": "*",
             },
         })
-            .then((response) => response.json())
+            .then((response) =>
+            {
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    return response.json();
+                }else{
+                    console.log("No JSON returned");
+                }
+            })
             .then((data) => {
                 console.log(data);
                 setTeachers(data);
@@ -119,7 +127,14 @@ function SeeTeachersAdmin() {
                                                             console.error(`Server responded with status code ${response.status}`);
                                                             throw new Error('Failed to delete the account');
                                                         }
-                                                        return response.json();
+
+                                                            const contentType = response.headers.get("content-type");
+                                                            if (contentType && contentType.indexOf("application/json") !== -1) {
+                                                                return response.json();
+                                                            }else{
+                                                                console.log("No JSON returned");
+                                                            }
+
 
                                                     })
                                                     .then((data) => {
@@ -130,7 +145,7 @@ function SeeTeachersAdmin() {
                                                             icon: "success"
                                                         });
 
-                                                        navigate("/main-page-admin")
+                                                        window.location.reload();
                                                     })
                                                     .catch((error) => {
                                                         console.error('Error:', error);

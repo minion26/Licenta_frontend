@@ -62,7 +62,7 @@ function SeeStudentsPerCourseAdmin(){
     return (
         <div>
             <Header/>
-            <UpperHeader title={"See teachers"} subtitle={course?.name || ""}/>
+            <UpperHeader title={"See students"} subtitle={course?.name || ""}/>
             <div className={styles.cardContainer}>
                 {students.length === 0 ? (
                     <Card

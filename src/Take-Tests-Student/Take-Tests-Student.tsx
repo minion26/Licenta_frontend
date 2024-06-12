@@ -37,12 +37,25 @@ function TakeTestsStudent(){
                 'Access-Control-Allow-Credentials': '*',
             }
         })
-            .then(response => response.json())
+            .then(response => {
+                if(!response.ok){
+                    return response.json().then(error => {
+                        throw new Error(error.message);
+                    })
+                }
+                return response.json();
+            })
             .then(data => {
                 setExam(data);
             })
             .catch((error) => {
                 console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                })
             });
     }, []);
 

@@ -135,7 +135,7 @@ function RoutesComponent() {
                     <Route path={"/add-homework/:idCourses/:idHomeworkAnnouncement"} element={<AddHomeworkStudent />} />
                     <Route path={"/tests"} element={<SeeTestsStudent />} />
                     <Route path={"/take-test/:idExam/:idStudentExam"} element={<TakeTestsStudent />} />
-                <Route path={"/see-submitted-test/:idExam"} element={<SeeSubmittedTestStudent/>} />
+                    <Route path={"/see-submitted-test/:idExam"} element={<SeeSubmittedTestStudent/>} />
                 </>
             )}
 
