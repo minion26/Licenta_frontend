@@ -6,7 +6,7 @@ import styles from "./Needs-Review-Teacher.module.css";
 import Button from "@mui/material/Button";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {CorrectAnswersExamCreationDTO, CorrectAnswersExamDTO, ReviewStudentAnswersDTO} from "../types.ts";
 import Swal from "sweetalert2";
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
@@ -14,6 +14,8 @@ import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} fr
 
 function NeedsReviewTeacher(){
     const {idStudentAnswerExam} = useParams();
+
+    const navigate = useNavigate();
 
     const [review, setReview] = useState<ReviewStudentAnswersDTO>({
         idStudentAnswerExam: "",
@@ -141,7 +143,7 @@ function NeedsReviewTeacher(){
             Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "The lecture has been saved",
+                title: "The review has been saved",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -151,7 +153,7 @@ function NeedsReviewTeacher(){
                 console.log(data);
             }
 
-            window.location.reload();
+            navigate("/notifications-teacher");
 
         } else {
             Swal.fire({

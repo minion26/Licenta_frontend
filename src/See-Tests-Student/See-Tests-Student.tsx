@@ -72,7 +72,7 @@ function SeeTestsStudent(){
                     <p>If you switch the tab, you can't resolve any more questions.</p>
                     <p>When the timer is up, your work will be automatically submitted.</p>
                 </Box>
-                <div>
+                <div className={styles.notStartedExams}>
                     {
                         notStartedExams.map((exam, index) => {
                             return (
@@ -126,7 +126,7 @@ function SeeTestsStudent(){
 
                 <div style={{height: '4px', backgroundColor: '#007EB4', width:'100%'}}/>
 
-                <div>
+                <div className={styles.notStartedExams}>
                     {
                         startedExams.map((exam, index) => {
                             return (

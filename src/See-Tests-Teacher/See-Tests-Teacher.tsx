@@ -100,6 +100,8 @@ function SeeTestsTeacher(){
         }
     }, [exams]);
 
+    const [isButtonClicked, setIsButtonClicked] = useState(false);
+
     return(
         <div>
             <Header/>
@@ -108,6 +110,7 @@ function SeeTestsTeacher(){
                 {
                     Array.isArray(exams) ? exams.map((exam, index) => {
                         const isStarted = examStatuses[exam.idExam];
+
 
                         return <CardElongated key={index} title={exam.name}  cardIndex={index} height={isSmallScreen ? 160 : 150}>
                             <Box sx={{
@@ -139,8 +142,10 @@ function SeeTestsTeacher(){
                                             border: "none",
                                             textTransform: "none",
                                         }}
-                                        disabled={isStarted}
+                                        // Disable the button if it's clicked or if the test has started
+                                        disabled={isStarted || isButtonClicked}
                                         onClick={() => {
+                                                setIsButtonClicked(true);
                                                 fetch(`http://localhost:8081/api/v1/exam/start-exam/idExam=${exam.idExam}`, {
                                                     method: "POST",
                                                     credentials: "include",
@@ -160,7 +165,11 @@ function SeeTestsTeacher(){
 
                                                     .catch((error) => {
                                                         console.error("Error:", error);
-                                                })
+                                                    })
+                                                    .finally(() => {
+                                                        // Reset the button click state after the fetch request is completed
+                                                        setIsButtonClicked(false);
+                                                    });
 
 
                                         }}
