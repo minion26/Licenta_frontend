@@ -8,9 +8,9 @@ import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {useNavigate, useParams} from "react-router-dom";
 import {useState} from "react";
-import {DatePicker} from 'rsuite';
+// import {DatePicker} from 'rsuite';
 
-import "rsuite/DatePicker/styles/index.css";
+// import "rsuite/DatePicker/styles/index.css";
 import {HomeworkAnnouncementsCreationDTO} from "../types.ts";
 
 
@@ -131,18 +131,17 @@ function HomeworkAnnouncementTeacher() {
 
 
 
-                <DatePicker
-                    size="lg"
-                    placeholder="Select Due Date"
-                    style={{ width: "200px",
-                        height: "80px",
-                        margin: 1,
-                        marginBottom: "20px"
+                <TextField
+                    id="outlined-date"
+                    label="Date"
+                    type="date"
+                    sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
+                    InputLabelProps={{
+                        shrink: true,
                     }}
-                    value={homeworkAnnouncement.dueDate}
+                    value={homeworkAnnouncement.dueDate ? homeworkAnnouncement.dueDate.toISOString().split('T')[0] : ''}
                     name="dueDate"
-                    onChange={(value) => setHomeworkAnnouncement({...homeworkAnnouncement, dueDate: value})}
-
+                    onChange={(e) => setHomeworkAnnouncement({...homeworkAnnouncement, dueDate: new Date(e.target.value)})}
                 />
 
 

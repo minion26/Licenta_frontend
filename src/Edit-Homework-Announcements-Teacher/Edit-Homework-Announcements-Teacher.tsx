@@ -9,7 +9,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import {useParams} from "react-router-dom";
 import {HomeworkAnnouncements} from "../types.ts";
 import {useEffect, useState} from "react";
-import {DatePicker} from "rsuite";
+
 
 function EditHomeworkAnnouncementsTeacher() {
     const {idHomeWorkAnnouncement} = useParams();
@@ -172,24 +172,21 @@ function EditHomeworkAnnouncementsTeacher() {
                     />
 
 
-                    <DatePicker
-                        size="lg"
-                        placeholder="Select Due Date"
-                        style={{ width: "200px",
-                            height: "80px",
-                            margin: 1,
-                            marginBottom: "20px"
+                    <TextField
+                        id="outlined-date"
+                        label="Due Date"
+                        type="date"
+                        sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
+                        InputLabelProps={{
+                            shrink: true,
                         }}
-                        value={homeworkAnnouncement.dueDate ? new Date(homeworkAnnouncement.dueDate) : undefined}
+                        value={homeworkAnnouncement.dueDate ? homeworkAnnouncement.dueDate.split('T')[0] : ''}
                         name={"dueDate"}
-                        onChange={(value) => {
-                            if (value) {
-                                const offset = value.getTimezoneOffset();
-                                const localISOTime = (new Date(value.getTime() - (offset * 60 * 1000))).toISOString().slice(0, -1);
-                                setHomeworkAnnouncement({...homeworkAnnouncement, dueDate: localISOTime})
-                                console.log("new date:", localISOTime)
-                            }
-
+                        onChange={(event) => {
+                            const newDate = new Date(event.target.value);
+                            const offset = newDate.getTimezoneOffset();
+                            const localISOTime = (new Date(newDate.getTime() - (offset * 60 * 1000))).toISOString().slice(0, -1);
+                            setHomeworkAnnouncement({...homeworkAnnouncement, dueDate: localISOTime})
                         }}
 
                     />

@@ -6,6 +6,7 @@ import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import Card from "@mui/material/Card";
 import {Importer, ImporterField} from "react-csv-importer";
 import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 function AddStudentsToCoursesAdmin(){
     const theme = useTheme();
@@ -81,7 +82,8 @@ function AddStudentsToCoursesAdmin(){
                                         },
                                     });
                                     if (!response.ok) {
-                                        throw new Error('Failed to upload file');
+                                        const error = await response.json();
+                                        throw new Error(error.message);
                                     }
 
                                     if (response.headers.get('content-type')?.includes('application/json')) {
@@ -92,6 +94,12 @@ function AddStudentsToCoursesAdmin(){
                                     }
                                 }catch(error){
                                     console.error(error);
+                                    const errorMessage = (error as Error).message;
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'An error occurred',
+                                        text: errorMessage,
+                                    });
                                 }
                             }}
                             onClose={() => {
