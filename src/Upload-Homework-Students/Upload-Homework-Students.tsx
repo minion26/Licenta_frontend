@@ -127,7 +127,7 @@ function UploadHomeworkStudents({idHomeworkAnnouncement} : {idHomeworkAnnounceme
                     icon: 'error',
                     title: "The deadline has passed!",
                     showConfirmButton: false,
-                    timer: 1500
+                    // timer: 1500
                 });
                 return;
             }else if(files){
@@ -155,7 +155,7 @@ function UploadHomeworkStudents({idHomeworkAnnouncement} : {idHomeworkAnnounceme
                             icon: 'error',
                             title: errorData.message || 'An error occurred',
                             showConfirmButton: false,
-                            timer: 1500
+                            // timer: 1500
                         });
                     }
 

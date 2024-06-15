@@ -200,6 +200,7 @@ function SeeTestsTeacher(){
                                             border: "none",
                                             textTransform: "none",
                                         }}
+                                        disabled={isStarted || isButtonClicked}
                                         component={Link}
                                         to={`/edit-test/${idCourses}/${exam.idExam}`}
                                     />
@@ -224,6 +225,7 @@ function SeeTestsTeacher(){
                                             border: "none",
                                             textTransform: "none",
                                         }}
+                                        disabled={isStarted || isButtonClicked}
                                         component={Link}
                                         to={`/add-questions-test/${exam.idExam}`}
                                     />
@@ -249,6 +251,7 @@ function SeeTestsTeacher(){
                                             textTransform: "none",
                                         }}
                                         component={Link}
+                                        disabled={isStarted || isButtonClicked}
                                         to={`/add-correct-answers/${exam.idExam}`}
                                     />
                                 </Tooltip>
@@ -272,6 +275,7 @@ function SeeTestsTeacher(){
                                             border: "none",
                                             textTransform: "none",
                                         }}
+                                        disabled={isStarted || isButtonClicked}
                                         component={Link}
                                         to={`/add-students-to-test/${idCourses}/${exam.idExam}`}
                                     />

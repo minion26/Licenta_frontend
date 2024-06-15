@@ -47,7 +47,7 @@ function AddHomeworkStudent(){
                     icon: 'error',
                     title: error.message || 'An error occurred',
                     showConfirmButton: false,
-                    timer: 1500
+                    // timer: 1500
                 });
             });
     }, []);

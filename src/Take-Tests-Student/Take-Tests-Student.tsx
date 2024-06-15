@@ -169,6 +169,8 @@ function TakeTestsStudent(){
         }
     }, [idStudentExam]);
 
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
     const handleSubmit = async () => {
 
         console.log("students answers: ",studentAnswers);
@@ -199,9 +201,27 @@ function TakeTestsStudent(){
             });
         }
 
+        setIsSubmitted(true);
         navigate(`/tests`)
 
     };
+
+    useEffect(() => {
+        // Adaugă listener-ul la încărcarea componentei
+        const blockBackButton = (event: PopStateEvent) => {
+            // Dacă submit-ul nu a fost efectuat, blochează navigarea înapoi
+            if (!isSubmitted) {
+                event.preventDefault();
+                window.history.pushState(null, document.title, window.location.href);
+            }
+        };
+        window.addEventListener('popstate', blockBackButton);
+
+        // Înlătură listener-ul la descărcarea componentei
+        return () => {
+            window.removeEventListener('popstate', blockBackButton);
+        };
+    }, [isSubmitted]);
 
     return (
         <div>

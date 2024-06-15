@@ -154,7 +154,7 @@ function SeeSubmissionsHomeworkTeacher() {
                     homeworks.map(
                         (homework, index) => (
                             <div key={index}>
-                            <CardElongated  title={`${homework.firstNameStudent} ${homework.lastNameStudent}`} description={"Grade : " + (homework ? homework.grade : "not graded")} cardIndex={index+1}>
+                            <CardElongated  title={`${homework.firstNameStudent} ${homework.lastNameStudent}`} description={"Grade : " + (homework ? (homework.grade!=-1 ? homework.grade : "not graded") : "")} cardIndex={index+1}>
                                 <Box sx={{ display: "flex" }}>
                                         <Button
                                             variant="contained"
