@@ -47,6 +47,20 @@ function CreateTeachersAdmin() {
 
     const handleSubmit = async (e :  React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        for (const key in teacher) {
+            if (teacher[key as keyof typeof teacher] === "") {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Please fill all fields",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return; // Prevent form submission
+            }
+        }
+
         console.log(teacher);
 
         const response = await fetch("http://localhost:8081/api/v1/teachers/create", {

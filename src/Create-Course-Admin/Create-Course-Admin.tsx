@@ -45,6 +45,20 @@ function CreateCourseAdmin(){
 
     const handleSumbit = async (e :  React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        for (const key in course) {
+            if (course[key as keyof typeof course] === "") {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Please fill all fields",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return; // Prevent form submission
+            }
+        }
+
         console.log(course);
 
         const response = await fetch("http://localhost:8081/api/v1/courses/create", {

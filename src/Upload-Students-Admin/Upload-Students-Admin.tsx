@@ -8,6 +8,7 @@ import Card from "@mui/material/Card";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 // import {useState} from "react";
 
 function UploadStudentsAdmin() {
@@ -83,6 +84,18 @@ function UploadStudentsAdmin() {
                         }}
                         onComplete={ async ({file, fields}) => {
                             console.log("finished import of file", file, "with fields", fields);
+
+                            // Check if the CSV file is empty
+                            if (file.size === 0) {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: "The CSV file is empty. Please upload a valid file.",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                return; // Prevent form submission
+                            }
 
                             const formData = new FormData();
                             formData.append('file', file);

@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Swal from "sweetalert2";
 import {useNavigate, useParams} from "react-router-dom";
-import {Teacher} from "../types.ts";
+import {DidacticDTO, Teacher} from "../types.ts";
 import {useEffect, useState} from "react";
 
 function SeeTeacherAccountAdmin(){
@@ -119,6 +119,27 @@ function SeeTeacherAccountAdmin(){
         setTeacher(teacherBackup);
     }
 
+    const [didactic, setDidactic] = useState<DidacticDTO[]>([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:8081/api/v1/didactic/idTeacher=${idUsers}`, {
+            method: "GET",
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+                // 'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+                "Access-Control-Allow-Origin": "*",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setDidactic(data);
+                // console.log(data);
+            })
+            .catch(error => console.error('An error occured!', error));
+
+    }, [idUsers]);
+
     return (
         <form onSubmit={handleSubmit}>
             <Header/>
@@ -190,6 +211,32 @@ function SeeTeacherAccountAdmin(){
                     name={"degree"}
                     onChange={(e) => handleInputChange("degree", e)}
                 />
+
+                {
+                    didactic.length>0 ? didactic.map((didactic) => (
+                        <TextField
+                            key={didactic.idDidactic}
+                            label="Course Name"
+                            id="outlined-start-adornment-course-name"
+                            sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
+                            value={didactic.courseName}
+                            InputProps={{
+                                readOnly: true,
+                                style: { color: 'black', backgroundColor: '#f0f0f0' }
+                            }}
+                        />
+                    )) : <TextField
+                        key={1}
+                        label="Course Name"
+                        id="outlined-start-adornment-course-name"
+                        sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
+                        value={"No courses assigned"}
+                        InputProps={{
+                            readOnly: true,
+                            style: { color: 'royalblue', backgroundColor: '#f0f0f0' }
+                        }}
+                    />
+                }
 
 
                 <Box

@@ -16,7 +16,7 @@ function UploadCoursesAdmin(){
     return (
         <div >
             <Header/>
-            <UpperHeader title={"Upload accounts"} subtitle={"Students"}/>
+            <UpperHeader title={"Upload courses"} subtitle={""}/>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <Card
                     sx={{
@@ -33,13 +33,20 @@ function UploadCoursesAdmin(){
                 >
                     <div className={styles.title}>
                         <p className={styles.p}>
-                            <strong className={styles.str}>Step 1:</strong> Please select the file you want to import. This file can be dragged and
+                            <strong className={styles.str}>Step 1:</strong> Please select the file you want to import.
+                            This file can be dragged and
                             dropped into the importer.<br/>
-                            <strong className={styles.str}>Step 2:</strong> Determine if the first row of your file is a header. If it is, make sure
+                            <strong className={styles.str}>Step 2:</strong> Determine if the first row of your file is a
+                            header. If it is, make sure
                             the 'First row is a header' option is selected.<br/>
-                            <strong className={styles.str}>Step 3:</strong> Ensure that your file is in CSV format. This is the only format that the
+                            <strong className={styles.str}>Step 3:</strong> Ensure that your file is in CSV format. This
+                            is the only format that the
                             importer can process.<br/>
-                            <strong className={styles.str}>Step 4:</strong> Drag and drop the data columns to match the corresponding fields in which
+                            <strong
+                                style={{color: 'red'}}>{"Name, Year, Credits, Semester, Description"}</strong>
+                            <br/>
+                            <strong className={styles.str}>Step 4:</strong> Drag and drop the data columns to match the
+                            corresponding fields in which
                             the data should be imported.
                         </p>
                     </div>

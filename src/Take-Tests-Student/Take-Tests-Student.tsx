@@ -173,33 +173,38 @@ function TakeTestsStudent(){
 
     const handleSubmit = async () => {
 
-        console.log("students answers: ",studentAnswers);
+        console.log("students answers: ", studentAnswers);
 
-        const response = await fetch(`http://localhost:8081/api/v1/student-answers/submit`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Credentials': '*',
-            },
-            body: JSON.stringify(studentAnswers),
-        });
 
-        if(response.ok){
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Your work has been submitted",
-                showConfirmButton: false,
-                timer: 1500
+            const response = await fetch(`http://localhost:8081/api/v1/student-answers/submit`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Credentials': '*',
+                },
+                body: JSON.stringify(studentAnswers),
             });
-        }else{
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-            });
-        }
+
+
+            if (response.ok) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Your work has been submitted",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            } else {
+                const error = await response.json();
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            }
+
 
         setIsSubmitted(true);
         navigate(`/tests`)

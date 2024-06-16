@@ -23,7 +23,7 @@ function Header() {
         onClick={toggleMenu}
       >
           {/*<Tooltip title={"Navigate to main page"}>*/}
-            <h1 className={styles.webApp} onClick={() => navigate("/main-page-teacher")}>web app</h1>
+            <h1 className={styles.webApp} onClick={() => navigate("/main-page-admin")}>web app</h1>
           {/*</Tooltip>*/}
         <nav>
           <ul className={`${styles.headerUlLi} ${styles.headerUlLiA}`}>

@@ -293,4 +293,10 @@ export type UserChangePasswordDTO = {
     confirmPassword: string;
 }
 
+export type DidacticDTO = {
+    idDidactic: string;
+    teacherName: string;
+    courseName: string;
+}
+
 

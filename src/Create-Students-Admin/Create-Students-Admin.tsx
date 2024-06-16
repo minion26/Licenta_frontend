@@ -54,6 +54,20 @@ function CreateStudentsAdmin(){
 
     const handleSubmit = async (e :  React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        // Check if any field is empty
+        for (const key in student) {
+            if (student[key as keyof typeof student] === "") {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Please fill all fields",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return; // Prevent form submission
+            }
+        }
+
         console.log(student);
 
         const response = await fetch("http://localhost:8081/api/v1/students/create", {

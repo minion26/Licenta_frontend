@@ -125,7 +125,7 @@ function SeeTeachersAdmin() {
                                                     .then((response) => {
                                                         if (!response.ok) {
                                                             console.error(`Server responded with status code ${response.status}`);
-                                                            throw new Error('Failed to delete the account');
+                                                            throw new Error('The teacher is assigned to a course. Please remove the teacher from the course before deleting the account.');
                                                         }
 
                                                             const contentType = response.headers.get("content-type");
@@ -149,6 +149,12 @@ function SeeTeachersAdmin() {
                                                     })
                                                     .catch((error) => {
                                                         console.error('Error:', error);
+                                                        Swal.fire({
+                                                            title: "An error occurred",
+                                                            text: error.message,
+                                                            icon: "error"
+
+                                                        })
                                                     });
                                             }
                                         });

@@ -47,6 +47,21 @@ function CreateAdmins(){
 
     const handleSumbit = async (e :  React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        for (const key in admin) {
+            if (admin[key as keyof typeof admin] === "") {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Please fill all fields",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                return; // Prevent form submission
+            }
+        }
+
+
         console.log(admin);
 
         admin.roleId= 1;
