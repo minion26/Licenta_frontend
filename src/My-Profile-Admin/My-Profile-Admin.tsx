@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Swal from "sweetalert2";
 import {useEffect, useState} from "react";
-import {User} from "../types.ts";
+import {User, UserChangePasswordDTO} from "../types.ts";
 import {useNavigate} from "react-router-dom";
 
 function MyProfileAdmin(){
@@ -88,6 +88,9 @@ function MyProfileAdmin(){
 
     function handleCancel(){
         setUser(userBackup);
+        setOldPass('');
+        setNewPass('');
+        setConfirmPass('');
     }
 
     const handleSubmit = async (e :  React.FormEvent<HTMLFormElement>) => {
@@ -124,6 +127,78 @@ function MyProfileAdmin(){
             .catch((error) => {
                 console.error('Error:', error);
             });
+    }
+
+    const [userChangePassword, setUserChangePassword] = useState<UserChangePasswordDTO>({
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+    });
+
+    const [oldPass, setOldPass] = useState<string>('');
+    const [newPass, setNewPass] = useState<string>('');
+    const [confirmPass, setConfirmPass] = useState<string>('');
+
+    const validatePassword = (password : string) => {
+        const hasEightCharacters = password.length >= 8;
+        const hasNumber = /\d/.test(password);
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasSpecialCharacter = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(password);
+
+        return hasEightCharacters && hasNumber && hasUpperCase && hasSpecialCharacter;
+    }
+
+    const hadlePost = async () => {
+        if(newPass !== confirmPass){
+            Swal.fire({
+                title: "Error!",
+                text: "Passwords do not match.",
+                icon: "error",
+            });
+            return;
+        }
+
+        if(!validatePassword(newPass)){
+            Swal.fire({
+                title: "Error!",
+                text: "Password must contain at least 8 characters, a number, an uppercase letter and a special character.",
+                icon: "error",
+            });
+            return;
+        }
+
+        setUserChangePassword({
+            oldPassword: oldPass,
+            newPassword: newPass,
+            confirmPassword: confirmPass,
+        });
+
+
+        const response = await fetch('http://localhost:8081/api/v1/users/changePassword', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(userChangePassword),
+        });
+
+        if(response.ok){
+            Swal.fire({
+                title: "Success!",
+                text: "Password changed successfully.",
+                icon: "success",
+            });
+        } else {
+            const errorData = await response.text();
+            Swal.fire({
+                title: "Error!",
+                text: errorData,
+                icon: "error",
+            });
+        }
+
     }
 
     return(
@@ -192,6 +267,8 @@ function MyProfileAdmin(){
                         type="password"
                         sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
                         autoComplete="current-password"
+                        value={oldPass}
+                        onChange={(e) => setOldPass(e.target.value)}
                     />
                     <TextField
                         id="outlined-new-password-input"
@@ -199,11 +276,29 @@ function MyProfileAdmin(){
                         type="password"
                         sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
                         autoComplete="current-password"
+                        value={newPass}
+                        onChange={(e) => {
+                            setNewPass(e.target.value);
+                            validatePassword(e.target.value);
+                        }}
+                    />
+
+                    <TextField
+                        id="outlined-new-password-input"
+                        label="Confirm New Password"
+                        type="password"
+                        sx={{ m: 1, width: "25ch", marginBottom: "20px" }}
+                        autoComplete="current-password"
+                        value={confirmPass}
+                        onChange={(e) => {
+                            setConfirmPass(e.target.value);
+                        }}
                     />
 
                     <Button
                         sx={{ m: 1, marginTop: isSmallScreen ? "0px" : "20px" }}
                         variant="contained"
+                        onClick={hadlePost}
                     >
                         Confirm Password
                     </Button>

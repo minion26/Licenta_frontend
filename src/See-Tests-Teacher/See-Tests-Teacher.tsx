@@ -142,8 +142,7 @@ function SeeTestsTeacher(){
                                             border: "none",
                                             textTransform: "none",
                                         }}
-                                        // Disable the button if it's clicked or if the test has started
-                                        disabled={isStarted || isButtonClicked}
+
                                         onClick={() => {
                                                 setIsButtonClicked(true);
                                                 fetch(`http://localhost:8081/api/v1/exam/start-exam/idExam=${exam.idExam}`, {
@@ -155,6 +154,11 @@ function SeeTestsTeacher(){
                                                     },
                                                 })
                                                     .then((response) => {
+                                                        if(!response.ok) {
+                                                            return response.json().then(err => {
+                                                                throw new Error(err.message);
+                                                            });
+                                                        }
                                                         if (response.headers.get('content-type')?.includes('application/json')) {
                                                             const data = response.json();
                                                             console.log('File uploaded', data);
@@ -162,9 +166,14 @@ function SeeTestsTeacher(){
                                                             console.log('No JSON data returned');
                                                         }
                                                     })
-
                                                     .catch((error) => {
                                                         console.error("Error:", error);
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: error.message || 'An error occurred',
+                                                            showConfirmButton: false,
+                                                            // timer: 1500
+                                                        });
                                                     })
                                                     .finally(() => {
                                                         // Reset the button click state after the fetch request is completed
@@ -173,6 +182,8 @@ function SeeTestsTeacher(){
 
 
                                         }}
+                                        // Disable the button if it's clicked or if the test has started
+                                        disabled={isStarted || isButtonClicked}
                                     >
                                         Start Test
                                     </Button>

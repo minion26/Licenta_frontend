@@ -326,7 +326,7 @@ function EditTestTeacher(){
                 console.log(data);
             }
 
-            navigate(`/see-exams/${idCourses}`);
+            navigate(`/see-tests/${idCourses}`);
         }else{
             const errorData = await response.json();
             await Swal.fire({
@@ -413,6 +413,7 @@ function EditTestTeacher(){
                         InputLabelProps={{ shrink: true }}
                         value={exam?.timeInMinutes}
                         name={"timeInMinutes"}
+                        inputProps={{ min: 1 }}
                         onChange={(event) => handleInputChange("timeInMinutes", event)}
                     />
 
