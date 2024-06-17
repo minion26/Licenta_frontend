@@ -322,10 +322,9 @@ function CreateTestTeacher() {
                     // InputLabelProps={{
                     //     shrink: true,
                     // }}
-                    // inputProps={{
-                    //     min: 1,
-                    //     // max: 100,
-                    // }}
+                    inputProps={{
+                        min: 1,
+                    }}
                     value={exam.timeInMinutes}
                     name={"timeInMinutes"}
                     onChange={handleExamChange}
@@ -340,10 +339,9 @@ function CreateTestTeacher() {
                     // InputLabelProps={{
                     //     shrink: true,
                     // }}
-                    // inputProps={{
-                    //     min: 1,
-                    //     // max: 100,
-                    // }}
+                    inputProps={{
+                        min: 1,
+                    }}
                     value={exam.totalScore}
                     name={"totalScore"}
                     onChange={handleExamChange}
@@ -358,10 +356,9 @@ function CreateTestTeacher() {
                     // InputLabelProps={{
                     //     shrink: true,
                     // }}
-                    // inputProps={{
-                    //     min: 1,
-                    //     // max: 100,
-                    // }}
+                    inputProps={{
+                        min: 1,
+                    }}
                     value={exam.passingScore}
                     name={"passingScore"}
                     onChange={handleExamChange}

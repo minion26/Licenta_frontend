@@ -80,7 +80,7 @@ function Buttons({ idCourses }: { idCourses: string | undefined}){
                 setCreateLecture(data);
             }
 
-            // window.location.reload();
+            window.location.reload();
 
         } else {
             Swal.fire({

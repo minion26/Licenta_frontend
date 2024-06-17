@@ -87,6 +87,9 @@ function MyProfileStudent() {
 
     function handleCancel(){
         setUser(userBackup);
+        setOldPass('');
+        setNewPass('');
+        setConfirmPass('');
     }
 
     const handleSubmit = async (e :  React.FormEvent<HTMLFormElement>) => {

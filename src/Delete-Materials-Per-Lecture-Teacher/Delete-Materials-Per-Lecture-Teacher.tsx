@@ -107,7 +107,13 @@ function DeleteMaterialsPerLectureTeacher(){
                                                             console.error(`Server responded with status code ${response.status}`);
                                                             throw new Error('Failed to delete the account');
                                                         }
-                                                        return response.json();
+
+                                                        // daca se returneaza un json, atunci returnez
+                                                        if(response.headers.get('content-type')?.includes('application/json')) {
+                                                            return response.json();
+                                                        }else{
+                                                            console.log('The server did not respond with JSON data');
+                                                        }
 
                                                     })
                                                     .then((data) => {
