@@ -52,15 +52,10 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
 import type { ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
 import styles from './PDF-viewer.module.css';
-import * as mammoth from 'mammoth';
-import {useEffect, useState} from "react";
 
 
 
 function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
-    // const defaultLayoutPluginInstance = defaultLayoutPlugin(
-    //     // props?: DefaultLayoutPluginProps
-    // );
     const toolbarPluginInstance = toolbarPlugin();
     const { renderDefaultToolbar, Toolbar } = toolbarPluginInstance;
 
@@ -77,65 +72,69 @@ function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
 
     });
 
-    const [docContent, setDocContent] = useState<string | null>(null);
+    // const [docContent, setDocContent] = useState<string | null>(null);
 
-    useEffect(() => {
-        if (fileType === 'docx' || fileType === 'doc'){
-            console.log("HERE");
-            fetch(fileURL)
-                .then(response => response.arrayBuffer())
-                .then(arrayBuffer => {
-                    mammoth.convertToHtml({arrayBuffer: arrayBuffer})
-                        .then(function(result){
-                            const html = result.value; // The generated HTML
-                            setDocContent(html);
-                        })
-                        .catch(function(err){
-                            console.log(err);
-                        });
-                });
-        }
-    }, [fileURL, fileType]);
+    // useEffect(() => {
+    //     if (fileType === 'docx' || fileType === 'doc'){
+    //         console.log("HERE");
+    //         fetch(fileURL)
+    //             .then(response => response.arrayBuffer())
+    //             .then(arrayBuffer => {
+    //                 mammoth.convertToHtml({arrayBuffer: arrayBuffer})
+    //                     .then(function(result){
+    //                         const html = result.value; // The generated HTML
+    //                         setDocContent(html);
+    //                     })
+    //                     .catch(function(err){
+    //                         console.log(err);
+    //                     });
+    //             });
+    //     }
+    // }, [fileURL, fileType]);
 
     // Check if fileURL is defined
     if (!fileURL) {
         return <div>No file URL provided</div>;
     }
 
+
+
     if (fileURL.startsWith('blob:')) {
 
         const fileExtension = fileType;
 
-        if (docContent) {
-            return <div className={styles.container}>
-                <iframe srcDoc={docContent} title="file content" style={{width: '100%', height: '100%'}}/>
-            </div>
 
-        }
+
+        // if (docContent) {
+        //     return <div className={styles.container}>
+        //         <iframe srcDoc={docContent} title="file content" style={{width: '100%', height: '100%'}}/>
+        //     </div>
+        //
+        // }
 
         console.log('Before switch, fileType:', fileType);
         switch (fileExtension) {
-            case 'docx':
-                fetch(fileURL)
-                    .then(response => {
-                        console.log('fetch response:', response);
-                        return response.arrayBuffer();
-                    })
-                    .then(arrayBuffer => {
-                        console.log('arrayBuffer:', arrayBuffer);
-                        mammoth.convertToHtml({arrayBuffer: arrayBuffer})
-                            .then(function(result){
-                                const html = result.value; // The generated HTML
-                                setDocContent(html);
-                            })
-                            .catch(function(err){
-                                console.log('mammoth.convertToHtml error:', err);
-                            });
-                    })
-                    .catch(function(err){
-                        console.log('fetch error:', err);
-                    });
-                return <div>Loading...</div>;
+            // case 'docx':
+            //     fetch(fileURL)
+            //         .then(response => {
+            //             console.log('fetch response:', response);
+            //             return response.arrayBuffer();
+            //         })
+            //         .then(arrayBuffer => {
+            //             console.log('arrayBuffer:', arrayBuffer);
+            //             mammoth.convertToHtml({arrayBuffer: arrayBuffer})
+            //                 .then(function(result){
+            //                     const html = result.value; // The generated HTML
+            //                     setDocContent(html);
+            //                 })
+            //                 .catch(function(err){
+            //                     console.log('mammoth.convertToHtml error:', err);
+            //                 });
+            //         })
+            //         .catch(function(err){
+            //             console.log('fetch error:', err);
+            //         });
+            //     return <div>Loading...</div>;
             case 'pdf':
                 return (
 
@@ -150,21 +149,39 @@ function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
                     </Worker>
                 );
             case 'png':
-                return <img src={fileURL} alt="file content"/>;
+                return (
+                    <div className={styles.container}>
+                    <img src={fileURL} alt="file content"/>
+                    </div>
+                    );
             case 'jpg':
-                return <img src={fileURL} alt="file content"/>;
+                return (<div className={styles.container}>
+                        <img src={fileURL} alt="file content"/>
+                    </div>
+                );
             case 'txt':
+                return (
+                    <div className={styles.container}>
+                        <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                    </div>
+                );
             case 'py':
                 return (
-                    <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                    <div className={styles.container}>
+                        <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                    </div>
                 );
             case 'cpp':
                 return (
+                    <div className={styles.container}>
                     <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                    </div>
                 );
             case 'java':
                 return (
-                    <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                    <div className={styles.container}>
+                        <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                    </div>
                 );
             case 'mp4':
                 return (
@@ -172,6 +189,10 @@ function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
                         <source src={fileURL} type="video/mp4"/>
                         Your browser does not support the video tag.
                     </video>
+                );
+            case 'pptx':
+                return (
+                    <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
                 );
             default:
                 return <div>File type not supported</div>;
