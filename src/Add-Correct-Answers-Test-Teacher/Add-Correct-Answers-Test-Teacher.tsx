@@ -78,13 +78,56 @@ import Box from "@mui/material/Box";
 import Swal from "sweetalert2";
 import Button from "@mui/material/Button";
 import {useParams} from "react-router-dom";
-import {  QuestionDTO} from "../types.ts";
+import {ExamDTO, QuestionDTO} from "../types.ts";
 
 
 function AddCorrectAnswersTestTeacher(){
     const {idExam} = useParams();
 
+    const [exam, setExam] = useState<ExamDTO>({
+        idExam: '',
+        name: '',
+        question: [],
+        timeInMinutes: 0,
+        totalScore: 0,
+        passingScore: 0,
+        date: new Date(),
+        courseName: '',
+        idTeachers: [],
+        studentExamDTO: [],
+    });
 
+    useEffect(() => {
+      fetch(`http://localhost:8081/api/v1/exam/idExam=${idExam}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+          },
+      })
+          .then((response) => {
+              if(!response.ok){
+                  return response.json().then(err => {
+                      throw new Error(err.message);
+                  });
+              }
+              return response.json();
+          })
+          .then((data) => {
+                setExam(data);
+                console.log(data);
+          })
+            .catch((error) => {
+                    console.error('An error occured!', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: error.message || 'An error occurred',
+                        showConfirmButton: false,
+                        // timer: 1500
+                    });
+            });
+    }, [idExam]);
 
     // Mock data
     // const [questions] = useState<Question[]>([]);
@@ -195,7 +238,7 @@ function AddCorrectAnswersTestTeacher(){
     return (
         <form onSubmit={handleSubmit}>
             <Header />
-            <UpperHeader title={"Add Correct Answers"} subtitle={"Test Name"} />
+            <UpperHeader title={"Add Correct Answers"} subtitle={exam ? exam.name : ""} />
             <div className={styles.container}>
                 {questionsWithAnswers.map((question, index) => {
                     const handleScoreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -377,23 +420,23 @@ function AddCorrectAnswersTestTeacher(){
                                 value={question.questionText}
 
                             />
-                            <TextField
-                                sx={{m: 1, marginBottom: "20px"}}
-                                fullWidth
-                                label="Score"
-                                type={"number"}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                inputProps={{
-                                    min: 1,
-                                    max: 100,
-                                }}
-                                id={`score${index}`}
-                                value={question.correctAnswers[0] && question.correctAnswers[0].score ? question.correctAnswers[0].score : 0}
-                                onChange={(event) => handleScoreChange(index, event)}
-
-                            />
+                                <TextField
+                                    sx={{m: 1, marginBottom: "20px"}}
+                                    fullWidth
+                                    label="Score"
+                                    type={"text"} // Change this to "text"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    id={`score${index}`}
+                                    value={question.correctAnswers[0] && question.correctAnswers[0].score ? question.correctAnswers[0].score : ''}
+                                    onChange={(event) => {
+                                        // Check if the input is a number or empty string
+                                        if (!isNaN(Number(event.target.value)) || event.target.value === '') {
+                                            handleScoreChange(index, event);
+                                        }
+                                    }}
+                                />
                             <TextField
                                 sx={{m: 1, marginBottom: "20px"}}
                                 fullWidth

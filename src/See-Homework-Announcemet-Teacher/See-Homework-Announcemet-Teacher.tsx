@@ -11,6 +11,9 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Course, HomeworkAnnouncements} from "../types.ts";
+import Card from "@mui/material/Card";
+import {useTheme} from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function Buttons({idHomeworkAnnouncement}: {idHomeworkAnnouncement: string}){
     return (<div>
@@ -124,6 +127,9 @@ function SeeHomeworkAnnouncementTeacher() {
     const [course, setCourse] = useState<Course>();
     const [homeworks, setHomeworks] = useState<HomeworkAnnouncements[]>([]);
 
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
     useEffect(() => {
         fetch(`http://localhost:8081/api/v1/courses/${idCourses}`, {
             method: 'GET',
@@ -165,7 +171,7 @@ function SeeHomeworkAnnouncementTeacher() {
         <UpperHeader title={"Homework " + course?.name} subtitle={"date"}/>
         <div className={styles.cardContainer} key={1}>
             {
-                homeworks.map((homework, index) => {
+               homeworks.length > 0  ? homeworks.map((homework, index) => {
                     return (
                         <CardElongated key={index} title={homework.title} cardIndex={index} height={145}>
                             <Box sx={{ display: "flex" }}>
@@ -181,7 +187,25 @@ function SeeHomeworkAnnouncementTeacher() {
                             </Box>
                         </CardElongated>
                     );
-                })
+                }) : <Card
+                   sx={{
+                       // marginLeft: isSmallScreen ? "0px" : "200px",
+                       marginTop: "10px",
+                       display: "flex",
+                       flexDirection: "column",
+                       width: isSmallScreen ? "100%" : "75%",
+                       height: isSmallScreen ? "50%" : "auto",
+                       backgroundColor: "#FAFAF5",
+                       borderRadius: "24px",
+                       alignSelf: "center",
+                   }}
+               >
+                   <div className={styles.title}>
+                       <p className={styles.p}>
+                           No homeworks announcements for this lecture! <br/>
+                       </p>
+                   </div>
+               </Card>
             }
 
     </div>

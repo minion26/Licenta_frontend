@@ -26,6 +26,19 @@ body{
 
 }
 
+.container2{
+    margin-left: 140px;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    /*border: 1px solid rgba(0, 0, 0, 0.3);*/
+    height: 100px;
+    width: 150px;
+
+}
+
 
 
 @media screen and (max-width: 540px) {

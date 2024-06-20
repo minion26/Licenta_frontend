@@ -52,7 +52,7 @@ import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import { toolbarPlugin } from '@react-pdf-viewer/toolbar';
 import type { ToolbarSlot, TransformToolbarSlot } from '@react-pdf-viewer/toolbar';
 import styles from './PDF-viewer.module.css';
-
+import Button from "@mui/material/Button";
 
 
 function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
@@ -95,6 +95,15 @@ function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
     // Check if fileURL is defined
     if (!fileURL) {
         return <div>No file URL provided</div>;
+    }
+
+    const handleDownload = () => {
+        const link = document.createElement('a');
+        link.href = fileURL;
+        link.download = 'file.' + fileType; // set the file name and type
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
 
@@ -192,7 +201,11 @@ function PdfViewer({ fileURL, fileType }: { fileURL: string, fileType: string}){
                 );
             case 'pptx':
                 return (
-                    <iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                    <div className={styles.container2}>
+                        <Button variant="contained" onClick={handleDownload}>Download PPTX</Button>
+                        {/*<p>Downloading the pptx file.</p>*/}
+                        {/*<iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>*/}
+                    </div>
                 );
             default:
                 return <div>File type not supported</div>;

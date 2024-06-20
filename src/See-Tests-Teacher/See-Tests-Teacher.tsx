@@ -17,6 +17,7 @@ import StartIcon from '@mui/icons-material/Start';
 import {Course, ExamDTO} from "../types.ts";
 import {useEffect, useState} from "react";
 import Swal from "sweetalert2";
+import Card from "@mui/material/Card";
 
 
 function SeeTestsTeacher(){
@@ -28,6 +29,10 @@ function SeeTestsTeacher(){
     const [course, setCourse] = useState<Course>();
 
     useEffect(() => {
+        if(idCourses === 'null' || idCourses === 'undefined') {
+            return ;
+        }
+
         fetch(`http://localhost:8081/api/v1/courses/${idCourses}`, {
             method: "GET",
             credentials: "include",
@@ -44,9 +49,13 @@ function SeeTestsTeacher(){
             .catch((error) => {
                 console.error("Error:", error);
             });
-    }, []);
+    }, [idCourses]);
 
     useEffect(() => {
+        if(idCourses === 'null' || idCourses === 'undefined') {
+            return ;
+        }
+
         fetch(`http://localhost:8081/api/v1/exam/get/idCourse=${idCourses}`, {
             method: "GET",
             credentials: "include",
@@ -106,6 +115,30 @@ function SeeTestsTeacher(){
         <div>
             <Header/>
             <UpperHeader title={"Tests"} subtitle={course ? course.name : " "} />
+            {
+                (idCourses === 'null' || idCourses === 'undefined') ? (
+                    <Card
+                        sx={{
+                            marginTop: "10px",
+                            display: "flex",
+                            flexDirection: "column",
+                            width: isSmallScreen ? "100%" : "75%",
+                            height: isSmallScreen ? "50%" : "auto",
+                            backgroundColor: "#FAFAF5",
+                            borderRadius: "24px",
+                            alignSelf: "center",
+                            marginLeft: isSmallScreen ? "0px" : "140px",
+                        }}
+                    >
+                        <div className={styles.title}>
+                            <p className={styles.p}>
+                                No notification to show. <br/>
+                            </p>
+                        </div>
+                    </Card>
+                ) : null
+            }
+
             <div className={styles.container}>
                 {
                     Array.isArray(exams) ? exams.map((exam, index) => {
@@ -321,141 +354,6 @@ function SeeTestsTeacher(){
                     }) : <p>Loading exams or an error occurred</p>
                 }
 
-
-                {/*<CardElongated title={"Test1"} cardIndex={1} height={isSmallScreen ? 150 : 100}>*/}
-                {/*    <Box sx={{*/}
-                {/*        display: 'flex',*/}
-                {/*        flexWrap: 'wrap',*/}
-                {/*        justifyContent: 'flex-end',*/}
-                {/*        alignItems: 'space-between',*/}
-                {/*        marginLeft: 'auto',*/}
-                {/*        marginTop: isSmallScreen ? "0px" : "5px",*/}
-                {/*    }}>*/}
-                {/*        <Tooltip title="Start Test">*/}
-                {/*            <Button*/}
-                {/*                variant="contained"*/}
-                {/*                endIcon={<StartIcon />}*/}
-                {/*                sx={{*/}
-                {/*                    width: isSmallScreen ? "35px" : "130px",*/}
-                {/*                    height: "50px",*/}
-                {/*                    backgroundColor: "#F5F5F5",*/}
-                {/*                    borderRadius: "20px",*/}
-                {/*                    color: "rgba(0,0,0,0.75)",*/}
-                {/*                    fontFamily: "Inter",*/}
-                {/*                    fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size*/}
-                {/*                    fontWeight: "semi-bold",*/}
-                {/*                    alignSelf: "flex-end",*/}
-                {/*                    marginLeft: "auto",*/}
-                {/*                    marginRight: isSmallScreen ? "5px" : "20px",*/}
-                {/*                    marginBottom: isSmallScreen ? "0px" : "25px",*/}
-                {/*                    border: "none",*/}
-                {/*                    textTransform: "none",*/}
-                {/*                }}*/}
-                {/*                // onClick={startTest}*/}
-                {/*            >*/}
-                {/*                Start Test*/}
-                {/*            </Button>*/}
-
-                {/*        </Tooltip>*/}
-
-                {/*        <Tooltip title="Edit Test Details">*/}
-                {/*            <Button*/}
-                {/*                variant="contained"*/}
-                {/*                endIcon={<CreateOutlinedIcon />}*/}
-                {/*                sx={{*/}
-                {/*                    width: isSmallScreen ? "35px" : "75px",*/}
-                {/*                    height: "50px",*/}
-                {/*                    backgroundColor: "#F5F5F5",*/}
-                {/*                    borderRadius: "20px",*/}
-                {/*                    color: "rgba(0,0,0,0.75)",*/}
-                {/*                    fontFamily: "Inter",*/}
-                {/*                    fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size*/}
-                {/*                    fontWeight: "semi-bold",*/}
-                {/*                    alignSelf: "flex-end",*/}
-                {/*                    marginLeft: "auto",*/}
-                {/*                    marginRight: isSmallScreen ? "5px" : "20px",*/}
-                {/*                    marginBottom: isSmallScreen ? "0px" : "25px",*/}
-                {/*                    border: "none",*/}
-                {/*                    textTransform: "none",*/}
-                {/*                }}*/}
-                {/*                component={Link}*/}
-                {/*                to="/edit-test"*/}
-                {/*            />*/}
-                {/*        </Tooltip>*/}
-                {/*        <Tooltip title="Add Questions To Test">*/}
-                {/*            <Button*/}
-                {/*                variant="contained"*/}
-                {/*                endIcon={<AddCircleOutlineIcon />}*/}
-                {/*                sx={{*/}
-                {/*                    width: isSmallScreen ? "35px" : "75px",*/}
-                {/*                    height: "50px",*/}
-                {/*                    backgroundColor: "#F5F5F5",*/}
-                {/*                    borderRadius: "20px",*/}
-                {/*                    color: "rgba(0,0,0,0.75)",*/}
-                {/*                    fontFamily: "Inter",*/}
-                {/*                    fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size*/}
-                {/*                    fontWeight: "semi-bold",*/}
-                {/*                    alignSelf: "flex-end",*/}
-                {/*                    marginLeft: "auto",*/}
-                {/*                    marginRight: isSmallScreen ? "5px" : "20px",*/}
-                {/*                    marginBottom: isSmallScreen ? "0px" : "25px",*/}
-                {/*                    border: "none",*/}
-                {/*                    textTransform: "none",*/}
-                {/*                }}*/}
-                {/*                component={Link}*/}
-                {/*                to="/add-questions-test"*/}
-                {/*            />*/}
-                {/*        </Tooltip>*/}
-                {/*        <Tooltip title="Add Correct Answers" >*/}
-                {/*                <Button*/}
-                {/*                    variant="contained"*/}
-                {/*                    endIcon={<CheckIcon />}*/}
-                {/*                    sx={{*/}
-                {/*                        width: isSmallScreen ? "35px" : "75px",*/}
-                {/*                        height: "50px",*/}
-                {/*                        backgroundColor: "#F5F5F5",*/}
-                {/*                        borderRadius: "20px",*/}
-                {/*                        color: "rgba(0,0,0,0.75)",*/}
-                {/*                        fontFamily: "Inter",*/}
-                {/*                        fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size*/}
-                {/*                        fontWeight: "semi-bold",*/}
-                {/*                        alignSelf: "flex-end",*/}
-                {/*                        marginLeft: "auto",*/}
-                {/*                        marginRight: isSmallScreen ? "5px" : "20px",*/}
-                {/*                        marginBottom: isSmallScreen ? "0px" : "25px",*/}
-                {/*                        border: "none",*/}
-                {/*                        textTransform: "none",*/}
-                {/*                    }}*/}
-                {/*                    component={Link}*/}
-                {/*                    to="/add-correct-answers"*/}
-                {/*                />*/}
-                {/*        </Tooltip>*/}
-                {/*        <Tooltip title="Add Students To Test">*/}
-                {/*            <Button*/}
-                {/*                variant="contained"*/}
-                {/*                endIcon={<AddTaskIcon />}*/}
-                {/*                sx={{*/}
-                {/*                    width: isSmallScreen ? "35px" : "75px",*/}
-                {/*                    height: "50px",*/}
-                {/*                    backgroundColor: "#F5F5F5",*/}
-                {/*                    borderRadius: "20px",*/}
-                {/*                    color: "rgba(0,0,0,0.75)",*/}
-                {/*                    fontFamily: "Inter",*/}
-                {/*                    fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size*/}
-                {/*                    fontWeight: "semi-bold",*/}
-                {/*                    alignSelf: "flex-end",*/}
-                {/*                    marginLeft: "auto",*/}
-                {/*                    marginRight: isSmallScreen ? "5px" : "20px",*/}
-                {/*                    marginBottom: isSmallScreen ? "0px" : "25px",*/}
-                {/*                    border: "none",*/}
-                {/*                    textTransform: "none",*/}
-                {/*                }}*/}
-                {/*                component={Link}*/}
-                {/*                to="/add-students-to-test"*/}
-                {/*            />*/}
-                {/*        </Tooltip>*/}
-                {/*    </Box>*/}
-                {/*</CardElongated>*/}
             </div>
         </div>
     );

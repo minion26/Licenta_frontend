@@ -9,17 +9,64 @@ import {Importer, ImporterField} from "react-csv-importer";
 import "react-csv-importer/dist/index.css";
 import {useNavigate, useParams} from "react-router-dom";
 import Swal from "sweetalert2";
+import {useEffect, useState} from "react";
+import {ExamDTO} from "../types.ts";
 
 function UploadStudentsToTestTeacher(){
     const {idCourses ,idExam} = useParams();
     const navigate = useNavigate();
+
+    const [exam, setExam] = useState<ExamDTO>({
+        idExam: '',
+        name: '',
+        question: [],
+        timeInMinutes: 0,
+        totalScore: 0,
+        passingScore: 0,
+        date: new Date(),
+        courseName: '',
+        idTeachers: [],
+        studentExamDTO: [],
+    });
+
+    useEffect(() => {
+        fetch(`http://localhost:8081/api/v1/exam/idExam=${idExam}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        })
+            .then((response) => {
+                if(!response.ok){
+                    return response.json().then(err => {
+                        throw new Error(err.message);
+                    });
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setExam(data);
+                console.log(data);
+            })
+            .catch((error) => {
+                console.error('An error occured!', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: error.message || 'An error occurred',
+                    showConfirmButton: false,
+                    // timer: 1500
+                });
+            });
+    }, [idExam]);
 
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     return(
         <div>
             <Header/>
-            <UpperHeader title={"Add Students"} subtitle={"Test Name"}/>
+            <UpperHeader title={"Add Students"} subtitle={exam ? exam.name : ""}/>
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
                 <Card
                     sx={{

@@ -9,6 +9,7 @@ import styles from "./Notifications-Teacher.module.css";
 import {Link} from "react-router-dom";
 import {ReviewStudentAnswersDTO, User} from "../types.ts";
 import {useEffect, useState} from "react";
+import Card from "@mui/material/Card";
 
 
 function NotificationsTeacher() {
@@ -64,7 +65,25 @@ function NotificationsTeacher() {
       <Header />
       <UpperHeader title="Notifications" subtitle="tests" />
       <div className={styles.container}>
-          { needsReview.length === 0 ? <h1>No reviews to be done</h1> :
+          { needsReview.length === 0 ? <Card
+                  sx={{
+                      // marginLeft: isSmallScreen ? "0px" : "200px",
+                      marginTop: "10px",
+                      display: "flex",
+                      flexDirection: "column",
+                      width: isSmallScreen ? "100%" : "75%",
+                      height: isSmallScreen ? "50%" : "auto",
+                      backgroundColor: "#FAFAF5",
+                      borderRadius: "24px",
+                      alignSelf: "center",
+                  }}
+              >
+                  <div className={styles.title}>
+                      <p className={styles.p}>
+                          No notification to show. <br/>
+                      </p>
+                  </div>
+              </Card> :
                 needsReview.map((review, index) => {
                 const user = users.find(user => user.idUsers === review.idStudent);
                  return   (
@@ -94,105 +113,6 @@ function NotificationsTeacher() {
                     </CardElongated>
                 )})
           }
-        {/*<CardElongated title={"student-0"} cardIndex={1} height={100}>*/}
-        {/*  <Button*/}
-        {/*    variant="contained"*/}
-        {/*    endIcon={<CreateOutlinedIcon />}*/}
-        {/*    sx={{*/}
-        {/*      width: isSmallScreen ? "50px" : "75px",*/}
-        {/*      height: "50px",*/}
-        {/*      backgroundColor: "#F5F5F5",*/}
-        {/*      borderRadius: "20px",*/}
-        {/*      color: "rgba(0,0,0,0.75)",*/}
-        {/*      fontFamily: "Inter",*/}
-        {/*      fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size*/}
-        {/*      fontWeight: "semi-bold",*/}
-        {/*      alignSelf: "flex-end",*/}
-        {/*      marginLeft: "auto",*/}
-        {/*      marginRight: "20px",*/}
-        {/*      marginBottom: "25px",*/}
-        {/*      border: "none",*/}
-        {/*      textTransform: "none",*/}
-        {/*    }}*/}
-        {/*    component={Link}*/}
-        {/*    to="/add-review"*/}
-        {/*  />*/}
-        {/*</CardElongated>*/}
-
-        {/*<CardElongated title={"student-1"} cardIndex={2} height={100}>*/}
-        {/*  <Button*/}
-        {/*    variant="contained"*/}
-        {/*    endIcon={<CreateOutlinedIcon />}*/}
-        {/*    sx={{*/}
-        {/*      width: isSmallScreen ? "50px" : "75px",*/}
-        {/*      height: "50px",*/}
-        {/*      backgroundColor: "#F5F5F5",*/}
-        {/*      borderRadius: "20px",*/}
-        {/*      color: "rgba(0,0,0,0.75)",*/}
-        {/*      fontFamily: "Inter",*/}
-        {/*      fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size*/}
-        {/*      fontWeight: "semi-bold",*/}
-        {/*      alignSelf: "flex-end",*/}
-        {/*      marginLeft: "auto",*/}
-        {/*      marginRight: "20px",*/}
-        {/*      marginBottom: "25px",*/}
-        {/*      border: "none",*/}
-        {/*      textTransform: "none",*/}
-        {/*    }}*/}
-        {/*    // component={Link}*/}
-        {/*    // to="/add-feedback"*/}
-        {/*  />*/}
-        {/*</CardElongated>*/}
-
-        {/*<CardElongated title={"student-2"} cardIndex={3} height={100}>*/}
-        {/*  <Button*/}
-        {/*    variant="contained"*/}
-        {/*    endIcon={<CreateOutlinedIcon />}*/}
-        {/*    sx={{*/}
-        {/*      width: isSmallScreen ? "50px" : "75px",*/}
-        {/*      height: "50px",*/}
-        {/*      backgroundColor: "#F5F5F5",*/}
-        {/*      borderRadius: "20px",*/}
-        {/*      color: "rgba(0,0,0,0.75)",*/}
-        {/*      fontFamily: "Inter",*/}
-        {/*      fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size*/}
-        {/*      fontWeight: "semi-bold",*/}
-        {/*      alignSelf: "flex-end",*/}
-        {/*      marginLeft: "auto",*/}
-        {/*      marginRight: "20px",*/}
-        {/*      marginBottom: "25px",*/}
-        {/*      border: "none",*/}
-        {/*      textTransform: "none",*/}
-        {/*    }}*/}
-        {/*    // component={Link}*/}
-        {/*    // to="/add-feedback"*/}
-        {/*  />*/}
-        {/*</CardElongated>*/}
-
-        {/*<CardElongated title={"student-3"} cardIndex={4} height={100}>*/}
-        {/*  <Button*/}
-        {/*    variant="contained"*/}
-        {/*    endIcon={<CreateOutlinedIcon />}*/}
-        {/*    sx={{*/}
-        {/*      width: isSmallScreen ? "50px" : "75px",*/}
-        {/*      height: "50px",*/}
-        {/*      backgroundColor: "#F5F5F5",*/}
-        {/*      borderRadius: "20px",*/}
-        {/*      color: "rgba(0,0,0,0.75)",*/}
-        {/*      fontFamily: "Inter",*/}
-        {/*      fontSize: isSmallScreen ? "10px" : "12px", // Adjust the font size based on screen size*/}
-        {/*      fontWeight: "semi-bold",*/}
-        {/*      alignSelf: "flex-end",*/}
-        {/*      marginLeft: "auto",*/}
-        {/*      marginRight: "20px",*/}
-        {/*      marginBottom: "25px",*/}
-        {/*      border: "none",*/}
-        {/*      textTransform: "none",*/}
-        {/*    }}*/}
-        {/*    // component={Link}*/}
-        {/*    // to="/add-feedback"*/}
-        {/*  />*/}
-        {/*</CardElongated>*/}
       </div>
     </div>
   );

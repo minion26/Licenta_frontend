@@ -7,6 +7,7 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 
 import styles from './PDF-viewer-homework.module.css';
 import {useState} from "react";
+import Button from "@mui/material/Button";
 // import * as mammoth from "mammoth";
 
 
@@ -20,6 +21,15 @@ function PdfViewerHomework({documentURL, fileType} : {documentURL: string, fileT
     // Check if fileURL is defined
     if (!documentURL) {
         return <div>No file URL provided</div>;
+    }
+
+    const handleDownload = () => {
+        const link = document.createElement('a');
+        link.href = documentURL;
+        link.download = 'file.' + fileType; // set the file name and type
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     if (documentURL.startsWith('blob:')) {
@@ -94,6 +104,14 @@ function PdfViewerHomework({documentURL, fileType} : {documentURL: string, fileT
                         <source src={documentURL} type="video/mp4"/>
                         Your browser does not support the video tag.
                     </video>
+                );
+            case 'pptx':
+                return (
+                    <div className={styles.container2}>
+                        <Button variant="contained" onClick={handleDownload}>Download PPTX</Button>
+                        {/*<p>Downloading the pptx file.</p>*/}
+                        {/*<iframe src={fileURL} title="file content" style={{width: '100%', height: '100%'}}/>*/}
+                    </div>
                 );
             default:
                 return <div>File type not supported</div>;

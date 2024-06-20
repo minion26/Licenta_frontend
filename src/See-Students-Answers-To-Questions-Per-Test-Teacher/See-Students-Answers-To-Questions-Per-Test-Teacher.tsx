@@ -7,11 +7,17 @@ import {QuestionAndStudentsAnswersDTO, Student} from "../types.ts";
 import {TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import Swal from "sweetalert2";
+import Card from "@mui/material/Card";
+import {useTheme} from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 
 function SeeStudentsAnswersToQuestionsPerTestTeacher(){
     const {idExam, idStudent} = useParams();
+
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const [studentsAnswer, setStudentsAnswer] = useState<QuestionAndStudentsAnswersDTO[]>([]);
 
@@ -141,7 +147,43 @@ function SeeStudentsAnswersToQuestionsPerTestTeacher(){
 
                         </Box>)
 
-                }) : hasError ? <h1>You dont have the permission to see this.</h1> : <h1>The student has not taken the test.</h1>}
+                }) : hasError ? <Card
+                    sx={{
+                        // marginLeft: isSmallScreen ? "0px" : "200px",
+                        marginTop: "10px",
+                        display: "flex",
+                        flexDirection: "column",
+                        width: isSmallScreen ? "100%" : "75%",
+                        height: isSmallScreen ? "50%" : "auto",
+                        backgroundColor: "#FAFAF5",
+                        borderRadius: "24px",
+                        alignSelf: "center",
+                    }}
+                >
+                    <div className={styles.title}>
+                        <p className={styles.p}>
+                            You don't have the permission to see this. <br/>
+                        </p>
+                    </div>
+                </Card> : <Card
+                    sx={{
+                        // marginLeft: isSmallScreen ? "0px" : "200px",
+                        marginTop: "10px",
+                        display: "flex",
+                        flexDirection: "column",
+                        width: isSmallScreen ? "100%" : "75%",
+                        height: isSmallScreen ? "50%" : "auto",
+                        backgroundColor: "#FAFAF5",
+                        borderRadius: "24px",
+                        alignSelf: "center",
+                    }}
+                >
+                    <div className={styles.title}>
+                        <p className={styles.p}>
+                            The student has not answered the test yet. <br/>
+                        </p>
+                    </div>
+                </Card>}
             </div>
         </div>
     );

@@ -10,6 +10,7 @@ import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Course, HomeworkAnnouncements} from "../types.ts";
 import Swal from "sweetalert2";
+import Card from "@mui/material/Card";
 
 function HomeworksPerLectureTeacher() {
     const {idCourses, idLectures} = useParams();
@@ -108,12 +109,12 @@ function HomeworksPerLectureTeacher() {
             <Header />
             <UpperHeader title={course ? course?.name : ""} subtitle="Homeworks" />
             <div className={styles.container}>
-                {homeworks.map((homework, index) => {
+                {homeworks.length > 0 ? homeworks.map((homework, index) => {
                     return (
-                        <CardElongated key={index} title={homework.title} cardIndex={index} >
+                        <CardElongated key={index} title={homework.title} cardIndex={index}>
                             <Button
                                 variant="contained"
-                                endIcon={<CreateOutlinedIcon />}
+                                endIcon={<CreateOutlinedIcon/>}
                                 sx={{
                                     width: isSmallScreen ? '150px' : '200px',
                                     height: '50px',
@@ -138,7 +139,26 @@ function HomeworksPerLectureTeacher() {
 
                         </CardElongated>
                     );
-                })}
+                }) : <Card
+                    sx={{
+                        // marginLeft: isSmallScreen ? "0px" : "200px",
+                        marginTop: "10px",
+                        display: "flex",
+                        flexDirection: "column",
+                        width: isSmallScreen ? "100%" : "75%",
+                        height: isSmallScreen ? "50%" : "auto",
+                        backgroundColor: "#FAFAF5",
+                        borderRadius: "24px",
+                        alignSelf: "center",
+                    }}
+                >
+                    <div className={styles.title}>
+                        <p className={styles.p}>
+                            No homeworks for this lecture! <br/>
+                        </p>
+                    </div>
+                </Card>
+                }
 
             </div>
         </div>
