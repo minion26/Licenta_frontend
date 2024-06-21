@@ -1,10 +1,10 @@
+import ReactStickyNotes from "@react-latest-ui/react-sticky-notes";
 import {useParams} from "react-router-dom";
 import Header from "../Header-students/Header.tsx";
 import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import {useEffect, useState} from "react";
 import styles from "../Feedback-Per-Homework-Teacher/Feedback-Per-Homework-Teacher.module.css";
 import PdfViewerHomework from "../PDF-viewer-homework/PDF-viewer-homework.tsx";
-import ReactStickyNotes from "@react-latest-ui/react-sticky-notes";
 import Swal from "sweetalert2";
 
 function SeeHomeworkFileStudent() {
@@ -136,15 +136,31 @@ function SeeHomeworkFileStudent() {
 
     }, [idHomework]);
 
+    const handleBeforeChange = (type, payload) => {
+        // Modify the payload if necessary
+        // For example, you can add a timestamp to the payload
+        payload.timestamp = Date.now();
+        return payload;
+    };
+
+    const handleChange = (type, payload, notes) => {
+        // Handle the change
+        console.log(type, payload, notes);
+    };
+
   return (
       <div>
           <Header/>
           <UpperHeader title={name ? name : "Homework"} subtitle={"date"}/>
           <div className={styles.container}>
-
-              {isLoading ? <div>Loading...</div> :
-                  <ReactStickyNotes notes={notesDB} />
-              }
+              <div className={styles.divContainer}>
+                  <div>
+                  {isLoading ? <div>Loading...</div> :
+                      <ReactStickyNotes notes={notesDB} onBeforeChange={handleBeforeChange}
+                                        onChange={handleChange} />
+                  }
+                  </div>
+              </div>
           <div className={styles.fileContainer} >
               {
                   fileUrls.map((url, index) => {

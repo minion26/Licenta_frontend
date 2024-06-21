@@ -67,6 +67,7 @@ import SeeUploadedHomeworkStudents from "./See-Uploaded-Homework-Students/See-Up
 import SeeHomeworkFileStudent from "./See-Homework-File-Student/See-Homework-File-Student.jsx";
 import MyProfileStudent from "./My-Profile-Student/My-Profile-Student.tsx";
 import SeeSubmittedTestStudent from "./See-Submitted-Test-Student/See-Submitted-Test-Student.tsx";
+import SeeSubmittedHomeworkStudent from "./See-Submitted-Homework-Student/See-Submitted-Homework-Student.tsx";
 
 function App() {
 
@@ -136,6 +137,7 @@ function RoutesComponent() {
                     <Route path={"/tests"} element={<SeeTestsStudent />} />
                     <Route path={"/take-test/:idExam/:idStudentExam"} element={<TakeTestsStudent />} />
                     <Route path={"/see-submitted-test/:idExam"} element={<SeeSubmittedTestStudent/>} />
+                    <Route path={"/see-submitted-homework/:idLecture/:idHomeworkAnnouncement"} element={<SeeSubmittedHomeworkStudent />} />
                 </>
             )}
 

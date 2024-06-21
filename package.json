@@ -24,6 +24,7 @@
     "@stomp/stompjs": "^7.0.0",
     "@types/aws-sdk": "^2.7.0",
     "@types/jwt-decode": "^3.1.0",
+    "ace-builds": "^1.35.0",
     "aws-sdk": "^2.1645.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",

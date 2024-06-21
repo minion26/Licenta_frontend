@@ -9,6 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import {StudentHomeworkDTO} from "../types.ts";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import Card from "@mui/material/Card";
 
 function HomeworkHistoryStudents() {
     const theme = useTheme();
@@ -40,7 +41,25 @@ function HomeworkHistoryStudents() {
             <div className={styles.container}>
 
                 {
-                    studentHomework.length === 0 ? <h1>No homeworks uploaded</h1> :
+                    studentHomework.length === 0 ? <Card
+                            sx={{
+                                // marginLeft: isSmallScreen ? "0px" : "200px",
+                                marginTop: "10px",
+                                display: "flex",
+                                flexDirection: "column",
+                                width: isSmallScreen ? "100%" : "75%",
+                                height: isSmallScreen ? "50%" : "auto",
+                                backgroundColor: "#FAFAF5",
+                                borderRadius: "24px",
+                                alignSelf: "center",
+                            }}
+                        >
+                            <div className={styles.title}>
+                                <p className={styles.p}>
+                                    You are not enrolled in any courses. <br/>
+                                </p>
+                            </div>
+                        </Card> :
                     studentHomework.map((homework, index) => {
 
                         return (

@@ -31,6 +31,7 @@ function AddHomeworkStudent(){
             }
         })
             .then((response) => {
+                console.log(`Response status: ${response.status}`);
                 if (!response.ok) {
                     return response.json().then((error) => {
                         throw new Error(error.message);

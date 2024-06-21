@@ -1,4 +1,4 @@
-import Header from "../Header-teacher/Header.tsx";
+import Header from "../Header-students/Header.tsx";
 import UpperHeader from "../Upper-Header/Upper-Header.tsx";
 import styles from "./View-Course-Students.module.css";
 import PDFViewer from "../PDF-viewer/PDF-viewer.tsx";

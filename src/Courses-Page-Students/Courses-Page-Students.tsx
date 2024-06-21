@@ -6,9 +6,16 @@ import {Link, useParams} from "react-router-dom";
 import {Course, User} from "../types.ts";
 import {useEffect, useState} from "react";
 import Swal from "sweetalert2";
+import Card from "@mui/material/Card";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import {useTheme} from "@mui/material/styles";
 
 function CoursesPageStudents(){
     const {semesterNumber } = useParams();
+
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
     if (typeof semesterNumber === "string") {
         localStorage.setItem('semesterNumber', semesterNumber);
     }
@@ -106,7 +113,25 @@ function CoursesPageStudents(){
                                 <CardLarge title={course.name} credits={course.credits} description={course.description} cardIndex={index}/>
                             </Link>
                         );
-                    }  ) : <h1>No courses available</h1>
+                    }  ) : <Card
+                       sx={{
+                           // marginLeft: isSmallScreen ? "0px" : "200px",
+                           marginTop: "10px",
+                           display: "flex",
+                           flexDirection: "column",
+                           width: isSmallScreen ? "100%" : "75%",
+                           height: isSmallScreen ? "50%" : "auto",
+                           backgroundColor: "#FAFAF5",
+                           borderRadius: "24px",
+                           alignSelf: "center",
+                       }}
+                   >
+                       <div className={styles.title}>
+                           <p className={styles.p}>
+                               You are not enrolled in any courses for the semester {semesterNumberInt} ! <br/>
+                           </p>
+                       </div>
+                   </Card>
                 }
 
                 {/*<Link to={"/lecture-per-course"} className={styles.noDecoration}>*/}

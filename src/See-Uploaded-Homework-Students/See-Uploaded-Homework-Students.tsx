@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import DownloadIcon from '@mui/icons-material/Download';
 
 
 function SeeUploadedHomeworkStudents(){
@@ -100,6 +101,7 @@ function SeeUploadedHomeworkStudents(){
 
             {
                 homework.fileName.map((file, index) => {
+                    console.log(file);
                     const nameFile = file.split("/").pop();
                     let uuid = "";
                     return (
@@ -112,7 +114,7 @@ function SeeUploadedHomeworkStudents(){
                                     flexDirection: "row",
                                 }}
                             >
-                                <Tooltip title={"Delete the home"}>
+                                <Tooltip title={"Delete the homework"}>
                                 <Button
                                     variant="contained"
                                     endIcon={<DeleteIcon />}
@@ -208,6 +210,69 @@ function SeeUploadedHomeworkStudents(){
 
                                 >
                                 </Button>
+                                </Tooltip>
+
+                                <Tooltip title={"Download the homework"}>
+                                    <Button
+                                        variant="contained"
+                                        endIcon={<DownloadIcon />}
+                                        sx={{
+                                            width: "50px",
+                                            height: "50px",
+                                            backgroundColor: "#F5F5F5",
+                                            borderRadius: "20px",
+                                            color: "rgba(0,0,0,0.75)",
+                                            fontFamily: "Inter",
+                                            fontSize: "12px",
+                                            fontWeight: "semi-bold",
+                                            alignSelf: "flex-end",
+                                            marginLeft: "20px",
+                                            marginRight: "20px",
+                                            marginBottom: "25px",
+                                            border: "none",
+                                            textTransform: "none",
+                                        }}
+                                        // component={Link}
+                                        // to="/homeworks-per-lecture"
+
+                                        onClick={() => {
+                                            if(nameFile === undefined){
+                                                return;
+                                            }
+                                            fetch(`http://localhost:8081/api/v1/homework/download/${nameFile}`, {
+                                                method: 'GET',
+                                                credentials: 'include',
+                                                headers: {
+                                                    'Access-Control-Allow-Origin': '*',
+                                                    // 'Content-Type': 'application/json',
+                                                },
+                                            })
+                                                .then(response => response.blob())
+                                                .then(blob => {
+                                                    // Crearea unui URL pentru blob
+                                                    const url = window.URL.createObjectURL(blob);
+                                                    // Crearea unui link în document
+                                                    const a = document.createElement('a');
+                                                    a.style.display = 'none';
+                                                    a.href = url;
+                                                    // Numele fișierului pentru descărcare
+                                                    a.download = nameFile;
+                                                    // Adăugarea linkului în document
+                                                    document.body.appendChild(a);
+                                                    // Simularea unui click pe link
+                                                    a.click();
+                                                    // Curățarea referinței la URL
+                                                    window.URL.revokeObjectURL(url);
+                                                })
+                                                .catch((error) => {
+                                                    console.error('Error:', error);
+                                                });
+
+                                        }}
+
+                                        >
+
+                                    </Button>
                                 </Tooltip>
 
 

@@ -45,7 +45,11 @@ body{
 }
 
 
-
+@media screen and (min-width: 1350px){
+    .container{
+        width: 1000px;
+    }
+}
 
 
 @media screen and (max-width: 540px) {

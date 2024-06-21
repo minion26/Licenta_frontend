@@ -3,13 +3,14 @@ import { Viewer } from '@react-pdf-viewer/core';
 import { Worker } from '@react-pdf-viewer/core';
 import { SpecialZoomLevel } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
+import '../../node_modules/pdfjs-dist/web/pdf_viewer.css';
 
 
 import styles from './PDF-viewer-homework.module.css';
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Button from "@mui/material/Button";
-// import * as mammoth from "mammoth";
 
+// import * as mammoth from "mammoth";
 
 
 
@@ -17,6 +18,19 @@ import Button from "@mui/material/Button";
 // Your render function
 function PdfViewerHomework({documentURL, fileType} : {documentURL: string, fileType:string}) {
     const [loading, setLoading] = useState(true);
+
+    const iframeRef = useRef<HTMLIFrameElement>(null);
+
+    useEffect(() => {
+        if (documentURL.startsWith('blob:') && (fileType === 'txt' || fileType === 'py' || fileType === 'cpp' || fileType === 'java')) {
+            const iframe = iframeRef.current;
+            iframe.onload = function() {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                iframe.style.height = doc.body.scrollHeight + 'px';
+            };
+        }
+    }, [documentURL, fileType]);
+
     // const [docContent, setDocContent] = useState<string | null>(null);
     // Check if fileURL is defined
     if (!documentURL) {
@@ -80,23 +94,31 @@ function PdfViewerHomework({documentURL, fileType} : {documentURL: string, fileT
                     </div>
                 );
             case 'png':
-                return <img src={documentURL} alt="file content"/>;
+                return (<div className={styles.container}>
+                    <img src={documentURL} alt="file content"/>;
+                    </div>);
             case 'jpg':
-                    return <img src={documentURL} alt="file content"/>;
+                return (<div className={styles.container}>
+                        <   img src={documentURL} alt="file content"/>
+                        </div>);
             case 'txt':
             case 'py':
                 return (
                     <div className={styles.container}>
-                        <iframe src={documentURL} title="file content" className={styles.responsiveIframe} />
+                        <iframe ref={iframeRef} src={documentURL} title="file content" className={styles.responsiveIframe} />
                     </div>
                 );
             case 'cpp':
                 return (
-                    <iframe src={documentURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                    <div className={styles.container}>
+                        <iframe ref={iframeRef} src={documentURL} title="file content" className={styles.responsiveIframe}/>
+                    </div>
                 );
             case 'java':
                 return (
-                    <iframe src={documentURL} title="file content" style={{width: '100%', height: '100%'}}/>
+                    <div className={styles.container}>
+                        <iframe ref={iframeRef} src={documentURL} title="file content" className={styles.responsiveIframe}/>
+                    </div>
                 );
             case 'mp4':
                 return (
