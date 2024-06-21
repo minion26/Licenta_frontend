@@ -13,6 +13,11 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 
 function FeedbackPerHomeworkTeacher() {
+    // Convert the percentages back to coordinates
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+
     const {idHomeworkAnnouncement,idHomework} = useParams();
     const navigate = useNavigate();
     const [homework, setHomework] = useState({
@@ -130,7 +135,10 @@ function FeedbackPerHomeworkTeacher() {
                     console.log("data : ", data);
                     const transformedNotes = data.map((note) => ({
                         id: note.idFeedback,
-                        position: {x: note.positionX, y: note.positionY},
+                        position: {
+                            x: (note.positionX / 100) * screenWidth,
+                            y: (note.positionY / 100) * screenHeight
+                        },
                         text: note.noteText
                     }));
                     setNotesDB(transformedNotes);
@@ -208,10 +216,100 @@ function FeedbackPerHomeworkTeacher() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        const notesUpdate = [];
+
         // Retrieve the notes from local storage
         const jsonString = localStorage.getItem('react-sticky-notes');
+
+        // if (jsonString) {
+        //     const notes = JSON.parse(jsonString);
+        //
+        //     // Iterate through the notes
+        //     notes.forEach(note => {
+        //         // Find the corresponding note in notesDBCopy
+        //         const originalNote = notesDBCopy.find(n => n.id === note.id);
+        //
+        //         // If the original note exists and its position has changed, add it to notesUpdate
+        //         if (originalNote && ((originalNote.position.x !== note.position.x || originalNote.position.y !== note.position.y)|| originalNote.text !== note.text)) {
+        //             notesUpdate.push(note);
+        //         }
+        //     });
+        //
+        //     // Now, notesUpdate contains all the notes that have changed their positions
+        //     console.log(notesUpdate);
+        // } else {
+        //     console.log('No notes found in local storage.');
+        // }
         if (jsonString) {
             const notes = JSON.parse(jsonString);
+
+            //FOR UPDATING NOTES
+            notes.forEach(note => {
+                // Find the corresponding note in notesDBCopy
+                const originalNote = notesDBCopy.find(n => n.id === note.id);
+
+                // If the original note exists and its position has changed, add it to notesUpdate
+                if (originalNote && ((originalNote.position.x !== note.position.x || originalNote.position.y !== note.position.y)|| originalNote.text !== note.text)) {
+                    notesUpdate.push(note);
+                    //sterge din notesDBCopy
+                    setNotesDBCopy(notesDBCopy.filter(n => n.id !== note.id));
+
+                    //sterge si din notesDB
+                    setNotesDB(notesDB.filter(n => n.id !== note.id));
+
+                }
+            });
+
+            for(let i = 0; i < notesUpdate.length; i++) {
+                fetch(`http://localhost:8081/api/v1/feedback/update/idFeedback=${notesUpdate[i].id}`, {
+                    method: "PATCH",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Credentials": "*"
+                    },
+                    body: JSON.stringify({
+                        positionX: Math.round((notesUpdate[i].position.x / screenWidth) * 100),
+                        positionY: Math.round((notesUpdate[i].position.y / screenHeight) * 100),
+                        noteText: notesUpdate[i].text
+                    })
+
+                })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.text();
+                        })
+                        .then(data => {
+                            if (data) {
+                                return JSON.parse(data);
+                            } else {
+                                console.log('No data returned by the server');
+                            }
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Feedback updated successfully!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+
+                            //delete local storage
+                            // localStorage.removeItem('react-sticky-notes');
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Feedback update failed!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+
+
+            }
 
             // Transform notesDB into a comparable format
             const notesDBComparable = notesDB.map(note => ({
@@ -230,10 +328,12 @@ function FeedbackPerHomeworkTeacher() {
                 return !notesDBComparable.some(dbNote => JSON.stringify(dbNote) === JSON.stringify(comparableNote));
             });
 
+            console.log(uniqueNotes);
+
             // Parse the unique notes into the desired format
             const feedback = uniqueNotes.map(note => ({
-                positionX: note.position.x,
-                positionY: note.position.y,
+                positionX: Math.round((note.position.x / screenWidth) * 100),
+                positionY: Math.round((note.position.y / screenHeight) * 100),
                 noteText: note.text
             }));
 
@@ -297,6 +397,8 @@ function FeedbackPerHomeworkTeacher() {
 
 
     }
+
+
 
     const handleBeforeChange = (type, payload) => {
         // Modify the payload if necessary

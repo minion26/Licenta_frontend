@@ -10,6 +10,9 @@ import Swal from "sweetalert2";
 function SeeHomeworkFileStudent() {
     const {idHomework } = useParams();
 
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
     const [homework, setHomework] = useState({
         idHomework: "",
         idStudent: "",
@@ -123,7 +126,10 @@ function SeeHomeworkFileStudent() {
                     console.log("data : ", data);
                     const transformedNotes = data.map((note) => ({
                         id: note.idFeedback,
-                        position: {x: note.positionX, y: note.positionY},
+                        position: {
+                            x: (note.positionX / 100) * screenWidth,
+                            y: (note.positionY / 100) * screenHeight
+                        },
                         text: note.noteText
                     }));
                     setNotesDB(transformedNotes);
