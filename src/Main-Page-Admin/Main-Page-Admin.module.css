@@ -18,6 +18,7 @@ body {
     justify-content: space-between;
 
     margin-top: 25px;
+    margin-right: 100px;
 }
 
 .calendarContainer {
@@ -51,22 +52,18 @@ body {
 
 
 .buttons{
-
-    /*gap: 20px;*/
-    /*display: flex;*/
-    /*justify-content: space-between; !* Optional: This will put some space between the buttons *!*/
-
     margin-left: 125px;
     gap: 10px;
     display: flex;
-    /*justify-content: space-between;*/
     flex-wrap: wrap;
+    flex-direction: row; /* Add this line */
 }
 
 @media screen and (max-width: 540px) {
     .main {
         flex-direction: column;
         align-items: center;
+        margin-left: 0;
         /*margin-left: 50px;*/
     }
 

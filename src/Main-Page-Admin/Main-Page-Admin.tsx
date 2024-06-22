@@ -12,6 +12,8 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import {Link} from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
+import {User} from "../types.ts";
+import {useEffect, useState} from "react";
 // import DeleteIcon from "@mui/icons-material/Delete";
 // import Swal from "sweetalert2";
 
@@ -248,6 +250,43 @@ function AdminsButtons() {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+    const [user, setUser] = useState<User>({
+        idUsers: "",
+        firstName: "",
+        lastName: "",
+        facultyEmail: "",
+        personalEmail: "",
+        password: "",
+        role: "",
+    });
+
+    useEffect(() => {
+
+        // Get the user from the server
+        fetch('http://localhost:8081/api/v1/users/get-the-superuser', {
+            method: 'GET',
+            credentials: 'include', // This will include cookies in the request
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server responded with status code ${response.status}`);
+                }
+
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                setUser(data);
+            })
+            .catch(error => {
+                console.error('Failed to get user', error);
+            });
+
+    }, []);
+
     return (
         <Card
             sx={{
@@ -268,33 +307,35 @@ function AdminsButtons() {
                     }}
                 >
                     <p className={styles.title}>Admins</p>
-                    <Tooltip title={"Create a new admin account"}>
-                        <Button
-                            variant="contained"
-                            endIcon={<AddIcon />}
-                            sx={{
-                                width: "150px",
-                                height: "50px",
-                                backgroundColor: "#F5F5F5",
-                                borderRadius: "20px",
-                                color: "rgba(0,0,0,0.75)",
-                                fontFamily: "Inter",
-                                fontSize: "12px",
-                                fontWeight: "semi-bold",
-                                alignSelf: "flex-end",
-                                marginLeft: "auto",
-                                marginRight: "20px",
-                                marginBottom: "10px",
-                                border: "none",
-                                textTransform: "none",
-                            }}
-                            component={Link}
-                            to="/create-admins"
-                        >
-                            {" "}
-                            Create
-                        </Button>
-                    </Tooltip>
+                    {user.idUsers && (
+                        <Tooltip title={"Create a new admin account"}>
+                            <Button
+                                variant="contained"
+                                endIcon={<AddIcon />}
+                                sx={{
+                                    width: "150px",
+                                    height: "50px",
+                                    backgroundColor: "#F5F5F5",
+                                    borderRadius: "20px",
+                                    color: "rgba(0,0,0,0.75)",
+                                    fontFamily: "Inter",
+                                    fontSize: "12px",
+                                    fontWeight: "semi-bold",
+                                    alignSelf: "flex-end",
+                                    marginLeft: "auto",
+                                    marginRight: "20px",
+                                    marginBottom: "10px",
+                                    border: "none",
+                                    textTransform: "none",
+                                }}
+                                component={Link}
+                                to="/create-admins"
+                            >
+                                {" "}
+                                Create
+                            </Button>
+                        </Tooltip>
+                    )}
 
                     <Tooltip title={"See all admins"}>
                         <Button
