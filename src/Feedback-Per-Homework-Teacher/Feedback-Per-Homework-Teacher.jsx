@@ -213,140 +213,211 @@ function FeedbackPerHomeworkTeacher() {
     //     console.log("here", newNotes);
     // }, [newNotes]);
 
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //
+    //     const notesUpdate = [];
+    //
+    //     // Retrieve the notes from local storage
+    //     const jsonString = localStorage.getItem('react-sticky-notes');
+    //
+    //     if (jsonString) {
+    //         const notes = JSON.parse(jsonString);
+    //         let localNotesDB = [...notesDB];
+    //         let localNotesDBCopy = [...notesDBCopy];
+    //
+    //
+    //         //FOR UPDATING NOTES
+    //         for (const note of notes) {
+    //             // Find the corresponding note in notesDBCopy
+    //             const originalNote = notesDBCopy.find(n => n.id === note.id);
+    //
+    //             // If the original note exists and its position has changed, add it to notesUpdate
+    //             if (originalNote && ((originalNote.position.x !== note.position.x || originalNote.position.y !== note.position.y)|| originalNote.text !== note.text)) {
+    //                 console.log("updated note: ", note.id);
+    //                 notesUpdate.push(note);
+    //
+    //                 console.log("here", notesDBCopy.filter(n => n.id !== note.id));
+    //
+    //
+    //                 //sterge din notesDBCopy
+    //                 localNotesDBCopy = localNotesDBCopy.filter(n => n.id !== note.id);
+    //
+    //
+    //                 //sterge si din notesDB
+    //                 localNotesDB = localNotesDB.filter(n => n.id !== note.id);
+    //
+    //
+    //             }
+    //         }
+    //
+    //         for(let i = 0; i < notesUpdate.length; i++) {
+    //             console.log("update notes:", notesUpdate[i].id, notesUpdate[i].position.x, notesUpdate[i].position.y, notesUpdate[i].text)
+    //             fetch(`http://localhost:8081/api/v1/feedback/update/idFeedback=${notesUpdate[i].id}`, {
+    //                 method: "PATCH",
+    //                 credentials: "include",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                     "Access-Control-Allow-Credentials": "*"
+    //                 },
+    //                 body: JSON.stringify({
+    //                     idNote : notesUpdate[i].id,
+    //                     positionX: Math.round((notesUpdate[i].position.x / screenWidth) * 100),
+    //                     positionY: Math.round((notesUpdate[i].position.y / screenHeight) * 100),
+    //                     noteText: notesUpdate[i].text
+    //                 })
+    //
+    //             })
+    //                     .then(response => {
+    //                         if (!response.ok) {
+    //                             throw new Error('Network response was not ok');
+    //                         }
+    //                         return response.text();
+    //                     })
+    //                     .then(data => {
+    //                         if (data) {
+    //                             return JSON.parse(data);
+    //                         } else {
+    //                             console.log('No data returned by the server');
+    //                         }
+    //
+    //                         Swal.fire({
+    //                             icon: 'success',
+    //                             title: 'Feedback updated successfully!',
+    //                             showConfirmButton: false,
+    //                             timer: 1500
+    //                         });
+    //
+    //                         //delete local storage
+    //                         // localStorage.removeItem('react-sticky-notes');
+    //
+    //                         //sterge din local storage doar notele care au fost updatate
+    //                         const notes = JSON.parse(jsonString);
+    //                         const notesFinal = notes.filter(note => !notesUpdate.includes(note));
+    //                         localStorage.setItem('react-sticky-notes', JSON.stringify(notesFinal));
+    //                     })
+    //                     .catch((error) => {
+    //                         console.error("Error:", error);
+    //                         Swal.fire({
+    //                             icon: 'error',
+    //                             title: 'Feedback update failed!',
+    //                             showConfirmButton: false,
+    //                             timer: 1500
+    //                         });
+    //                     });
+    //
+    //
+    //         }
+    //
+    //         // Transform notesDB into a comparable format
+    //         const notesDBComparable = localNotesDB.map(note => ({
+    //             positionX: note.position.x,
+    //             positionY: note.position.y,
+    //             noteText: note.text
+    //         }));
+    //
+    //         // Filter out the notes that are already in notesDB
+    //         const uniqueNotes = notes.filter(note => {
+    //             const comparableNote = {
+    //                 positionX: note.position.x,
+    //                 positionY: note.position.y,
+    //                 noteText: note.text
+    //             };
+    //             return !notesDBComparable.some(dbNote => JSON.stringify(dbNote) === JSON.stringify(comparableNote));
+    //         });
+    //
+    //         console.log(uniqueNotes);
+    //
+    //         // Parse the unique notes into the desired format
+    //         const feedback = uniqueNotes.map(note => ({
+    //             positionX: Math.round((note.position.x / screenWidth) * 100),
+    //             positionY: Math.round((note.position.y / screenHeight) * 100),
+    //             noteText: note.text
+    //         }));
+    //
+    //         // const notes = JSON.parse(jsonString);
+    //         //
+    //         // // Parse the notes into the desired format
+    //         // const feedback = notes.map(note => ({
+    //         //     positionX: note.position.x,
+    //         //     positionY: note.position.y,
+    //         //     noteText: note.text
+    //         // }));
+    //
+    //         //sterge din feedback cele care sunt in notesUpdate
+    //         const feedbackFinal = feedback.filter(note => !notesUpdate.includes(note));
+    //
+    //         fetch(`http://localhost:8081/api/v1/feedback/create/idHomework=${idHomework}`, {
+    //             method: "POST",
+    //             credentials: "include",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "Access-Control-Allow-Credentials": "true"
+    //             },
+    //             body: JSON.stringify(feedbackFinal)
+    //         })
+    //             .then(response => {
+    //                 if (!response.ok) {
+    //                     throw new Error('Network response was not ok');
+    //                 }
+    //                 return response.text();
+    //             })
+    //             .then(data => {
+    //                 if (data) {
+    //                     return JSON.parse(data);
+    //                 } else {
+    //                     console.log('No data returned by the server');
+    //                 }
+    //
+    //                 Swal.fire({
+    //                     icon: 'success',
+    //                     title: 'Feedback submitted successfully!',
+    //                     showConfirmButton: false,
+    //                     timer: 1500
+    //                 });
+    //
+    //                 //delete local storage
+    //                 localStorage.removeItem('react-sticky-notes');
+    //             })
+    //             .catch((error) => {
+    //                 console.error("Error:", error);
+    //                 Swal.fire({
+    //                     icon: 'error',
+    //                     title: 'Feedback submission failed!',
+    //                     showConfirmButton: false,
+    //                     timer: 1500
+    //                 });
+    //             });
+    //
+    //         // window.location.reload();
+    //         navigate(`/see-submissions/${idHomeworkAnnouncement}`)
+    //     } else {
+    //         console.log('No notes found in local storage.');
+    //     }
+    //
+    //
+    //
+    // }
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        const notesUpdate = [];
 
         // Retrieve the notes from local storage
         const jsonString = localStorage.getItem('react-sticky-notes');
 
-        // if (jsonString) {
-        //     const notes = JSON.parse(jsonString);
-        //
-        //     // Iterate through the notes
-        //     notes.forEach(note => {
-        //         // Find the corresponding note in notesDBCopy
-        //         const originalNote = notesDBCopy.find(n => n.id === note.id);
-        //
-        //         // If the original note exists and its position has changed, add it to notesUpdate
-        //         if (originalNote && ((originalNote.position.x !== note.position.x || originalNote.position.y !== note.position.y)|| originalNote.text !== note.text)) {
-        //             notesUpdate.push(note);
-        //         }
-        //     });
-        //
-        //     // Now, notesUpdate contains all the notes that have changed their positions
-        //     console.log(notesUpdate);
-        // } else {
-        //     console.log('No notes found in local storage.');
-        // }
         if (jsonString) {
             const notes = JSON.parse(jsonString);
 
-            //FOR UPDATING NOTES
-            notes.forEach(note => {
-                // Find the corresponding note in notesDBCopy
-                const originalNote = notesDBCopy.find(n => n.id === note.id);
-
-                // If the original note exists and its position has changed, add it to notesUpdate
-                if (originalNote && ((originalNote.position.x !== note.position.x || originalNote.position.y !== note.position.y)|| originalNote.text !== note.text)) {
-                    notesUpdate.push(note);
-                    //sterge din notesDBCopy
-                    setNotesDBCopy(notesDBCopy.filter(n => n.id !== note.id));
-
-                    //sterge si din notesDB
-                    setNotesDB(notesDB.filter(n => n.id !== note.id));
-
-                }
-            });
-
-            for(let i = 0; i < notesUpdate.length; i++) {
-                fetch(`http://localhost:8081/api/v1/feedback/update/idFeedback=${notesUpdate[i].id}`, {
-                    method: "PATCH",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Credentials": "*"
-                    },
-                    body: JSON.stringify({
-                        positionX: Math.round((notesUpdate[i].position.x / screenWidth) * 100),
-                        positionY: Math.round((notesUpdate[i].position.y / screenHeight) * 100),
-                        noteText: notesUpdate[i].text
-                    })
-
-                })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.text();
-                        })
-                        .then(data => {
-                            if (data) {
-                                return JSON.parse(data);
-                            } else {
-                                console.log('No data returned by the server');
-                            }
-
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Feedback updated successfully!',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-
-                            //delete local storage
-                            // localStorage.removeItem('react-sticky-notes');
-                        })
-                        .catch((error) => {
-                            console.error("Error:", error);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Feedback update failed!',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        });
-
-
-            }
-
-            // Transform notesDB into a comparable format
-            const notesDBComparable = notesDB.map(note => ({
-                positionX: note.position.x,
-                positionY: note.position.y,
-                noteText: note.text
-            }));
-
-            // Filter out the notes that are already in notesDB
-            const uniqueNotes = notes.filter(note => {
-                const comparableNote = {
-                    positionX: note.position.x,
-                    positionY: note.position.y,
-                    noteText: note.text
-                };
-                return !notesDBComparable.some(dbNote => JSON.stringify(dbNote) === JSON.stringify(comparableNote));
-            });
-
-            console.log(uniqueNotes);
-
-            // Parse the unique notes into the desired format
-            const feedback = uniqueNotes.map(note => ({
+            // Parse the notes into the desired format
+            const feedback = notes.map(note => ({
+                idNote: note.id,
                 positionX: Math.round((note.position.x / screenWidth) * 100),
                 positionY: Math.round((note.position.y / screenHeight) * 100),
                 noteText: note.text
             }));
 
-            // const notes = JSON.parse(jsonString);
-            //
-            // // Parse the notes into the desired format
-            // const feedback = notes.map(note => ({
-            //     positionX: note.position.x,
-            //     positionY: note.position.y,
-            //     noteText: note.text
-            // }));
-
-            fetch(`http://localhost:8081/api/v1/feedback/create/idHomework=${idHomework}`, {
+            fetch(`http://localhost:8081/api/v1/feedback/createOrUpdate/idHomework=${idHomework}`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -388,16 +459,12 @@ function FeedbackPerHomeworkTeacher() {
                     });
                 });
 
-
+            // window.location.reload();
             navigate(`/see-submissions/${idHomeworkAnnouncement}`)
         } else {
             console.log('No notes found in local storage.');
         }
-
-
-
     }
-
 
 
     const handleBeforeChange = (type, payload) => {
