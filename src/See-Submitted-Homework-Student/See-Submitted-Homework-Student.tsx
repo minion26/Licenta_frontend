@@ -101,8 +101,12 @@ function SeeUploadedFiles({ idHomework }: { idHomework: string }) {
           let uuid = "";
           return (
             <CardElongated
-              height={145}
+              height={150}
               title={nameFile ? nameFile : file}
+              description={
+                "Grade: " +
+                (homework.grade === -1 ? "not graded yet" : homework.grade)
+              }
               cardIndex={index}
               key={index}
             >
@@ -184,9 +188,9 @@ function SeeUploadedFiles({ idHomework }: { idHomework: string }) {
                                   console.error(
                                     `Server responded with status code ${response.status}`,
                                   );
-                                  throw new Error(
-                                    "Failed to delete the account",
-                                  );
+                                  return response.json().then((error) => {
+                                    throw new Error(error.message);
+                                  });
                                 }
                                 const contentType =
                                   response.headers.get("content-type");
@@ -212,6 +216,12 @@ function SeeUploadedFiles({ idHomework }: { idHomework: string }) {
                               })
                               .catch((error) => {
                                 console.error("Error:", error);
+                                Swal.fire({
+                                  icon: "error",
+                                  title: error.message || "An error occurred",
+                                  showConfirmButton: false,
+                                  // timer: 1500
+                                });
                               });
                           }
                         });
