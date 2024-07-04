@@ -32,7 +32,7 @@ function Buttons({
           variant="contained"
           endIcon={<AddCircleIcon />}
           sx={{
-            width: "50px",
+            width: "150px",
             height: "50px",
             backgroundColor: "#F5F5F5",
             borderRadius: "20px",
@@ -49,7 +49,9 @@ function Buttons({
           }}
           component={Link}
           to={`/see-homework-details/${idCourses}/${idHomeworkAnnouncement}`}
-        ></Button>
+        >
+          Add homework
+        </Button>
       </Tooltip>
 
       <Tooltip title={"See the submitted homework!"}>
@@ -57,7 +59,7 @@ function Buttons({
           variant="contained"
           endIcon={<RemoveRedEyeIcon />}
           sx={{
-            width: "50px",
+            width: "150px",
             height: "50px",
             backgroundColor: "#F5F5F5",
             borderRadius: "20px",
@@ -74,7 +76,9 @@ function Buttons({
           }}
           component={Link}
           to={`/see-submitted-homework/${idLecture}/${idHomeworkAnnouncement}`}
-        ></Button>
+        >
+          See homework
+        </Button>
       </Tooltip>
     </div>
   );

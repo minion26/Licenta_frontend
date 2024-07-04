@@ -1,4 +1,4 @@
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import MainPage from "./Main-page/Main-Page.tsx";
 import Login from "./Login/Login.tsx";
 import MainPageStudents from "./Main-page-students/Main-Page-Students.tsx";
@@ -21,8 +21,7 @@ import FeedbackPerHomeworkTeacher from "./Feedback-Per-Homework-Teacher/Feedback
 import NotificationsTeacher from "./Notifications-Teacher/Notifications-Teacher.tsx";
 import HomeworkAnnouncementTeacher from "./Homework-Announcement-Teacher/Homework-Announcement-Teacher.tsx";
 import SeeHomeworkAnnouncementTeacher from "./See-Homework-Announcemet-Teacher/See-Homework-Announcemet-Teacher.tsx";
-import EditHomeworkAnnouncementsTeacher
-    from "./Edit-Homework-Announcements-Teacher/Edit-Homework-Announcements-Teacher.tsx";
+import EditHomeworkAnnouncementsTeacher from "./Edit-Homework-Announcements-Teacher/Edit-Homework-Announcements-Teacher.tsx";
 import AddMaterialsTeacher from "./Add-Materials-Teacher/Add-Materials-Teacher.tsx";
 import CreateTestTeacher from "./Create-Test-Teacher/Create-Test-Teacher.tsx";
 import SeeTestsTeacher from "./See-Tests-Teacher/See-Tests-Teacher.tsx";
@@ -48,21 +47,18 @@ import SeeCoursesAdmin from "./See-Courses-Admin/See-Courses-Admin.tsx";
 import SeeCoursesAccountAdmin from "./See-Courses-Account-Admin/See-Courses-Account-Admin.tsx";
 import AddStudentsToCoursesAdmin from "./Add-Students-To-Courses-Admin/Add-Students-To-Courses-Admin.tsx";
 
-import {AuthProvider, useAuth} from './AuthContext';
+import { AuthProvider, useAuth } from "./AuthContext";
 import SeeAdminsAdmin from "./See-admins-admin/See-admins-admin.tsx";
 import SeeTeachersPerCourseAdmin from "./See-Teachers-Per-Course-Admin/See-Teachers-Per-Course-Admin.tsx";
 import AddSingleTeacherToCourseAdmin from "./Add-Single-Teacher-To-Course-Admin/Add-Single-Teacher-To-Course-Admin.tsx";
 import SeeStudentsPerCourseAdmin from "./See-Students-Per-Course-Admin/See-Students-Per-Course-Admin.tsx";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import MyProfileAdmin from "./My-Profile-Admin/My-Profile-Admin.tsx";
-import DeleteMaterialsPerLectureTeacher
-    from "./Delete-Materials-Per-Lecture-Teacher/Delete-Materials-Per-Lecture-Teacher.tsx";
-import SeeSubmissionsHomeworkTeacher from './See-Submissions-Homework-Teacher/See-Submissions-Homework-Teacher.tsx';
+import DeleteMaterialsPerLectureTeacher from "./Delete-Materials-Per-Lecture-Teacher/Delete-Materials-Per-Lecture-Teacher.tsx";
+import SeeSubmissionsHomeworkTeacher from "./See-Submissions-Homework-Teacher/See-Submissions-Homework-Teacher.tsx";
 import SeeStudentsPerTestTeacher from "./See-Students-Per-Test-Teacher/See-Students-Per-Test-Teacher.tsx";
-import SeeStudentsAnswersToQuestionsPerTestTeacher
-    from "./See-Students-Answers-To-Questions-Per-Test-Teacher/See-Students-Answers-To-Questions-Per-Test-Teacher.tsx";
-import SeeHomeworkAnnouncementDetailsStudent
-    from "./See-Homework-Announcement-Details-Student/See-Homework-Announcement-Details-Student.tsx";
+import SeeStudentsAnswersToQuestionsPerTestTeacher from "./See-Students-Answers-To-Questions-Per-Test-Teacher/See-Students-Answers-To-Questions-Per-Test-Teacher.tsx";
+import SeeHomeworkAnnouncementDetailsStudent from "./See-Homework-Announcement-Details-Student/See-Homework-Announcement-Details-Student.tsx";
 import SeeUploadedHomeworkStudents from "./See-Uploaded-Homework-Students/See-Uploaded-Homework-Students.tsx";
 import SeeHomeworkFileStudent from "./See-Homework-File-Student/See-Homework-File-Student.jsx";
 import MyProfileStudent from "./My-Profile-Student/My-Profile-Student.tsx";
@@ -70,145 +66,272 @@ import SeeSubmittedTestStudent from "./See-Submitted-Test-Student/See-Submitted-
 import SeeSubmittedHomeworkStudent from "./See-Submitted-Homework-Student/See-Submitted-Homework-Student.tsx";
 
 function App() {
-
-
-    return (
-        <AuthProvider>
-            <RoutesComponent />
-        </AuthProvider>
-    );
+  return (
+    <AuthProvider>
+      <RoutesComponent />
+    </AuthProvider>
+  );
 }
 
 function RoutesComponent() {
-    const { role, setRole } = useAuth();
+  const { role, setRole } = useAuth();
 
+  useEffect(() => {
+    // Get the role from the server
+    fetch("http://localhost:8081/api/v1/role", {
+      method: "GET",
+      credentials: "include", // This will include cookies in the request
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `Server responded with status code ${response.status}`,
+          );
+        }
 
-    useEffect(() => {
-        // Get the role from the server
-        fetch('http://localhost:8081/api/v1/role', {
-            method: 'GET',
-            credentials: 'include', // This will include cookies in the request
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Server responded with status code ${response.status}`);
-                }
+        // If the role is successfully fetched, navigate to the main page
+        // navigate('/main-page-teacher');
 
-                // If the role is successfully fetched, navigate to the main page
-                // navigate('/main-page-teacher');
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setRole(data);
+      })
+      .catch((error) => {
+        console.error("Failed to get role", error);
+        // If the fetch fails, navigate to the login page
+        // navigate('/login');
+      });
+  }, []);
 
-                return response.json();
+  return (
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/login" element={<Login />} />
 
-            })
-            .then(data => {
-                console.log(data);
-                setRole(data);
-            })
-            .catch(error => {
-                console.error('Failed to get role', error);
-                // If the fetch fails, navigate to the login page
-                // navigate('/login');
-            });
-    }, []);
+      {/*STUDENTS*/}
+      {role == 3 && (
+        <>
+          <Route path={"/main-page-student"} element={<MainPageStudents />} />
+          <Route
+            path={"/semester/:semesterNumber"}
+            element={<CoursesPageStudents />}
+          />
+          <Route
+            path={"/lecture-per-course/:idCourses"}
+            element={<LecturePerCourseStudents />}
+          />
+          <Route path={"/homework"} element={<HomeworkHistoryStudents />} />
+          <Route
+            path={"/see-homeworks/:idHomework"}
+            element={<SeeUploadedHomeworkStudents />}
+          />
+          <Route
+            path={"/see-homework-feedback/:idHomework"}
+            element={<SeeHomeworkFileStudent />}
+          />
+          <Route path={"/my-profile"} element={<MyProfileStudent />} />
+          <Route
+            path={"/materials-per-lecture/:idCourses/:idLecture"}
+            element={<MaterialsPerLectureStudents />}
+          />
+          <Route
+            path={"/view-course/:idCourses/:idLecture/:materialType"}
+            element={<ViewCourseStudents />}
+          />
+          <Route
+            path={"/see-homework-announcement/:idCourses/:idLecture"}
+            element={<SeeHomeworkAnnouncementStudent />}
+          />
+          <Route
+            path={"/see-homework-details/:idCourses/:idHomeworkAnnouncement"}
+            element={<SeeHomeworkAnnouncementDetailsStudent />}
+          />
+          <Route
+            path={"/add-homework/:idCourses/:idHomeworkAnnouncement"}
+            element={<AddHomeworkStudent />}
+          />
+          <Route path={"/tests"} element={<SeeTestsStudent />} />
+          <Route
+            path={"/take-test/:idExam/:idStudentExam"}
+            element={<TakeTestsStudent />}
+          />
+          <Route
+            path={"/see-submitted-test/:idExam"}
+            element={<SeeSubmittedTestStudent />}
+          />
+          <Route
+            path={"/see-submitted-homework/:idLecture/:idHomeworkAnnouncement"}
+            element={<SeeSubmittedHomeworkStudent />}
+          />
+        </>
+      )}
 
-    return (
-        <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/login" element={<Login />} />
+      {/*TEACHERS*/}
+      {role == 2 && (
+        <>
+          <Route path="/main-page-teacher" element={<MainPageTeacher />} />
+          <Route
+            path="/lecture-per-course/:idCourses"
+            element={<LecturesPerCourseTeachers />}
+          />
+          <Route
+            path="/materials-per-lecture/:idCourses/:idLectures"
+            element={<MaterialsPerCourseTeacher />}
+          />
+          <Route
+            path={"/view-course-teacher/:idCourses/:idLectures/:materialType"}
+            element={<ViewCourseTeacher />}
+          />
+          <Route
+            path={"/view-auxiliar-teacher/:idCourses/:idLectures/:materialType"}
+            element={<ViewCourseTeacher />}
+          />
+          <Route
+            path={"/view-video-teacher/:idCourses/:idLectures/:materialType"}
+            element={<ViewCourseTeacher />}
+          />
+          <Route
+            path={"/homeworks-per-lecture/:idCourses/:idLectures"}
+            element={<HomeworksPerLectureTeacher />}
+          />
+          <Route
+            path={"/see-submissions/:idHomeworkAnnouncement"}
+            element={<SeeSubmissionsHomeworkTeacher />}
+          />
+          <Route
+            path={"/add-feedback/:idHomeworkAnnouncement/:idHomework"}
+            element={<FeedbackPerHomeworkTeacher />}
+          />
+          <Route
+            path={"/notifications-teacher"}
+            element={<NotificationsTeacher />}
+          />
+          <Route path={"/my-profile"} element={<MyProfileTeacher />} />
+          <Route
+            path={"/add-homework-announcement/:idCourses/:idLectures"}
+            element={<HomeworkAnnouncementTeacher />}
+          />
+          <Route
+            path={"/see-homework-announcement/:idCourses/:idLectures"}
+            element={<SeeHomeworkAnnouncementTeacher />}
+          />
+          <Route
+            path={"/edit-homework-announcement/:idHomeWorkAnnouncement"}
+            element={<EditHomeworkAnnouncementsTeacher />}
+          />
+          <Route
+            path={"/add-materials-per-lecture/:idCourses/:idLectures"}
+            element={<AddMaterialsTeacher />}
+          />
+          <Route
+            path={"/create-test/:idCourses"}
+            element={<CreateTestTeacher />}
+          />
+          <Route path={"/see-tests/:idCourses"} element={<SeeTestsTeacher />} />
+          <Route
+            path={"/see-students-test/:idExam"}
+            element={<SeeStudentsPerTestTeacher />}
+          />
+          <Route
+            path={"/edit-test/:idCourses/:idExam"}
+            element={<EditTestTeacher />}
+          />
+          <Route
+            path={"/add-questions-test/:idExam"}
+            element={<AddQuestionsTestTeacher />}
+          />
+          <Route
+            path={"/add-correct-answers/:idExam"}
+            element={<AddCorrectAnswersTestTeacher />}
+          />
+          <Route
+            path={"/add-students-to-test/:idCourses/:idExam"}
+            element={<UploadStudentsToTestTeacher />}
+          />
+          <Route
+            path={"/add-review/:idStudentAnswerExam"}
+            element={<NeedsReviewTeacher />}
+          />
+          <Route
+            path={"/delete-materials-per-lecture/:idLectures"}
+            element={<DeleteMaterialsPerLectureTeacher />}
+          />
+          <Route
+            path={"/see-students-answers-per-test/:idExam/:idStudent"}
+            element={<SeeStudentsAnswersToQuestionsPerTestTeacher />}
+          />
+        </>
+      )}
 
-            {/*STUDENTS*/}
-            {role == 3 && (
-                <>
-                    <Route path={"/main-page-student"} element={<MainPageStudents />} />
-                    <Route path={"/semester/:semesterNumber"} element={<CoursesPageStudents />} />
-                    <Route path={"/lecture-per-course/:idCourses"} element={<LecturePerCourseStudents />} />
-                    <Route path={"/homework"} element={<HomeworkHistoryStudents />} />
-                    <Route path={"/see-homeworks/:idHomework"} element={<SeeUploadedHomeworkStudents />} />
-                    <Route path={"/see-homework-feedback/:idHomework"} element={<SeeHomeworkFileStudent />} />
-                    <Route path={"/my-profile"} element={<MyProfileStudent />} />
-                    <Route path={"/materials-per-lecture/:idCourses/:idLecture"} element={<MaterialsPerLectureStudents />} />
-                    <Route path={"/view-course/:idCourses/:idLecture/:materialType"} element={<ViewCourseStudents />} />
-                    <Route path={"/see-homework-announcement/:idCourses/:idLecture"} element={<SeeHomeworkAnnouncementStudent />} />
-                    <Route path={"/see-homework-details/:idCourses/:idHomeworkAnnouncement"} element={<SeeHomeworkAnnouncementDetailsStudent />} />
-                    <Route path={"/add-homework/:idCourses/:idHomeworkAnnouncement"} element={<AddHomeworkStudent />} />
-                    <Route path={"/tests"} element={<SeeTestsStudent />} />
-                    <Route path={"/take-test/:idExam/:idStudentExam"} element={<TakeTestsStudent />} />
-                    <Route path={"/see-submitted-test/:idExam"} element={<SeeSubmittedTestStudent/>} />
-                    <Route path={"/see-submitted-homework/:idLecture/:idHomeworkAnnouncement"} element={<SeeSubmittedHomeworkStudent />} />
-                </>
-            )}
-
-
-
-            {/*TEACHERS*/}
-                {role == 2 && (
-                    <>
-                            <Route path="/main-page-teacher" element={<MainPageTeacher />} />
-                            <Route path="/lecture-per-course/:idCourses" element={<LecturesPerCourseTeachers />}/>
-                            <Route path="/materials-per-lecture/:idCourses/:idLectures" element={<MaterialsPerCourseTeacher />}/>
-                            <Route path={"/view-course-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
-                            <Route path={"/view-auxiliar-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
-                            <Route path={"/view-video-teacher/:idCourses/:idLectures/:materialType"} element={<ViewCourseTeacher />} />
-                            <Route path={"/homeworks-per-lecture/:idCourses/:idLectures"} element={<HomeworksPerLectureTeacher />}/>
-                            <Route path={"/see-submissions/:idHomeworkAnnouncement"} element={<SeeSubmissionsHomeworkTeacher />}/>
-                            <Route path={"/add-feedback/:idHomeworkAnnouncement/:idHomework"} element={<FeedbackPerHomeworkTeacher />}/>
-                            <Route path={"/notifications-teacher"} element={<NotificationsTeacher />}/>
-                            <Route path={"/my-profile"} element={<MyProfileTeacher />} />
-                            <Route path={"/add-homework-announcement/:idCourses/:idLectures"} element={<HomeworkAnnouncementTeacher />} />
-                            <Route path={"/see-homework-announcement/:idCourses/:idLectures"} element={<SeeHomeworkAnnouncementTeacher />} />
-                            <Route path={"/edit-homework-announcement/:idHomeWorkAnnouncement"} element={<EditHomeworkAnnouncementsTeacher /> } />
-                            <Route path={"/add-materials-per-lecture/:idLectures"} element={<AddMaterialsTeacher />} />
-                            <Route path={"/create-test/:idCourses"} element={<CreateTestTeacher />} />
-                            <Route path={"/see-tests/:idCourses"} element={<SeeTestsTeacher />} />
-                            <Route path={"/see-students-test/:idExam"} element={<SeeStudentsPerTestTeacher />} />
-                            <Route path={"/edit-test/:idCourses/:idExam"} element={<EditTestTeacher />} />
-                            <Route path={"/add-questions-test/:idExam"} element={<AddQuestionsTestTeacher />} />
-                            <Route path={"/add-correct-answers/:idExam"} element={<AddCorrectAnswersTestTeacher />} />
-                            <Route path={"/add-students-to-test/:idCourses/:idExam"} element={<UploadStudentsToTestTeacher />} />
-                            <Route path={"/add-review/:idStudentAnswerExam"} element={<NeedsReviewTeacher />} />
-                            <Route path={"/delete-materials-per-lecture/:idLectures"} element={<DeleteMaterialsPerLectureTeacher />} />
-                            <Route path={"/see-students-answers-per-test/:idExam/:idStudent"} element={<SeeStudentsAnswersToQuestionsPerTestTeacher />} />
-                    </>
-                )}
-
-
-
-            {/* ADMINS */}
-                {role == 1 && (
-                    <>
-                            <Route path={"/main-page-admin"} element={<MainPageAdmin />} />
-                            <Route path={"/create-students-admin"} element={<CreateStudentsAdmin />} />
-                            <Route path={"/my-profile"} element={<MyProfileAdmin />} />
-                            <Route path={"/upload-students-admin"} element={<UploadStudentsAdmin />} />
-                            <Route path={"/see-students-admin"} element={<SeeStudentsAdmin />} />
-                            <Route path={"/see-student-account-admin/:idUsers"} element={<SeeStudentAccountAdmin />} />
-                            <Route path={"/create-teachers-admin"} element={<CreateTeachersAdmin />} />
-                            <Route path={"/upload-teachers-admin"} element={<UploadTeachersAdmin />} />
-                            <Route path={"/see-teachers-admin"} element={<SeeTeachersAdmin />} />
-                            <Route path={"/see-teacher-account-admin/:idUsers"} element={<SeeTeacherAccountAdmin />} />
-                            <Route path={"/students-per-course/:idCourses"} element={<SeeStudentsPerCourseAdmin />} />
-                            <Route path={"/create-admins"} element={<CreateAdmins />} />
-                            <Route path={"/see-admins"} element={<SeeAdminsAdmin />} />
-                            <Route path={"/create-course"} element={<CreateCourseAdmin />} />
-                            <Route path={"/upload-courses"} element={<UploadCoursesAdmin />} />
-                            <Route path={"/add-teachers-to-courses"} element={<AddTeacherToCoursesAdmin />} />
-                            <Route path={"/add-single-teacher-per-course/:idCourses"} element={<AddSingleTeacherToCourseAdmin />} />
-                            <Route path={"/teachers-per-course/:idCourses"} element={<SeeTeachersPerCourseAdmin />} />
-                            <Route path={"/see-courses"} element={<SeeCoursesAdmin />} />
-                            <Route path={"/see-course-account/:idCourses"} element={<SeeCoursesAccountAdmin />} />
-                            <Route path={"/add-students-to-courses"} element={<AddStudentsToCoursesAdmin />} />
-                    </>
-                )}
-
-
-        </Routes>
-    );
+      {/* ADMINS */}
+      {role == 1 && (
+        <>
+          <Route path={"/main-page-admin"} element={<MainPageAdmin />} />
+          <Route
+            path={"/create-students-admin"}
+            element={<CreateStudentsAdmin />}
+          />
+          <Route path={"/my-profile"} element={<MyProfileAdmin />} />
+          <Route
+            path={"/upload-students-admin"}
+            element={<UploadStudentsAdmin />}
+          />
+          <Route path={"/see-students-admin"} element={<SeeStudentsAdmin />} />
+          <Route
+            path={"/see-student-account-admin/:idUsers"}
+            element={<SeeStudentAccountAdmin />}
+          />
+          <Route
+            path={"/create-teachers-admin"}
+            element={<CreateTeachersAdmin />}
+          />
+          <Route
+            path={"/upload-teachers-admin"}
+            element={<UploadTeachersAdmin />}
+          />
+          <Route path={"/see-teachers-admin"} element={<SeeTeachersAdmin />} />
+          <Route
+            path={"/see-teacher-account-admin/:idUsers"}
+            element={<SeeTeacherAccountAdmin />}
+          />
+          <Route
+            path={"/students-per-course/:idCourses"}
+            element={<SeeStudentsPerCourseAdmin />}
+          />
+          <Route path={"/create-admins"} element={<CreateAdmins />} />
+          <Route path={"/see-admins"} element={<SeeAdminsAdmin />} />
+          <Route path={"/create-course"} element={<CreateCourseAdmin />} />
+          <Route path={"/upload-courses"} element={<UploadCoursesAdmin />} />
+          <Route
+            path={"/add-teachers-to-courses"}
+            element={<AddTeacherToCoursesAdmin />}
+          />
+          <Route
+            path={"/add-single-teacher-per-course/:idCourses"}
+            element={<AddSingleTeacherToCourseAdmin />}
+          />
+          <Route
+            path={"/teachers-per-course/:idCourses"}
+            element={<SeeTeachersPerCourseAdmin />}
+          />
+          <Route path={"/see-courses"} element={<SeeCoursesAdmin />} />
+          <Route
+            path={"/see-course-account/:idCourses"}
+            element={<SeeCoursesAccountAdmin />}
+          />
+          <Route
+            path={"/add-students-to-courses"}
+            element={<AddStudentsToCoursesAdmin />}
+          />
+        </>
+      )}
+    </Routes>
+  );
 }
 
-export default App
-
-
-
+export default App;

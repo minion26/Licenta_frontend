@@ -209,6 +209,46 @@ function PdfViewer({
             />
           </div>
         );
+      case "c":
+        return (
+          <div className={styles.container}>
+            <iframe
+              src={fileURL}
+              title="file content"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div>
+        );
+      case "html":
+        return (
+          <div className={styles.container}>
+            <iframe
+              src={fileURL}
+              title="file content"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div>
+        );
+      case "css":
+        return (
+          <div className={styles.container}>
+            <iframe
+              src={fileURL}
+              title="file content"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div>
+        );
+      case "js":
+        return (
+          <div className={styles.container}>
+            <iframe
+              src={fileURL}
+              title="file content"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div>
+        );
       case "mp4":
         return (
           <video width="320" height="240" controls>

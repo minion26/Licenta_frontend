@@ -98,6 +98,20 @@ function MyProfileStudent() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(user);
+    //daca numele si prenumele au cifre, nu se trimite request-ul
+    if (
+      user.firstName.match(/\d/) ||
+      user.lastName.match(/\d/) ||
+      user.firstName === "" ||
+      user.lastName === ""
+    ) {
+      Swal.fire({
+        title: "Error!",
+        text: "First name and last name must not contain numbers.",
+        icon: "error",
+      });
+      return;
+    }
     fetch(`http://localhost:8081/api/v1/users/update/${user.idUsers}`, {
       method: "PATCH",
       credentials: "include",

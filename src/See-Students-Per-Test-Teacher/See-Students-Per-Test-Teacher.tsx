@@ -387,6 +387,7 @@ function SeeStudentsPerTestTeacher() {
                           border: "none",
                           textTransform: "none",
                         }}
+                        disabled={student.examStatus === -1}
                         onClick={() =>
                           handleClickOpen({
                             idStudentExam: student.idStudentExam,
@@ -397,7 +398,6 @@ function SeeStudentsPerTestTeacher() {
                   </Box>
                 </Box>
               </CardElongated>
-
               <Dialog
                 open={open}
                 onClose={handleClose}
@@ -434,6 +434,9 @@ function SeeStudentsPerTestTeacher() {
                       name={"score"}
                       type="number"
                       value={studentEdit.score}
+                      InputProps={{
+                        inputProps: { min: 0, max: exam.totalScore },
+                      }}
                       onChange={handleInput}
                       fullWidth
                       required

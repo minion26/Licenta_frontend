@@ -118,7 +118,7 @@ function SeeUploadedFiles({ idHomework }: { idHomework: string }) {
                     flexDirection: "row",
                   }}
                 >
-                  <Tooltip title={"Delete the home"}>
+                  <Tooltip title={"Delete the homework"}>
                     <Button
                       variant="contained"
                       endIcon={<DeleteIcon />}

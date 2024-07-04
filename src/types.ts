@@ -294,3 +294,9 @@ export type DidacticDTO = {
   teacherName: string;
   courseName: string;
 };
+
+export type ExamDetailsDTO = {
+  name: string;
+  date: string;
+  startDate: string;
+};

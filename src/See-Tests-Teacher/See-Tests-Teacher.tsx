@@ -7,14 +7,14 @@ import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link, useParams } from "react-router-dom";
-import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CheckIcon from "@mui/icons-material/Check";
 import Tooltip from "@mui/material/Tooltip";
-import AddTaskIcon from "@mui/icons-material/AddTask";
 import StartIcon from "@mui/icons-material/Start";
-import { Course, ExamDTO } from "../types.ts";
+import { Course, ExamDTO, StudentExamFrontDTO } from "../types.ts";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Card from "@mui/material/Card";
@@ -116,6 +116,33 @@ function SeeTestsTeacher() {
 
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
+  const [studentExams, setStudentExams] = useState<
+    Record<string, StudentExamFrontDTO[]>
+  >({});
+
+  useEffect(() => {
+    exams.forEach((exam) => {
+      fetch(`http://localhost:8081/api/v1/student-exam/idExam=${exam.idExam}`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setStudentExams((prevStudentExams) => ({
+            ...prevStudentExams,
+            [exam.idExam]: data,
+          }));
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+  }, [exams]);
+
   return (
     <div>
       <Header />
@@ -146,7 +173,7 @@ function SeeTestsTeacher() {
         {Array.isArray(exams) ? (
           exams.map((exam, index) => {
             const isStarted = examStatuses[exam.idExam];
-
+            const studentExam = studentExams[exam.idExam];
             return (
               <CardElongated
                 key={index}
@@ -154,11 +181,12 @@ function SeeTestsTeacher() {
                 cardIndex={index}
                 height={isSmallScreen ? 160 : 150}
               >
-                <Box
+                <Stack
                   sx={{
                     display: "flex",
                     flexWrap: "wrap",
                     justifyContent: "flex-end",
+                    flexDirection: "row",
                     alignItems: "space-around",
                     marginLeft: "auto",
                     marginTop: isSmallScreen ? "0px" : "5px",
@@ -185,50 +213,60 @@ function SeeTestsTeacher() {
                         textTransform: "none",
                       }}
                       onClick={() => {
-                        setIsButtonClicked(true);
-                        fetch(
-                          `http://localhost:8081/api/v1/exam/start-exam/idExam=${exam.idExam}`,
-                          {
-                            method: "POST",
-                            credentials: "include",
-                            headers: {
-                              "Content-Type": "application/json",
-                              "Access-Control-Allow-Origin": "*",
-                            },
-                          },
-                        )
-                          .then((response) => {
-                            if (!response.ok) {
-                              return response.json().then((err) => {
-                                throw new Error(err.message);
-                              });
-                            }
-                            if (
-                              response.headers
-                                .get("content-type")
-                                ?.includes("application/json")
-                            ) {
-                              const data = response.json();
-                              console.log("File uploaded", data);
-                            } else {
-                              console.log("No JSON data returned");
-                            }
-
-                            window.location.reload();
-                          })
-                          .catch((error) => {
-                            console.error("Error:", error);
-                            Swal.fire({
-                              icon: "error",
-                              title: error.message || "An error occurred",
-                              showConfirmButton: false,
-                              // timer: 1500
-                            });
-                          })
-                          .finally(() => {
-                            // Reset the button click state after the fetch request is completed
-                            setIsButtonClicked(false);
+                        //trebuie sa vad daca examenul are studenti
+                        if (studentExam.length === 0) {
+                          Swal.fire({
+                            icon: "error",
+                            title: "The test has no students",
+                            showConfirmButton: false,
+                            // timer: 1500
                           });
+                        } else {
+                          setIsButtonClicked(true);
+                          fetch(
+                            `http://localhost:8081/api/v1/exam/start-exam/idExam=${exam.idExam}`,
+                            {
+                              method: "POST",
+                              credentials: "include",
+                              headers: {
+                                "Content-Type": "application/json",
+                                "Access-Control-Allow-Origin": "*",
+                              },
+                            },
+                          )
+                            .then((response) => {
+                              if (!response.ok) {
+                                return response.json().then((err) => {
+                                  throw new Error(err.message);
+                                });
+                              }
+                              if (
+                                response.headers
+                                  .get("content-type")
+                                  ?.includes("application/json")
+                              ) {
+                                const data = response.json();
+                                console.log("File uploaded", data);
+                              } else {
+                                console.log("No JSON data returned");
+                              }
+
+                              window.location.reload();
+                            })
+                            .catch((error) => {
+                              console.error("Error:", error);
+                              Swal.fire({
+                                icon: "error",
+                                title: error.message || "An error occurred",
+                                showConfirmButton: false,
+                                // timer: 1500
+                              });
+                            })
+                            .finally(() => {
+                              // Reset the button click state after the fetch request is completed
+                              setIsButtonClicked(false);
+                            });
+                        }
                       }}
                       // Disable the button if it's clicked or if the test has started
                       disabled={isStarted || isButtonClicked}
@@ -315,7 +353,7 @@ function SeeTestsTeacher() {
                   <Tooltip title="Add Students To Test">
                     <Button
                       variant="contained"
-                      endIcon={<AddTaskIcon />}
+                      endIcon={<PersonAddIcon />}
                       sx={{
                         width: isSmallScreen ? "35px" : "35px",
                         height: "50px",
@@ -362,7 +400,7 @@ function SeeTestsTeacher() {
                       to={`/see-students-test/${exam.idExam}`}
                     />
                   </Tooltip>
-                </Box>
+                </Stack>
               </CardElongated>
             );
           })
