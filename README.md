@@ -1,6 +1,9 @@
 # Bachelor Project : Frontend
 This is a frontend project developed using React, Typescript and Vite.
 
+## Backend
+https://github.com/minion26/Licenta_v1.git
+
 ## Techonologies
 - React 18.2.0
 - Typescript 5.2.2
